@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script>
+    $(document).ready(function () {
+
+        $("#Members").load("/UserProfile/Members");
+
+    });
+</script>
+
+
+
+<div id="Members"></div>
+

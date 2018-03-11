@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<script>
+    $(document).ready(function () {
+
+        $("#MemberName").load("/Home/LatestMember");
+        $("#EventName").load("/Home/LatestEvent");
+        $("#NoticeName").load("/Home/LatestNotice");
+
+    });
+</script>
+<div class="row justify-content-md-center" style="margin-bottom:20px;">
+    <div class="col-md-12">
+        @using (Html.BeginForm("Index", "Search", FormMethod.Get))
+        {
+
+            <div style="margin-left:auto;margin-right:auto;margin-top:10px;">
+                <div id="fakeBox" style="float:left">
+                    <input type="text" name="Search" class="fakeInput" />
+                </div>
+                <div style="float:left">
+                    <input type="submit" class="btn btn-primary btn-custom" name="submit" value="Search" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="card-deck">
+        <div class="card">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Latest member name</h5>
+                <div id="MemberName"></div>
+                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+        <div class="card">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Latest Notice name</h5>
+                <div id="NoticeName"></div>
+                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+        <div class="card">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Latest Event name</h5>
+                <div id="EventName"></div>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+    </div>
+</div>

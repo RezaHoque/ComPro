@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ComPro.Models.ChatModel>
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "ShowChat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ShowChat</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create_Chat")
+</p>
+<table class="table">
+
+
+    @foreach (var item in Model)
+    {
+        <tr>            
+            <td>
+                @Html.ActionLink(item.PartnerName, "Message", new { Id = item.PartnerId})
+            </td>
+           
+        </tr>
+
+       
+    }
+
+</table>

@@ -1,0 +1,87 @@
+﻿@model IEnumerable<ComPro.Models.NoticeBoardViewModel>
+@using Microsoft.AspNet.Identity
+@using ComPro.Helpers
+
+@{
+    ViewBag.Title = "Noticeboard";
+}
+
+<p>
+    @Html.ActionLink("Create Notice", "Create")
+</p>
+@if (User.IsInRole("Administrator"))
+{
+    @Html.ActionLink("New Notice", "NewNotice")
+}
+
+<p>
+    @if (ViewBag.NoticeEdit != null)
+    {@ViewBag.NoticeEdit;
+}
+    @if (ViewBag.Delete != null)
+    {@ViewBag.Delete;
+}
+
+</p>
+<h2>
+    Recent posts on the Notice board.
+</h2>
+<div class="card-columns" style="margin-top:10px;">
+    @foreach (var i in Model)
+    {
+        if (i.TotalComments >= 3)
+        {
+            <div class="card border-light text-white bg-danger mb-3">
+                <div class="card-header">@i.Notice.Title</div>
+                <div class="card-body">
+                    <p class="card-text">
+                        @if (i.Notice.Description.Length > 200)
+        {
+                @i.Notice.Description.Substring(0, 190) <span>...</span>
+}
+else
+{
+                @i.Notice.Description
+}
+                        <a href="/NoticeBoard/Notice?Id=@i.Notice.Id" class="alert-link text-white">more</a>
+                    </p>
+                    <h5 class="card-title"><a href="/UserProfile/Details?id=@i.Notice.Creator.UserName" class="alert-link text-white">@UserInformation.UserName(i.Notice.Creator.UserName)</a></h5>
+                    @*<h5 class="card-title"><a href="/UserProfile/Details?id=@i.Notice.CreatorId" class="alert-link text-white">@UserInformation.UserName(i.Notice.Creator.UserName)</a></h5>*@
+                   <span class="card-title">@i.Notice.SubmitDate.ToShortDateString()</span>
+                    <hr />
+                    <a href="/NoticeBoard/Notice?Id=@i.Notice.Id" class="text-white">
+                        <i class="fas fa-comments"></i> Comments @if (i.TotalComments > 0)
+        {<span class="badge badge-light">@i.TotalComments</span>}
+                    </a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card border-light mb-3">
+                <div class="card-header">@i.Notice.Title</div>
+                <div class="card-body">
+                    <p class="card-text">
+                        @if (i.Notice.Description.Length > 200)
+                        {
+                            @i.Notice.Description.Substring(0, 190) <span>...</span>
+                        }
+                        else
+                        {
+                            @i.Notice.Description
+                        }
+                        <a href="/NoticeBoard/Notice?Id=@i.Notice.Id" class="alert-link">more</a>
+                    </p>
+                    <h5 class="card-title"><a href="/Home/Member?name=@i.Notice.Creator.UserName" class="alert-link">@i.Notice.Creator.UserName</a></h5>
+                    <span class="card-title">@i.Notice.SubmitDate.ToShortDateString()</span>
+                    <hr />
+                    <a href="/NoticeBoard/Notice?Id=@i.Notice.Id">
+                        <i class="fas fa-comments"></i> Comments @if (i.TotalComments > 0)
+                        {<span class="badge badge-success">@i.TotalComments</span>}
+                    </a>
+                </div>
+            </div>
+        }
+
+    }
+</div>

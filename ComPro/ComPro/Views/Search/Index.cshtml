@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ComPro.Models.SearchViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Search Result</h2>
+
+
+<p>
+    @if (ViewBag.search != null)
+    {@ViewBag.search;
+    }
+</p>
+
+<table class="table">
+   
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+
+
+
+
+            @if (item.ResultCatagory == "User Profile")
+    {
+        @Html.ActionLink(item.ResultCatagory, "Details", "UserProfile", new { id = item.ResultId }, null)
+
+}
+            @if (item.ResultCatagory == "Notice")
+    {
+        @Html.ActionLink(item.ResultCatagory, "Notice", "NoticeBoard", new { id = item.ResultId }, null)
+
+}
+
+            @if (item.ResultCatagory == "Event")
+    {
+        @Html.ActionLink(item.ResultCatagory, "EventDetails", "Event", new { id = item.ResultId }, null)
+
+}
+
+
+            @Html.DisplayFor(modelItem => item.ResultName)
+            @Html.DisplayFor(modelItem => item.MatchedText)
+
+
+
+        </td>
+       
+    </tr>
+}
+
+</table>

@@ -1,0 +1,27 @@
+﻿@model ComPro.Models.ChatModel
+
+@{
+    ViewBag.Title = "Chat_History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script>
+    $(document).ready(function () {
+
+        $("#ChatBox").load("/Chat/ChatPost");
+       
+    });
+</script>
+
+<div class="row" style="margin-top:10px;" >
+    <div class="card">
+        <div class="card-header">
+            @Model.PartnerName
+            <input type="hidden" name="hPartnerId" value="@Model.PartnerId" id="hPartnerId" />
+        </div>
+        
+    </div>
+</div>
+
+<div id="ChatBox"></div>

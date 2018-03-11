@@ -1,0 +1,18 @@
+﻿@model IEnumerable<ComPro.Models.ChatHisytoryModel>
+
+<div>
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <div class="commentWriter col-2">
+                @item.SenderName
+                <hr />
+                <span class="dt">@item.Date_Time</span>
+            </div>
+            <div class="commentDes col-8">
+                @item.Message   
+            </div>
+
+        </div>
+    }
+</div>

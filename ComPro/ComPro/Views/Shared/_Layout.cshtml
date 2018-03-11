@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - ComPro</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <link href="~/Content/font-awesome/css/fontawesome-all.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome/css/fa-brands.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+        <div class="container">
+            <a href="/" class="navbar-brand"><i class="fas fa-users fa-2x" data-fa-transform="grow-6"></i></a>
+
+            
+            @*@Html.ActionLink("ComPro", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">@Html.ActionLink("Notice", "Index", "NoticeBoard")</li>
+                    <li class="nav-item">@Html.ActionLink("Members", "Index", "UserProfile")</li>
+                    <li class="nav-item">@Html.ActionLink("Event", "Index", "Event")</li>
+                   
+
+                    @if (User.Identity.IsAuthenticated)
+    {
+                <li class="nav-item">@Html.ActionLink("Message", "ShowChat", "Chat")</li>
+
+}
+                </ul>
+
+            </div>
+            <div>
+                @Html.Partial("_LoginPartial")
+            </div>
+
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        
+        <footer>
+            <p>&copy; @DateTime.Now.Year - ComPro</p>
+        </footer>
+    </div>
+
+   
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

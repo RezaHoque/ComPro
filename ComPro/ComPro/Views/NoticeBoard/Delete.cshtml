@@ -1,0 +1,36 @@
+﻿@model ComPro.Models.NoticeBoard
+@{
+    ViewBag.Title = "Notice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    $(document).ready(function () {
+
+        $("#commentBox").load("/NoticeBoard/PostComment");
+
+    });
+</script>
+
+<div class="row" style="margin-top:10px;">
+    <div class="card">
+        <div class="card-header">
+            @Model.Title
+            <input type="hidden" name="hNoticeId" value="@Model.Id" id="hNoticeId" />
+            @if ((User.Identity.Name == Model.Creator.UserName) || User.IsInRole("Administrator"))
+    {
+        <p>Are You Sure To Delete This Notice ???</p>
+        @Html.ActionLink("Yes", "DeleteConfirmed", new { id = Model.Id })
+        @Html.ActionLink("No", "Index")
+}
+        </div>
+        <div class="card-body">
+            @Model.Description
+            <hr />
+            <i>@Model.Creator.UserName </i>
+            <i>@Model.SubmitDate.ToShortDateString()</i>
+            
+        </div>
+    </div>
+</div>
+
+<div id="commentBox"></div>

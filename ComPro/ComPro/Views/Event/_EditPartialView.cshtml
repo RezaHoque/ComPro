@@ -1,0 +1,125 @@
+﻿@model ComPro.Models.EventModel
+
+
+
+
+<div class="modal fade" id="EventEdit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="alert alert-success alert-dismissible fade hide" role="alert" id="MessageSuccess">
+                        <strong>Thanks !</strong>  Your Event is Successfully Modified .
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade hide" role="alert" id="MessageFail">
+                        <strong>Sorry !</strong>  Your Event is Sailed to be Modified. Please Try Again .
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @Html.HiddenFor(model => model.EventId, new { id = "EventId", htmlAttributes = new { @class = "form-control" } })
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Title, new { id = "Title", htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Description, new { id = "Description", htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Date, new { id = "Date", htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Place, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Place, new { id = "Place", htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="button" value="Save" class="btn btn-default" id="btnEventEdit" />
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+    $("#btnEventEdit").click(function () {
+
+        var url = "/Event/Edit";
+
+        var Title = $("#Title").val();
+        var Description = $("#Description").val();
+        var Date = $("#Date").val();
+        var Place = $("#Place").val();
+        var Id = $("#EventId").val();
+
+        var request = $.ajax({
+            type: "POST",
+            url: url,
+            data: { Title: Title, Description: Description, Date: Date, Place: Place, EventId: Id }
+        })
+
+        request.done(function (msg) {
+
+            if (msg == "True") {
+                
+                $("#MessageFail").removeClass("hide");
+                $("#MessageSuccess").addClass("show");
+                
+            }
+            else {
+                $("#MessageSuccess").removeClass("hide");
+                $("#MessageFail").addClass("show");
+
+            }
+
+
+
+        });
+
+
+    });
+
+
+
+</script>
+

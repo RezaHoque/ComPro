@@ -1,0 +1,121 @@
+﻿@model ComPro.Models.UserInfo
+
+
+<div class="modal fade" id="MemDetails">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form>
+
+                    <h2>@Html.DisplayFor(model => model.Name)</h2>
+
+                    
+                        <hr />
+                        <dl class="dl-horizontal">
+                            
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Photo)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Photo)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Address)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Address)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.PostCode)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.PostCode)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.City)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.City)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Phone)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Phone)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Gender)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Gender)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.BirthDate)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.BirthDate)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CurrentJobTitle)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.CurrentJobTitle)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CompanyName)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.CompanyName)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Skills)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Skills)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Email)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Email)
+                            </dd>
+
+
+
+                        </dl>
+                    
+                    
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

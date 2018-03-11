@@ -1,0 +1,38 @@
+﻿
+
+
+<div class="card-body">
+    
+    <a href="#" class="card-link btn btn-primary" name="MyEvent" id="MyEvent">My Event</a>
+    @if (User.IsInRole("Administrator"))
+    {
+        <a href="#" class="card-link btn btn-primary" name="NewEvents" id="NewEvents">New Events</a>
+    }
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        $("#EventList").load("/Event/GetEvents");
+    });
+
+  
+
+    $("#MyEvent").click(function () {
+        $("#EventList").load("/Event/MyEvent");
+
+
+    });
+
+    $("#NewEvents").click(function () {
+        $("#EventList").load("/Event/NewEvent");
+
+    });
+</script>
+
+
+<div id="EventList"></div>
+
+
+

@@ -1,0 +1,44 @@
+﻿
+
+<div class="card-body">
+    <a href="#" class="card-link btn btn-primary" name="AllMember" id="AllMember">All Member</a>
+    @if (User.IsInRole("Administrator"))
+    {
+        <a href="#" class="card-link btn btn-primary" name="NewMember" id="NewMember">New Member</a>
+
+    }
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        $("#AllMember").hide();
+        $("#MemberList").load("/UserProfile/AllMembers");
+    });
+
+    $("#NewMember").click(function () {
+        $("#NewMember").hide();
+        $("#AllMember").show();
+        $("#MemberList").load("/UserProfile/NewUser");
+        
+
+    });
+
+    $("#AllMember").click(function () {
+        $("#AllMember").hide();
+        $("#NewMember").show();
+        $("#MemberList").load("/UserProfile/AllMembers");
+
+
+    });
+
+    //$("#NewEvents").click(function () {
+    //    $("#EventList").load("/Event/NewEvent");
+
+    //});
+</script>
+
+
+<div id="MemberList"></div>
+

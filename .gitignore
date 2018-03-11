@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/ComPro/.vs
+/ComPro/ComPro/bin
+/ComPro/ComPro/ComPro/bin
+/ComPro/ComPro/ComPro/obj
+/ComPro/ComPro/obj/Debug
+/ComPro/ComPro/obj/Release
+/ComPro/ComPro/ComPro.Tests

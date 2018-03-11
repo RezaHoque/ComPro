@@ -1,0 +1,43 @@
+﻿
+
+<script>
+    $(document).ready(function () {
+
+        $("#Events").load("/Event/Events");
+        $("#Create").click(function () {
+
+          
+            $("#datacontainer3").load("/Event/Create");
+            $('#createModal').modal();
+         
+
+        });
+    });
+    
+</script>
+
+
+<a href="#" class="card-link btn btn-primary" name="Create" id="Create">Create Event</a>
+<div id="Events"></div>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="createModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="datacontainer3">
+               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

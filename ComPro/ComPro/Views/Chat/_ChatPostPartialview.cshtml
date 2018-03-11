@@ -1,0 +1,40 @@
+﻿
+<script>
+    var PartnerId = $("#hPartnerId").val();
+    $(document).ready(function () {
+        $("#messageList").load("/Chat/ChatGet?Emai=" + PartnerId);
+    });
+     $("#saveMessage").click(function () {
+         var txt = $("#Text").val();
+
+
+            if (txt !== "") {
+                var url = "/Chat/ChatPost";
+                $.ajax({
+                    method: "POST",
+                    url: url,
+                    data: { Message: txt, PartnerId: PartnerId }
+                })
+                    .done(function (msg) {
+                        $("#Text").val("");
+                        $("#messageList").load("/Chat/ChatGet?Emai=" + PartnerId);
+                    });
+            }
+        });
+</script>
+
+<div id="messageList"></div>
+
+<div class="card" style="width: 60%;margin:20px;" id="cb5">
+    <div class="card-body">
+        <h5 class="card-title">Message</h5>
+
+        <p class="card-text">
+            <textarea class="form-control" id="Text" rows="3"></textarea>
+        </p>
+
+        <a href="#" class="card-link btn btn-primary" name="saveMessage" id="saveMessage">Send</a>
+
+    </div>
+</div>
+

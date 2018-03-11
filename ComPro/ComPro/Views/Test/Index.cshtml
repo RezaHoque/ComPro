@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ComPro.Models.EventViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Events</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EventTitel)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href="#" id="EventDetails" onClick="EventDetails(@item.Id)" ;>@item.EventTitel</a>
+            </td>
+
+        </tr>
+
+
+    }
+
+</table>
+<script>
+    
+         $(function () {
+             $('#editModal').modal();
+         });
+
+      
+
+    function EventDetails(id ){
+        $.ajax({
+            url: "/test/Edit?id=" + id, // The method name + paramater
+           method: "GET",
+            success: function (data) {
+                $('#modalWrapper').html(data); // This should be an empty div where you can inject your new html (the partial view)
+                $('#editModal').modal();
+
+            }
+        });
+    }
+
+</script>
+
+<div id="modalWrapper">
+    @* Inject form here *@
+</div>

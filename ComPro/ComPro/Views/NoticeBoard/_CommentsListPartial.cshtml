@@ -1,0 +1,20 @@
+﻿@model IEnumerable<ComPro.Models.PublicComment>
+@using ComPro.Helpers
+
+<div>
+    @foreach (var i in Model)
+    {
+        <div class="row">
+            <div class="commentWriter col-2">
+                @UserInformation.UserName(i.CommentUser.UserName)
+
+                <hr />
+                <span class="dt">@i.CommentDateTime.ToShortDateString()</span>
+            </div>
+            <div class="commentDes col-8">
+                @i.CommentText
+            </div>
+
+        </div>
+    }
+</div>

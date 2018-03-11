@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "MyPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script>
+    $(document).ready(function () {
+
+        $("#MyPage").load("/UserProfile/CurrentUser");
+
+    });
+</script>
+
+
+
+<div id="MyPage"></div>

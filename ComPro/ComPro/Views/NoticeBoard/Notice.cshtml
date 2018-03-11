@@ -1,0 +1,37 @@
+﻿@model ComPro.Models.NoticeBoard
+@using ComPro.Helpers
+@{
+    ViewBag.Title = "Notice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    $(document).ready(function () {
+
+        $("#commentBox").load("/NoticeBoard/PostComment");
+
+    });
+</script>
+
+<div class="row" style="margin-top:10px;">
+    <div class="card">
+        <div class="card-header">
+            @Model.Title
+            <input type="hidden" name="hNoticeId" value="@Model.Id" id="hNoticeId" />
+        </div>
+        <div class="card-body">
+            @Model.Description
+            <hr />
+            <i>@UserInformation.UserName(Model.Creator.UserName) </i>
+            <i>@Model.SubmitDate.ToShortDateString()</i>
+            @if ((User.Identity.Name == Model.Creator.UserName) || User.IsInRole("Administrator"))
+            {
+
+                <i>@Html.ActionLink("Edit", "Edit", new { id = Model.Id })</i>
+
+                <i>@Html.ActionLink("Delete", "Delete", new { id = Model.Id })</i>
+            }
+        </div>
+    </div>
+</div>
+
+<div id="commentBox"></div>
