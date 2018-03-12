@@ -15,20 +15,19 @@
         <div class="container">
             <a href="/" class="navbar-brand"><i class="fas fa-users fa-2x" data-fa-transform="grow-6"></i></a>
 
-            
+
             @*@Html.ActionLink("ComPro", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">@Html.ActionLink("Notice", "Index", "NoticeBoard")</li>
-                    <li class="nav-item">@Html.ActionLink("Members", "Index", "UserProfile")</li>
-                    <li class="nav-item">@Html.ActionLink("Event", "Index", "Event")</li>
-                   
+                    <li class="nav-item"><a href="/NoticeBoard/Index" class="nav-link"><i class="fa fa-newspaper"></i> Notice Board</a></li>
+                    <li class="nav-item"><a href="/UserProfile/Index" class="nav-link"><i class="fa fa-user-circle"></i> Members</a></li>
+                    <li class="nav-item"><a href="/Event/Index" class="nav-link"><i class="fa fa-calendar-alt"></i> Events</a></li>
 
                     @if (User.Identity.IsAuthenticated)
-    {
-                <li class="nav-item">@Html.ActionLink("Message", "ShowChat", "Chat")</li>
+                    {
+                        <li class="nav-item"><a href="/Chat/ShowChat" class="nav-link">Messages</a></li>
 
-}
+                    }
                 </ul>
 
             </div>
@@ -40,13 +39,18 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        
+
         <footer>
-            <p>&copy; @DateTime.Now.Year - ComPro</p>
+            <nav class="navbar fixed-bottom navbar-expand navbar-light bg-light">
+                <div class="navbar-text m-auto">
+                    Made with <i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>️ by the community geniuses
+                </div>
+            </nav>
         </footer>
     </div>
+    
 
-   
+
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

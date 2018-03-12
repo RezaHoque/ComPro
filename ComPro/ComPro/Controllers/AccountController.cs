@@ -371,7 +371,7 @@ namespace ComPro.Controllers
 
             //string userinfo = loginInfo.Login.ProviderKey;
 
-
+            /*
             string UserEmail = _UserProfile.CheckExternalUser(loginInfo.Login.ProviderKey);
             if (UserEmail!= null)
             {
@@ -383,12 +383,12 @@ namespace ComPro.Controllers
             }
 
             
-
+            */
             if (loginInfo == null)
             {
                 return RedirectToAction("Login");
             }
-
+            
             // Sign in the user with this external login provider if the user already has a login
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             switch (result)
@@ -420,7 +420,7 @@ namespace ComPro.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Manage");
+                return RedirectToAction("Index", "Home");
             }
 
             if (ModelState.IsValid)
@@ -436,14 +436,16 @@ namespace ComPro.Controllers
 
                 if (result.Succeeded)
                 {
-                    await UserManager.AddToRoleAsync(user.Id, "NewUser");
+                    await UserManager.AddToRoleAsync(user.Id, "User");
 
-                    UserInfo uInfo = new UserInfo();
-                    uInfo.Name = model.Name;
-                    uInfo.Email = model.Email;
-                    uInfo.CurrentJobTitle = model.CurrentJobTitle;
-                    uInfo.Gender = model.Gender;
-                    
+                    UserInfo uInfo = new UserInfo
+                    {
+                        Name = model.Name,
+                        Email = model.Email,
+                        CurrentJobTitle = model.CurrentJobTitle,
+                        Gender = model.Gender
+                    };
+
 
                     _db.UserInfo.Add(uInfo);
                     _db.SaveChanges();
@@ -454,7 +456,7 @@ namespace ComPro.Controllers
                     if (result.Succeeded)
                     {
 
-                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         return RedirectToAction("Login");
                     }
                 }
