@@ -47,10 +47,10 @@ namespace ComPro.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<ComPro.Models.MemberViewModel> MemberViewModels { get; set; }
+        //public System.Data.Entity.DbSet<ComPro.Models.MemberViewModel> MemberViewModels { get; set; }
 
-        public System.Data.Entity.DbSet<ComPro.Models.DetailViewModel> DetailViewModels { get; set; }
+        //public System.Data.Entity.DbSet<ComPro.Models.DetailViewModel> DetailViewModels { get; set; }
 
-        public System.Data.Entity.DbSet<ComPro.Models.EventViewModel> EventViewModels { get; set; }
+        //public System.Data.Entity.DbSet<ComPro.Models.EventViewModel> EventViewModels { get; set; }
     }
 }

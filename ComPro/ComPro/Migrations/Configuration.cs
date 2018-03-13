@@ -15,7 +15,7 @@ namespace ComPro.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(ComPro.Models.ApplicationDbContext context)
+        protected override void Seed(ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -31,11 +31,92 @@ namespace ComPro.Migrations
             //  
 
             // SeedUser(context);
-            SeedRole(context);
+           // SeedRole(context);
             //SeedUserRole(context);
             //SeedNotice(context);
+           // SeedEvents(context);
             
 
+        }
+        private void SeedEvents(ApplicationDbContext context)
+        {
+            var events = new EventModel
+            {
+                Title = "Pohela boishak 2018",
+                Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis lectus quis sem lacinia nonummy. Proin mollis lorem non dolor. In hac habitasse platea dictumst. Nulla ultrices odio.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis lectus quis sem lacinia nonummy. Proin mollis lorem non dolor. In hac habitasse platea dictumst. Nulla ultrices odio.",
+                Date = new DateTime(2018, 4, 14, 10, 00, 00),
+                Creation = DateTime.Now,
+                Place = "In a Hall",
+                IsApproved = true,
+                CreatorId = "5ced017f-6f95-44e7-9c33-261b6172bbe8",
+                EventStatus=true,
+                ApprovalDate=DateTime.Now
+
+            };
+            context.Event.Add(events);
+
+            var events1 = new EventModel
+            {
+                Title = "Summer Picnic",
+                Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis lectus quis sem lacinia nonummy. Proin mollis lorem non dolor. In hac habitasse platea dictumst. Nulla ultrices odio.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis lectus quis sem lacinia nonummy. Proin mollis lorem non dolor. In hac habitasse platea dictumst. Nulla ultrices odio.",
+                Date = new DateTime(2018, 4, 19, 12, 00, 00),
+                Creation = DateTime.Now,
+                Place = "Klampenborg beach",
+                IsApproved = true,
+                CreatorId = "41d04839-4c98-4be2-8521-c403b0fd16d5",
+                EventStatus = true,
+                ApprovalDate = DateTime.Now
+
+            };
+            context.Event.Add(events1);
+            var events2 = new EventModel
+            {
+                Title = "BTH Get together",
+                Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis lectus quis sem lacinia nonummy. Proin mollis lorem non dolor. In hac habitasse platea dictumst. Nulla ultrices odio.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis lectus quis sem lacinia nonummy. Proin mollis lorem non dolor. In hac habitasse platea dictumst. Nulla ultrices odio.",
+                Date = new DateTime(2018, 4, 10, 10, 00, 00),
+                Creation = DateTime.Now,
+                Place = "In a Hall",
+                IsApproved = true,
+                CreatorId = "41d04839-4c98-4be2-8521-c403b0fd16d5",
+                EventStatus = true,
+                ApprovalDate = DateTime.Now
+
+            };
+            context.Event.Add(events2);
+
+            var events3 = new EventModel
+            {
+                Title = "Summer tour to Møn",
+                Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis lectus quis sem lacinia nonummy. Proin mollis lorem non dolor. In hac habitasse platea dictumst. Nulla ultrices odio.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis lectus quis sem lacinia nonummy. Proin mollis lorem non dolor. In hac habitasse platea dictumst. Nulla ultrices odio.",
+                Date = new DateTime(2018, 6, 14, 10, 00, 00),
+                Creation = DateTime.Now,
+                Place = "Mønsklint",
+                IsApproved = true,
+                CreatorId = "5ced017f-6f95-44e7-9c33-261b6172bbe8",
+                EventStatus = true,
+                ApprovalDate = DateTime.Now
+
+            };
+
+            context.Event.Add(events3);
+
+            var events4 = new EventModel
+            {
+                Title = "Code BD",
+                Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis lectus quis sem lacinia nonummy. Proin mollis lorem non dolor. In hac habitasse platea dictumst. Nulla ultrices odio.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis lectus quis sem lacinia nonummy. Proin mollis lorem non dolor. In hac habitasse platea dictumst. Nulla ultrices odio.",
+                Date = new DateTime(2018, 5, 14, 10, 00, 00),
+                Creation = DateTime.Now,
+                Place = "In a Hall",
+                IsApproved = true,
+                CreatorId = "41d04839-4c98-4be2-8521-c403b0fd16d5",
+                EventStatus = true,
+                ApprovalDate = DateTime.Now
+
+            };
+
+            context.Event.Add(events4);
+
+            context.SaveChanges();
         }
         private void SeedUserRole(ApplicationDbContext context)
         {
