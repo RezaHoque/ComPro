@@ -49,6 +49,9 @@ namespace ComPro.Interfaces
                            Approval = p.IsApproved,
                            CreatorID = p.CreatorId,
                            Activity = null,
+                           Description=p.Description,
+                           Place=p.Place,
+                           EventDate=p.Date
                        });
 
                     
@@ -66,7 +69,7 @@ namespace ComPro.Interfaces
                             Result.Add(item); 
                         }
                     }
-                    return Result;
+                    return Result.OrderBy(x=>x.EventDate);
                
            
         }
@@ -330,7 +333,7 @@ namespace ComPro.Interfaces
                 Data.CreatorId = Current_User_id;
 
                 Data.EventStatus = true;
-                Data.IsApproved = false;
+                Data.IsApproved = true;
 
                 Data.ApprovalDate = DateTime.Now;
 
@@ -370,7 +373,7 @@ namespace ComPro.Interfaces
             try
             {
                 var Event = _data.Event.FirstOrDefault(x=>x.EventId==Id);
-                Event.IsApproved = true;
+                Event.IsApproved = false;
                 Event.ApprovalDate = DateTime.Now;
 
                 _data.SaveChanges();

@@ -7,235 +7,217 @@
 @if (Model.Count() <= 0)
 {
 <div class="alert alert-primary" role="alert">
-    Currently there are no event for you !!
+    Currently there are no events for you !!
 </div>
 }
-<table class="table">
-    @foreach (var item in Model)
+<div class="container-fluid">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-4">
+                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                    <div class="card-header"><a href="#" id="EventDetails" onClick="EventDetails(@item.Id)">@item.EventTitel </a> </div>
+                    <div class="card-body">
+                        <h6 class="card-title"><i>Date: @item.EventDate.ToShortDateString() <br />@item.Place</i></h6>
+                        <p class="card-text">@item.Description</p>
+
+                    </div>
+                   
+                        @if (User.IsInRole("Administrator") && item.Approval == true)
+                        {
+                            <div style="padding-bottom:5px;padding-top:5px;">
+                                <a href="#" onClick="Approval(@item.Id)" class="btn btn-sm btn-danger">DisApprove</a>
+                            </div>
+                        }
+
+                  
+                    <div class="card-footer bg-white border-primary text-center">
+                        @if (!(User.Identity.GetUserId() == item.CreatorID) && !(User.IsInRole("Administrator")))
     {
-        <tr>
+        if (string.IsNullOrEmpty(item.Activity))
+        {
+                    <a href="#" onClick="MemberResponseGoing(@item.Id)" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Yes</a>
+                    <a href="#" id="maybe" onClick="MemberResponseMayBe(@item.Id)" class="btn btn-sm btn-primary"><i class="fa fa-exclamation"></i> May Be</a>
+                    <a href="#" id="notgoing" onClick="MemberResponseNotGoing(@item.Id)" class="btn btn-sm btn-primary"><i class="fa fa-times"></i> No</a>
+}
+else
+{
+                    <span class="btn btn-sm btn-dark">@item.Activity</span>
 
-            <td>
-                <a href="#" id="EventDetails" onClick="EventDetails(@item.Id)" ;>@item.EventTitel</a>
-            </td>
-            <td>
+}
 
-                @if (User.IsInRole("Administrator") && item.Approval == false)
-                {<div class="col-md-offset-2 col-md-10">
-                        @*<a href="@Url.Action("ApproveEvent","Event", new { Id = Model.Id })"  class="btn btn-default">Approve</a>*@
-                        <a href="#" onClick="Approval(@item.Id)" ;>Approve</a>
+
+}
+else
+{
+                    <a href="#" onClick="EventEdit(@item.Id)" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="#" onClick="EventDelete(@item.Id)" class="btn btn-sm btn-primary">Delete</a>
+}
                     </div>
-                }
+                    
+                </div>
+        </div>
 
+            }
+        </div>
+    </div>
+ 
 
+        <script>
 
-                @if ((User.Identity.GetUserId() == item.CreatorID) || User.IsInRole("Administrator"))
-                {<div>
+            function EventDetails(id) {
+                var id = id;
+                var url = "/Event/EventDetails";
 
-                        @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id })*@
-                        <a href="#" onClick="EventEdit(@item.Id)" ;>Edit</a>
-                        <a href="#" onClick="EventDelete(@item.Id)" ;>Delete</a>
-                        @*@Html.ActionLink("Delete", "Delete", new { id = Model.Id })*@
-                    </div>
-                }
+                $.ajax({
 
+                    url: url,
+                    data: { id: id },
 
-                @if (!(User.Identity.GetUserId() == item.CreatorID) && !(User.IsInRole("Administrator")))
-                {
-                 <div>
-                    @if(item.Activity== "Going")
-                    {
-                     <a>Going</a>
-                     }
-                     else
-                     {<a href="#" onClick="MemberResponseGoing(@item.Id)" ;>Going</a>
-                     }
+                    success: function (data) {
+                        $('#datacontainer2').html(data);
+                        $('#MyModal').modal();
+                    }
 
-                     @if(item.Activity== "MayBe")
-                     {<a>May Be</a>
-                     }
-                     else
-                     {
-                     <a href="#" id="maybe" onClick="MemberResponseMayBe(@item.Id)" ;>May Be</a>
-                     }
-
-                     @if(item.Activity== "NotGoing")
-                     {<a>Not Going</a>
-                     }
-                     else
-                     {
-                     <a href="#" id="notgoing" onClick="MemberResponseNotGoing(@item.Id)" ;>Not Going</a>
-
-                     }
-
-
-                 </div>
-
-                }
-
-            </td>
-
-        </tr>
-
-
-    }
-
-</table>
-<script>
-
-        function EventDetails(id) {
-            var id = id;
-            var url = "/Event/EventDetails";
-
-            $.ajax({
-
-                url: url,
-                data: { id: id },
-
-                success: function (data) {
-                    $('#datacontainer2').html(data);
-                    $('#MyModal').modal();
-                }
-
-            });
-
-        }
-
-
-
-    function EventEdit(id) {
-
-        $.ajax({
-            url: "/Event/Edit?id=" + id,
-            success: function (data) {
-
-                $('#datacontainer').html(data);
-                $('#EventEdit').modal();
+                });
 
             }
 
-        });
-
-    }
-
-    function EventDelete(id) {
 
 
+            function EventEdit(id) {
 
-        if (confirm('You Are Going to Delete This Event')) {
+                $.ajax({
+                    url: "/Event/Edit?id=" + id,
+                    success: function (data) {
 
-            var url = "/Event/Delete";
+                        $('#datacontainer').html(data);
+                        $('#EventEdit').modal();
 
-            var request = $.ajax({
-                type: "POST",
-                url: url,
-                data: { id: id }
-            })
-            request.done(function (msg) {
-                if (msg == "True") {
-                    alert("Your Event Is Successfully Deleted");
+                    }
 
+                });
 
-
-                }
-
-            });
-
-        }
-
-    }
-
-    function MemberResponseGoing(id) {
-       
-        var request = $.ajax({
-
-            type: "GET",
-            url: "/Event/MemberResponse",
-            dataType: 'json',
-            //data: { ID: id},
-            data: { ID: id, Response: 'Going' },
-           
-        })
-        request.done(function (msg) {
-            if (msg === "True") {
-                $("#EventList").load("/Event/GetEvents");
             }
 
-        });
-        
-
-    }
+            function EventDelete(id) {
 
 
-        function MemberResponseMayBe(id) {
 
-            
-            var request = $.ajax({
-                type: "GET",
-                url: "/Event/MemberResponse",
-                data: { ID: id, Response: 'MayBe' },
-                
-            })
-            request.done(function (msg) {
-                console.log(msg);
-                console.log("id:"+id);
-                if (msg === "True") {
-                    $("#EventList").load("/Event/GetEvents");
+                if (confirm('You Are Going to Delete This Event')) {
+
+                    var url = "/Event/Delete";
+
+                    var request = $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: { id: id }
+                    })
+                    request.done(function (msg) {
+                        if (msg == "True") {
+                            alert("Your Event Is Successfully Deleted");
+
+
+
+                        }
+
+                    });
+
                 }
 
-            });
+            }
+
+            function MemberResponseGoing(id) {
+
+                var request = $.ajax({
+
+                    type: "GET",
+                    url: "/Event/MemberResponse",
+                    dataType: 'json',
+                    //data: { ID: id},
+                    data: { ID: id, Response: 'Going' },
+
+                })
+                request.done(function (msg) {
+                    if (msg === "True") {
+                        $("#EventList").load("/Event/GetEvents");
+                    }
+
+                });
 
 
-        }
+            }
+
+
+            function MemberResponseMayBe(id) {
+
+
+                var request = $.ajax({
+                    type: "GET",
+                    url: "/Event/MemberResponse",
+                    data: { ID: id, Response: 'MayBe' },
+
+                })
+                request.done(function (msg) {
+                    console.log(msg);
+                    console.log("id:" + id);
+                    if (msg === "True") {
+                        $("#EventList").load("/Event/GetEvents");
+                    }
+
+                });
+
+
+            }
 
 
 
-        function MemberResponseNotGoing(id) {
-
-            
-            var request = $.ajax({
-                type: "GET",
-                url: "/Event/MemberResponse",
-                data: { ID: id, Response: "NotGoing" },
-               
-            })
-            request.done(function (msg) {
-                if (msg === "True") {
-                    $("#EventList").load("/Event/GetEvents");
-                }
-
-            });
+            function MemberResponseNotGoing(id) {
 
 
-        }
+                var request = $.ajax({
+                    type: "GET",
+                    url: "/Event/MemberResponse",
+                    data: { ID: id, Response: "NotGoing" },
+
+                })
+                request.done(function (msg) {
+                    if (msg === "True") {
+                        $("#EventList").load("/Event/GetEvents");
+                    }
+
+                });
+
+
+            }
 
 
 
-        function Approval(id) {
+            function Approval(id) {
 
-            var request = $.ajax({
-                type: "POST",
-                url: "/Event/ApproveEvent",
-                data: { Id: id}
-            })
-            request.done(function (msg) {
-                if (msg == "True") {
+                var request = $.ajax({
+                    type: "POST",
+                    url: "/Event/ApproveEvent",
+                    data: { Id: id }
+                })
+                request.done(function (msg) {
+                    if (msg == "True") {
 
-                    $("#EventList").load("/Event/NewEvent");
-                }
+                        $("#EventList").load("/Event/NewEvent");
+                    }
 
-            });
+                });
 
-        }
+            }
 
 
-</script>
+        </script>
 
-<div id="datacontainer">
+        <div id="datacontainer">
 
-</div>
-<div id="datacontainer2">
+        </div>
+        <div id="datacontainer2">
 
-</div>
+        </div>
 
 

@@ -78,6 +78,9 @@ namespace ComPro.Models
         public bool Approval { get; set; }
         public string CreatorID { get; set; }
         public string Activity { get; set; }
+        public string Description { get; set; }
+        public DateTime EventDate { get; set; }
+        public string Place { get; set; }
 
     }
 
