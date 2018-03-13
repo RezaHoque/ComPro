@@ -31,12 +31,38 @@ namespace ComPro.Migrations
             //  
 
             // SeedUser(context);
-           // SeedRole(context);
+            // SeedRole(context);
             //SeedUserRole(context);
             //SeedNotice(context);
-           // SeedEvents(context);
+            // SeedEvents(context);
+            //SeedImages(context);
             
 
+        }
+        private void SeedImages(ApplicationDbContext context)
+        {
+
+            var img = new SiteImage
+            {
+                ImagePath = "/Content/images/bellevue-strandbad.jpg",
+                Type = "Event",
+                TypeId = context.Event.FirstOrDefault(x => x.Title == "Summer Picnic").EventId,
+                UploadDate = DateTime.Now,
+                UploaderId = context.Event.FirstOrDefault(x => x.Title == "Summer Picnic").CreatorId
+
+            };
+            context.SiteImages.Add(img);
+            var img1 = new SiteImage
+            {
+                ImagePath = "/Content/images/moens-klint.jpg",
+                Type = "Event",
+                TypeId = context.Event.FirstOrDefault(x => x.Title == "Summer tour to Møn").EventId,
+                UploadDate = DateTime.Now,
+                UploaderId = context.Event.FirstOrDefault(x => x.Title == "Summer tour to Møn").CreatorId
+
+            };
+            context.SiteImages.Add(img1);
+            context.SaveChanges();
         }
         private void SeedEvents(ApplicationDbContext context)
         {

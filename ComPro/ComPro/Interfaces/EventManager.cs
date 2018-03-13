@@ -37,10 +37,6 @@ namespace ComPro.Interfaces
                     }
                 _data.SaveChanges();
 
-
-
-
-
                 var AllResult = _data.Event.Where(a => a.EventStatus == true && a.IsApproved == true)
                        .AsEnumerable().Select(p => new EventViewModel
                        {
@@ -51,14 +47,15 @@ namespace ComPro.Interfaces
                            Activity = null,
                            Description=p.Description,
                            Place=p.Place,
-                           EventDate=p.Date
+                           EventDate=p.Date,
+                           Images=_data.SiteImages.Where(x=>x.Type=="Event" && x.TypeId==p.EventId).ToList()
                        });
 
                     
                     foreach (var item in AllResult)
                     {
 
-
+                        
                         if (_data.EventMember.Any(x => ((x.EventId == item.Id) && (x.MemberID == Current_User_id))) || (HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString())))
                         {
                         if (!(HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString())))
@@ -68,6 +65,7 @@ namespace ComPro.Interfaces
                             }
                             Result.Add(item); 
                         }
+
                     }
                     return Result.OrderBy(x=>x.EventDate);
                

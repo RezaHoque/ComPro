@@ -81,6 +81,7 @@ namespace ComPro.Models
         public string Description { get; set; }
         public DateTime EventDate { get; set; }
         public string Place { get; set; }
+        public List<SiteImage> Images { get; set; }
 
     }
 

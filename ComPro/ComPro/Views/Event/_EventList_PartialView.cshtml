@@ -11,38 +11,49 @@
 </div>
 }
 <div class="container-fluid">
+    <div class="alert alert-light" role="alert">
+        <h3>Displaying @Model.Count() event(s).</h3>
+    </div>
     <div class="row">
+
         @foreach (var item in Model)
         {
             <div class="col-sm-4">
                 <div class="card bg-light mb-3" style="max-width: 18rem;">
-                    <div class="card-header"><a href="#" id="EventDetails" onClick="EventDetails(@item.Id)">@item.EventTitel </a> </div>
+                    <div class="card-header">
+                        <a href="#" id="EventDetails" onClick="EventDetails(@item.Id)">@item.EventTitel </a>
+                    </div>
+                    @if (item.Images.Any())
+                    {
+                        <img class="card-img-top" src="@item.Images.FirstOrDefault().ImagePath" alt="Card image cap">
+                    }
+
                     <div class="card-body">
                         <h6 class="card-title"><i>Date: @item.EventDate.ToShortDateString() <br />@item.Place</i></h6>
                         <p class="card-text">@item.Description</p>
 
                     </div>
-                   
-                        @if (User.IsInRole("Administrator") && item.Approval == true)
-                        {
-                            <div style="padding-bottom:5px;padding-top:5px;">
-                                <a href="#" onClick="Approval(@item.Id)" class="btn btn-sm btn-danger">DisApprove</a>
-                            </div>
-                        }
 
-                  
+                    @if (User.IsInRole("Administrator") && item.Approval == true)
+    {
+                <div style="padding-bottom:5px;padding-top:5px;">
+                    <a href="#" onClick="Approval(@item.Id)" class="btn btn-sm btn-danger">DisApprove</a>
+                </div>
+}
+
+
                     <div class="card-footer bg-white border-primary text-center">
                         @if (!(User.Identity.GetUserId() == item.CreatorID) && !(User.IsInRole("Administrator")))
-    {
-        if (string.IsNullOrEmpty(item.Activity))
         {
-                    <a href="#" onClick="MemberResponseGoing(@item.Id)" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Yes</a>
-                    <a href="#" id="maybe" onClick="MemberResponseMayBe(@item.Id)" class="btn btn-sm btn-primary"><i class="fa fa-exclamation"></i> May Be</a>
-                    <a href="#" id="notgoing" onClick="MemberResponseNotGoing(@item.Id)" class="btn btn-sm btn-primary"><i class="fa fa-times"></i> No</a>
+            if (string.IsNullOrEmpty(item.Activity))
+            {
+                <a href="#" onClick="MemberResponseGoing(@item.Id)" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Yes</a>
+                <a href="#" id="maybe" onClick="MemberResponseMayBe(@item.Id)" class="btn btn-sm btn-primary"><i class="fa fa-exclamation"></i> May Be</a>
+                <a href="#" id="notgoing" onClick="MemberResponseNotGoing(@item.Id)" class="btn btn-sm btn-primary"><i class="fa fa-times"></i> No</a>
 }
 else
 {
-                    <span class="btn btn-sm btn-dark">@item.Activity</span>
+                <span class="btn btn-sm btn-dark">@item.Activity</span>
 
 }
 
@@ -50,17 +61,17 @@ else
 }
 else
 {
-                    <a href="#" onClick="EventEdit(@item.Id)" class="btn btn-sm btn-primary">Edit</a>
-                    <a href="#" onClick="EventDelete(@item.Id)" class="btn btn-sm btn-primary">Delete</a>
+                <a href="#" onClick="EventEdit(@item.Id)" class="btn btn-sm btn-primary">Edit</a>
+                <a href="#" onClick="EventDelete(@item.Id)" class="btn btn-sm btn-primary">Delete</a>
 }
                     </div>
-                    
-                </div>
-        </div>
 
-            }
-        </div>
+                </div>
+            </div>
+
+        }
     </div>
+</div>
  
 
         <script>

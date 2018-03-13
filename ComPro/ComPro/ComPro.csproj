@@ -337,6 +337,10 @@
     <Compile Include="Migrations\201803122048176_dd.Designer.cs">
       <DependentUpon>201803122048176_dd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803131415297_siteimages.cs" />
+    <Compile Include="Migrations\201803131415297_siteimages.Designer.cs">
+      <DependentUpon>201803131415297_siteimages.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChatHisytoryModel.cs" />
@@ -354,6 +358,7 @@
     <Compile Include="Models\NoticeBoardViewModel.cs" />
     <Compile Include="Models\PublicComment.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
+    <Compile Include="Models\SiteImage.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\User_Approval_Model.cs" />
@@ -396,8 +401,10 @@
     <Content Include="Content\font-awesome\webfonts\fa-regular-400.svg" />
     <Content Include="Content\font-awesome\webfonts\fa-solid-900.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\images\bellevue-strandbad.jpg" />
     <Content Include="Content\images\facebook-png-6111.png" />
     <Content Include="Content\images\ipl-logo-png-transparent-images-1423.png" />
+    <Content Include="Content\images\moens-klint.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -738,6 +745,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803122048176_dd.resx">
       <DependentUpon>201803122048176_dd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803131415297_siteimages.resx">
+      <DependentUpon>201803131415297_siteimages.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

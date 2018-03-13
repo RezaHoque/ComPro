@@ -36,6 +36,7 @@ namespace ComPro.Models
         public DbSet<MessageRecieveModel> RecieveMessage { get; set; }
         public DbSet<EventModel> Event { get; set; }
         public DbSet<EventMember> EventMember { get; set; }
+        public DbSet<SiteImage> SiteImages { get; set; }
        
 
 
