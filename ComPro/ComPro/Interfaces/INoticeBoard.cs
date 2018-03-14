@@ -11,7 +11,7 @@ namespace ComPro.Interfaces
     {
         IEnumerable<NoticeBoard> GetApprovedNotices();
         IEnumerable<NoticeBoard> GetNewNotices();
-        string PostNotices(NoticeBoard model);
+        NoticeBoard PostNotices(NoticeBoard model);
         NoticeBoard GetDetails(int id);
         void ApproveNotice(int id);
 
@@ -21,5 +21,7 @@ namespace ComPro.Interfaces
 
         bool PostComment(PublicComment comment);
         ICollection<PublicComment> GetComments(int noticeId);
+        bool SaveImage(SiteImage image);
+        SiteImage GetNoticeImage(int id);
     }
 }

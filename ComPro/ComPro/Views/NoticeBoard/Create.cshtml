@@ -6,17 +6,14 @@
 
 
 
-<h2>Create</h2>
+<h2>Post to Notice board.</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "NoticeBoard", FormMethod.Post, new { enctype = "multipart/form-data" })) 
 {
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    @if (@ViewBag.massage != null)
-    { <h4>@ViewBag.massage;</h4>}
-    <hr />
-
+  
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -29,7 +26,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @cols = 80, @rows = 8 })
             @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -41,25 +38,16 @@
             @Html.ValidationMessageFor(model => model.WebLink, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
-        @Html.LabelFor(model => model.ActionDate, htmlAttributes: new { @class = "control-label col-md-2" })
+       
         <div class="col-md-10">
-            @Html.EditorFor(model => model.ActionDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ActionDate, "", new { @class = "text-danger" })
+            <input type="file" id="fileUpload1" name="fileUpload1"/> 
         </div>
     </div>
-
-
-
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Post" class="btn btn-primary" />
         </div>
     </div>
 </div>
 }
-
-<div>
-    @Html.ActionLink("Back Notice Board", "Index")
-</div>

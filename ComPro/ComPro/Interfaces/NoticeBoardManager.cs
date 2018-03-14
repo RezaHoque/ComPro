@@ -20,7 +20,11 @@ namespace ComPro.Interfaces
         {
             _data = new ApplicationDbContext();
         }
-     
+        public SiteImage GetNoticeImage(int id)
+        {
+            var image = _data.SiteImages.FirstOrDefault(x => x.TypeId == id);
+            return image;
+        }
         public IEnumerable<NoticeBoard> GetApprovedNotices()
         {
             try
@@ -76,20 +80,20 @@ namespace ComPro.Interfaces
             return new NoticeBoard();
         }
 
-        public string PostNotices(NoticeBoard model)
+        public NoticeBoard PostNotices(NoticeBoard model)
         {
             try
             {
                 
-                model.IsApproved = false;
-                model.SubmitDate = (DateTime.Now).Date;
+                model.IsApproved = true;
+                model.SubmitDate = DateTime.Now;
                 model.CreatorId = model.CreatorId;
-                model.ActionDate = model.ActionDate.Date;
+                model.ActionDate = DateTime.Now;
 
                 _data.Notice.Add(model);
                 _data.SaveChanges();
 
-                return Helpers.Constants.NoticePosting;
+                return model;
             }
 
             catch
@@ -209,6 +213,18 @@ namespace ComPro.Interfaces
             }
         }
 
-
+        public bool SaveImage(SiteImage image)
+        {
+            try
+            {
+                _data.SiteImages.Add(image);
+                _data.SaveChanges();
+                return true;
+            }catch(Exception ex)
+            {
+                throw;
+            }
+            
+        }
     }
 }

@@ -21,18 +21,18 @@
             <div class="col-sm-4">
                 <div class="card bg-light mb-3" style="max-width: 18rem;">
                     <div class="card-header">
-                        <a href="#" id="EventDetails" onClick="EventDetails(@item.Id)">@item.EventTitel </a>
+                        <a href="#" id="EventDetails" onClick="EventDetails(@item.Id)">@item.EventTitel <span class="badge badge-success"><i class="fa fa-check"></i> @item.TotalYes</span> </a>
                     </div>
                     @if (item.Images.Any())
                     {
                         <img class="card-img-top" src="@item.Images.FirstOrDefault().ImagePath" alt="Card image cap">
                     }
 
-                    <div class="card-body">
-                        <h6 class="card-title"><i>Date: @item.EventDate.ToShortDateString() <br />@item.Place</i></h6>
-                        <p class="card-text">@item.Description</p>
-
-                    </div>
+                        <div class="card-body">
+                            <h6 class="card-title"><i>Date: @item.EventDate.ToShortDateString() <br />@item.Place</i></h6>
+                            <p class="card-text">@item.Description</p>
+                            <h6 class="card-title bg-white" style="padding:3px;"><i>Owner: @item.CreatorName</i></h6>
+                        </div>
 
                     @if (User.IsInRole("Administrator") && item.Approval == true)
     {
@@ -44,26 +44,26 @@
 
                     <div class="card-footer bg-white border-primary text-center">
                         @if (!(User.Identity.GetUserId() == item.CreatorID) && !(User.IsInRole("Administrator")))
-        {
-            if (string.IsNullOrEmpty(item.Activity))
-            {
-                <a href="#" onClick="MemberResponseGoing(@item.Id)" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Yes</a>
-                <a href="#" id="maybe" onClick="MemberResponseMayBe(@item.Id)" class="btn btn-sm btn-primary"><i class="fa fa-exclamation"></i> May Be</a>
-                <a href="#" id="notgoing" onClick="MemberResponseNotGoing(@item.Id)" class="btn btn-sm btn-primary"><i class="fa fa-times"></i> No</a>
-}
-else
-{
-                <span class="btn btn-sm btn-dark">@item.Activity</span>
+                        {
+                            if (string.IsNullOrEmpty(item.Activity))
+                            {
+                                <a href="#" onClick="MemberResponse('@item.Id','Going')" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Yes</a>
+                                <a href="#" id="maybe" onClick="MemberResponse('@item.Id','MayBe')" class="btn btn-sm btn-primary"><i class="fa fa-exclamation"></i> May Be</a>
+                                <a href="#" id="notgoing" onClick="MemberResponse('@item.Id','NotGoing')" class="btn btn-sm btn-primary"><i class="fa fa-times"></i> No</a>
+                            }
+                            else
+                            {
+                                <span class="btn btn-sm btn-dark">@item.Activity</span>
 
-}
+                            }
 
 
-}
-else
-{
-                <a href="#" onClick="EventEdit(@item.Id)" class="btn btn-sm btn-primary">Edit</a>
-                <a href="#" onClick="EventDelete(@item.Id)" class="btn btn-sm btn-primary">Delete</a>
-}
+                        }
+                        else
+                        {
+                            <a href="#" onClick="EventEdit(@item.Id)" class="btn btn-sm btn-primary">Edit</a>
+                            <a href="#" onClick="EventDelete(@item.Id)" class="btn btn-sm btn-primary">Delete</a>
+                        }
                     </div>
 
                 </div>
@@ -138,7 +138,7 @@ else
 
             }
 
-            function MemberResponseGoing(id) {
+            function MemberResponse(id,res) {
 
                 var request = $.ajax({
 
@@ -146,7 +146,7 @@ else
                     url: "/Event/MemberResponse",
                     dataType: 'json',
                     //data: { ID: id},
-                    data: { ID: id, Response: 'Going' },
+                    data: { ID: id, Response: res },
 
                 })
                 request.done(function (msg) {
@@ -158,51 +158,6 @@ else
 
 
             }
-
-
-            function MemberResponseMayBe(id) {
-
-
-                var request = $.ajax({
-                    type: "GET",
-                    url: "/Event/MemberResponse",
-                    data: { ID: id, Response: 'MayBe' },
-
-                })
-                request.done(function (msg) {
-                    console.log(msg);
-                    console.log("id:" + id);
-                    if (msg === "True") {
-                        $("#EventList").load("/Event/GetEvents");
-                    }
-
-                });
-
-
-            }
-
-
-
-            function MemberResponseNotGoing(id) {
-
-
-                var request = $.ajax({
-                    type: "GET",
-                    url: "/Event/MemberResponse",
-                    data: { ID: id, Response: "NotGoing" },
-
-                })
-                request.done(function (msg) {
-                    if (msg === "True") {
-                        $("#EventList").load("/Event/GetEvents");
-                    }
-
-                });
-
-
-            }
-
-
 
             function Approval(id) {
 

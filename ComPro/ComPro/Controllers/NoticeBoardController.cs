@@ -8,6 +8,7 @@ using ComPro.Models;
 using static ComPro.Models.Enums;
 using Microsoft.AspNet.Identity;
 using System.Net;
+using System.IO;
 
 namespace ComPro.Controllers
 {
@@ -32,8 +33,9 @@ namespace ComPro.Controllers
                 var totalComnts = _noticeBoardManager.GetComments(n.Id).Count();
                 noticeVMList.Add(new NoticeBoardViewModel
                 {
-                    Notice=n,
-                    TotalComments=totalComnts
+                    Notice = n,
+                    TotalComments = totalComnts,
+                    NoticeImage = _noticeBoardManager.GetNoticeImage(n.Id)
                 });
             }
 
@@ -50,19 +52,33 @@ namespace ComPro.Controllers
         [HttpPost]
         public ActionResult Create(NoticeBoard model)
         {
+            model.CreatorId = User.Identity.GetUserId();
+           
+            var notice = _noticeBoardManager.PostNotices(model);
+
+            if (Request.Files.Count > 0)
+            {
+                var file = Request.Files[0];
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    var fileName = Guid.NewGuid()+"_"+Path.GetFileName(file.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Content/images/"), fileName);
+                    file.SaveAs(path);
+                    var image = new SiteImage
+                    {
+                        ImagePath = "/Content/images/" + fileName,
+                        Type = "Notice",
+                        TypeId = notice.Id,
+                        UploadDate = DateTime.Now,
+                        UploaderId = notice.CreatorId
                         
-            if (model.Title == null || model.Description == null)
-            {
-                ViewBag.massage = Helpers.Constants.WarningToNoticeCreatorMessage;
-                return View();
+                    };
+                    _noticeBoardManager.SaveImage(image);
+                }
             }
-            else
-            {
-                model.CreatorId = User.Identity.GetUserId();
-                TempData["Massage"] = _noticeBoardManager.PostNotices(model);
-            }
-
-
+            
+           
 
             return RedirectToAction("Index");
         }

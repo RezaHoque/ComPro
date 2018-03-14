@@ -42,6 +42,27 @@ namespace ComPro.Helpers
 
             }
         }
+        public static string UserNameById(string Id)
+        {
+            if (!string.IsNullOrEmpty(Id))
+            {
+                IUtility _utility = new UtilityManager();
+                ApplicationDbContext Data = new ApplicationDbContext();
+
+
+                var user = Data.Users.FirstOrDefault(x => x.Id == Id);
+                var user2 = Data.UserInfo.FirstOrDefault(x => x.Email == user.Email);
+                return user2.Name;
+            }
+            return string.Empty;
+          
+                
+
+
+            
+
+            
+        }
 
     }
 }

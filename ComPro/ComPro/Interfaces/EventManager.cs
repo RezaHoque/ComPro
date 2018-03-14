@@ -6,6 +6,7 @@ using System.Web;
 using static ComPro.Models.Enums;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity;
+using ComPro.Helpers;
 
 namespace ComPro.Interfaces
 {
@@ -24,7 +25,6 @@ namespace ComPro.Interfaces
             try
             { 
 
-                
                     var AllEvent = _data.Event.Where(x => x.EventStatus == true);
 
                     foreach (var item in AllEvent)
@@ -48,26 +48,29 @@ namespace ComPro.Interfaces
                            Description=p.Description,
                            Place=p.Place,
                            EventDate=p.Date,
-                           Images=_data.SiteImages.Where(x=>x.Type=="Event" && x.TypeId==p.EventId).ToList()
+                           Images=_data.SiteImages.Where(x=>x.Type=="Event" && x.TypeId==p.EventId).ToList(),
+                           TotalYes=_data.EventMember.Where(x=>x.EventId==p.EventId && x.PerticipetingType== "Going").Count(),
+                           Members=_data.EventMember.Where(x => x.EventId == p.EventId).ToList(),
+                           CreatorName= UserInformation.UserNameById(p.CreatorId)
                        });
 
-                    
-                    foreach (var item in AllResult)
+
+                foreach (var item in AllResult)
+                {
+
+
+                    if (_data.EventMember.Any(x => ((x.EventId == item.Id) && (x.MemberID == Current_User_id))) || (HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString())))
                     {
-
-                        
-                        if (_data.EventMember.Any(x => ((x.EventId == item.Id) && (x.MemberID == Current_User_id))) || (HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString())))
-                        {
                         if (!(HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString())))
-                            {
-                                var check = _data.EventMember.FirstOrDefault(x => (x.EventId == item.Id));
-                                item.Activity = check.PerticipetingType;
-                            }
-                            Result.Add(item); 
+                        {
+                            var check = _data.EventMember.FirstOrDefault(x => x.EventId == item.Id && x.MemberID == Current_User_id);
+                            item.Activity = check.PerticipetingType;
                         }
-
+                        Result.Add(item);
                     }
-                    return Result.OrderBy(x=>x.EventDate);
+
+                }
+                return Result.OrderBy(x=>x.EventDate);
                
            
         }
@@ -505,8 +508,8 @@ namespace ComPro.Interfaces
             EventMember NewPerticipent = new EventMember();
             try
             {
-                var perticipent = _data.EventMember.FirstOrDefault(x => x.EventId == Id);
-                if (perticipent == null)
+                var perticipent = _data.EventMember.FirstOrDefault(x => x.EventId == Id && x.MemberID==Current_User_id);
+                if (perticipent.PerticipetingType == null)
                 {
                     NewPerticipent.EventId = Id;
                     NewPerticipent.MemberID = Current_User_id;

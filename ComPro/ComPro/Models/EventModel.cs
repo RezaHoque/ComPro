@@ -38,7 +38,7 @@ namespace ComPro.Models
         public int Id { get; set; }
 
         //public string EventID { get; set; }
-
+        public virtual ApplicationUser Member { get; set; }
         public string MemberID { get; set; }
 
         public string PerticipetingType { get; set; }
@@ -77,11 +77,15 @@ namespace ComPro.Models
         public string EventTitel { get; set; }
         public bool Approval { get; set; }
         public string CreatorID { get; set; }
+        public string CreatorName { get; set; }
         public string Activity { get; set; }
         public string Description { get; set; }
         public DateTime EventDate { get; set; }
         public string Place { get; set; }
         public List<SiteImage> Images { get; set; }
+        public int TotalYes { get; set; }
+        public ICollection<EventMember> Members { get; set; }
+        
 
     }
 
