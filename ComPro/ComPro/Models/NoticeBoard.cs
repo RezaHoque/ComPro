@@ -13,7 +13,7 @@ namespace ComPro.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Titel")]
+        [Display(Name = "Title")]
         public string Title { get; set; }
 
         [Required]

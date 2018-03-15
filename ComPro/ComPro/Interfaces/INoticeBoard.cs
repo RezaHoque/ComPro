@@ -12,7 +12,7 @@ namespace ComPro.Interfaces
         IEnumerable<NoticeBoard> GetApprovedNotices();
         IEnumerable<NoticeBoard> GetNewNotices();
         NoticeBoard PostNotices(NoticeBoard model);
-        NoticeBoard GetDetails(int id);
+        NoticeBoardViewModel GetDetails(int id);
         void ApproveNotice(int id);
 
         NoticeBoard GetEdit(int id);

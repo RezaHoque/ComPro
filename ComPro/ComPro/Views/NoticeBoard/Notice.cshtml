@@ -1,4 +1,4 @@
-﻿@model ComPro.Models.NoticeBoard
+﻿@model ComPro.Models.NoticeBoardViewModel
 @using ComPro.Helpers
 @{
     ViewBag.Title = "Notice";
@@ -15,20 +15,23 @@
 <div class="row" style="margin-top:10px;">
     <div class="card">
         <div class="card-header">
-            @Model.Title
-            <input type="hidden" name="hNoticeId" value="@Model.Id" id="hNoticeId" />
+            @Model.Notice.Title
+            <input type="hidden" name="hNoticeId" value="@Model.Notice.Id" id="hNoticeId" />
         </div>
         <div class="card-body">
-            @Model.Description
+            @Model.Notice.Description
+            <p style="margin-top:10px;">
+                <img src="@Model.NoticeImage.ImagePath" alt="@Model.Notice.Title" class="img-thumbnail" width="200px" height="200px">
+            </p>
             <hr />
-            <i>@UserInformation.UserName(Model.Creator.UserName) </i>
-            <i>@Model.SubmitDate.ToShortDateString()</i>
-            @if ((User.Identity.Name == Model.Creator.UserName) || User.IsInRole("Administrator"))
+            <i>@UserInformation.UserNameById(Model.Notice.CreatorId) </i>
+            <i>@Model.Notice.SubmitDate.ToShortDateString()</i>
+            @if ((User.Identity.Name == Model.Notice.Creator.UserName) || User.IsInRole("Administrator"))
             {
 
-                <i>@Html.ActionLink("Edit", "Edit", new { id = Model.Id })</i>
+                <i>@Html.ActionLink("Edit", "Edit", new { id = Model.Notice.Id })</i>
 
-                <i>@Html.ActionLink("Delete", "Delete", new { id = Model.Id })</i>
+                <i>@Html.ActionLink("Delete", "Delete", new { id = Model.Notice.Id })</i>
             }
         </div>
     </div>

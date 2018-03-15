@@ -674,6 +674,7 @@
     <Content Include="Views\UserProfile\_MemberInformation_PartialView.cshtml" />
     <Content Include="Views\UserProfile\MyPage.cshtml" />
     <Content Include="Views\UserProfile\_CurrentUser_Partialview.cshtml" />
+    <Content Include="Views\Home\Terms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

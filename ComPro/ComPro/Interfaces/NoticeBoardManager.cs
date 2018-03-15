@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using ComPro.Helpers;
 using ComPro.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -70,14 +71,26 @@ namespace ComPro.Interfaces
             }
         }
 
-        public NoticeBoard GetDetails(int id)
+        public NoticeBoardViewModel GetDetails(int id)
         {
             var noticeDetails = _data.Notice.FirstOrDefault(x => x.Id == id && x.IsApproved);
             if (noticeDetails != null)
             {
-                return noticeDetails;
+                var nvm = new NoticeBoardViewModel();
+                nvm.Notice = noticeDetails;
+                /*
+                nvm.Notice.Title = noticeDetails.Title;
+                nvm.Notice.Description = noticeDetails.Description;
+                nvm.Notice.Id = noticeDetails.Id;
+                nvm.Notice.SubmitDate = noticeDetails.SubmitDate;
+                nvm.Notice.WebLink = noticeDetails.WebLink;
+                nvm.Notice.CreatorId = noticeDetails.CreatorId;
+                */
+                nvm.NoticeImage = _data.SiteImages.FirstOrDefault(x => x.TypeId == noticeDetails.Id);
+
+                return nvm;
             }
-            return new NoticeBoard();
+            return new NoticeBoardViewModel();
         }
 
         public NoticeBoard PostNotices(NoticeBoard model)

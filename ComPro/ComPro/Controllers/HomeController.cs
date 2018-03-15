@@ -76,5 +76,9 @@ namespace ComPro.Controllers
 
 
         }
+        public ActionResult Terms()
+        {
+            return View();
+        }
     }
 }
