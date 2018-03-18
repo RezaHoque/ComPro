@@ -1,5 +1,6 @@
 ﻿@model ComPro.Models.EventModel
 
+
 <form>
     <div class="form-group">
         @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -31,7 +32,14 @@
             <input type="text" id="datetimepicker" class="form-control">
         </div>
     </div>
-  
+  <div class="form-group">
+      <label>Send invitation to</label>
+      <div class="col-md-10">
+          <select data-placeholder="Choose a member..." multiple class="chosen-select form-control" id="slt">
+          </select>
+      </div>
+
+  </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -44,3 +52,23 @@
 
 
 
+<script type="text/javascript">
+    $(function () {
+
+        var url = "/UserProfile/UserList";
+        $.ajax({
+            method: "GET",
+            url: url,
+            dataType: "json"
+        })
+            .done(function (data) {
+                $.each(data, function (k, v) {
+                    console.log(v);
+                    $('<option>').val(v.Id).text(v.Name).appendTo('#slt');
+                });
+                $(".chosen-select").chosen();
+            });
+
+      
+    });
+</script>

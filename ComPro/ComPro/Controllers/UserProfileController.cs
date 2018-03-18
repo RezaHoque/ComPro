@@ -112,6 +112,12 @@ namespace ComPro.Controllers
 
 
         }
+        [AllowAnonymous]
+        public JsonResult UserList()
+        {
+            var alluser = _userProfile.AllUser();
+            return Json(alluser, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }
