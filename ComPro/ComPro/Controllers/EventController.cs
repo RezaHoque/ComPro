@@ -165,14 +165,9 @@ namespace ComPro.Controllers
         }
 
         [HttpGet]
-
-        // public ActionResult MemberResponse(int ID)
-        public ActionResult MemberResponse(int ID, string Response)
+       public ActionResult MemberResponse(int ID, string Response)
         {
-        //if (ID == null)
-        //{
-        //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //}
+        
         bool res = _event.MemberResponse(ID, Response);
             return Content(res.ToString());
             
