@@ -119,11 +119,7 @@ namespace ComPro.Controllers
        // GET: Event/Edit/5
         public ActionResult Edit(int id)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-
+           
             var Result = _event.GetEdit(id);
             if (Result == null)
             {
