@@ -51,7 +51,6 @@ namespace ComPro.Controllers
         }
         public ActionResult NewEvent()
         {
-           
             var result = _event.NewEvent();
             return PartialView("_EventList_Partialview", result);
 
@@ -112,8 +111,7 @@ namespace ComPro.Controllers
         {
            bool result = _event.ApproveEvent(Id.Value);
             return Content(result.ToString());
-            //return RedirectToAction("Index");
-            //RedirectToAction("Index", (int)EventType.Admin);
+          
 
         }
 
