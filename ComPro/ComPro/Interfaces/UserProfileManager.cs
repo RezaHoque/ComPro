@@ -31,31 +31,42 @@ namespace ComPro.Interfaces
 
         public void AddationalInfo( InternalRegisterViewModel model)
         {
-            UserInfo UserInformation = new UserInfo();
-            UserInformation.Name = model.Name;
-            UserInformation.Photo = model.Photo;
-            UserInformation.Address = model.Address;
-            UserInformation.PostCode = model.PostCode;
-            UserInformation.City = model.City;
-            UserInformation.Phone = model.Phone;
-            UserInformation.Gender = model.Gender;
-            UserInformation.BirthDate = model.BirthDate;
-           
+            try
+            {
+                UserInfo UserInformation = new UserInfo();
+                UserInformation.Name = model.Name;
 
-            UserInformation.CurrentJobTitle = model.CurrentJobTitle;
-            UserInformation.CompanyName = model.CompanyName;
-            UserInformation.Skills = model.Skills;
+                UserInformation.Address = model.Address;
+                UserInformation.PostCode = model.PostCode;
+                UserInformation.City = model.City;
+                UserInformation.Phone = model.Phone;
+                UserInformation.Gender = model.Gender;
 
-            UserInformation.Email = model.Email;
+                UserInformation.Photo = SetProfilePicture(model.Gender);
+
+                UserInformation.BirthDate = null;
 
 
+                UserInformation.CurrentJobTitle = null;
+                UserInformation.CompanyName = null;
+                UserInformation.Skills = null;
+
+                UserInformation.Email = model.Email;
 
 
-            // Note: _data cant access data from database
-            //_data.UserInfo.Add(UserInformation);
-            //_data.SaveChanges();
-            Data.UserInfo.Add(UserInformation);
-            Data.SaveChanges();
+
+
+                // Note: _data cant access data from database
+                //_data.UserInfo.Add(UserInformation);
+                //_data.SaveChanges();
+                Data.UserInfo.Add(UserInformation);
+                Data.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
+
 
         }
 
@@ -104,11 +115,28 @@ namespace ComPro.Interfaces
         }
 
 
-        public UserInfo EditUserProfile(int id)
+        public UserInfo DetailProfile(int Id)
         {
             try
             {
-                return Data.UserInfo.FirstOrDefault(x => x.Id == id);
+
+                return Data.UserInfo.FirstOrDefault(x => x.Id == Id);
+            }
+
+            catch
+            {
+                throw;
+            }
+
+        }
+
+        public UserInfo EditUserProfile()
+        {
+            try
+            {
+                string Current_User_id = HttpContext.Current.User.Identity.GetUserId();
+                var user2 = _data.Users.FirstOrDefault(x => x.Id == Current_User_id);
+                return Data.UserInfo.FirstOrDefault(x => x.Email == user2.Email);
             }
 
             catch
@@ -224,7 +252,7 @@ namespace ComPro.Interfaces
         {
             try
             {
-var user = Data.Users.FirstOrDefault(x => x.Email == email);
+            var user = Data.Users.FirstOrDefault(x => x.Email == email);
             return user.EmailConfirmed;
             }
 
@@ -256,8 +284,8 @@ var user = Data.Users.FirstOrDefault(x => x.Email == email);
                                 {
                                     Id = y.Id,
                                     Name = y.Name,
-                                    Phone = y.Phone,
-                                    Email = y.Email,
+                                    Photo = y.Photo,
+
                                 });
                             }
                     }
@@ -313,7 +341,7 @@ var user = Data.Users.FirstOrDefault(x => x.Email == email);
 
 
 
-                //return _utility.SendEmail(obj);
+                var result = _utility.SendEmail(obj);
                 return true;
 
             }
@@ -367,6 +395,46 @@ var user = Data.Users.FirstOrDefault(x => x.Email == email);
 
         }
 
+
+        public string SetProfilePicture(string data)
+        {
+
+
+            if (data == Gender.Male.ToString())
+            {
+                return "/Content/images/Profile/Male.png";
+            }
+            else
+            {
+                return "/Content/images/Profile/Female.png";
+            }
+
+        }
+
+        public void ExternalAddationalInfo(UserInfo model)
+        {
+            try
+            {
+                UserInfo uInfo = new UserInfo
+                {
+                    Name = model.Name,
+                    Email = model.Email,
+                    CurrentJobTitle = model.CurrentJobTitle,
+                    Gender = model.Gender,
+                    Photo = SetProfilePicture(model.Gender),
+                    ApprovalDate = DateTime.Now
+                };
+
+
+                Data.UserInfo.Add(uInfo);
+                Data.SaveChanges();
+
+            }
+            catch
+            {
+
+            }
+        }
 
 
     }

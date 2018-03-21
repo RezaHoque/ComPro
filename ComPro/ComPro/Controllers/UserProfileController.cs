@@ -36,26 +36,26 @@ namespace ComPro.Controllers
             
         }
 
-        public ActionResult Index1()
-        {
+        //public ActionResult Index1()
+        //{
 
-            return View(_userProfile.AllUser());
-        }
+        //    return View(_userProfile.AllUser());
+        //}
 
-        [HttpGet]
-        public ActionResult Edit( int? id )
-        {
+        //[HttpGet]
+        //public ActionResult Edit( int? id )
+        //{
 
-            return View(_userProfile.EditUserProfile(id.Value));
-        }
+        //    return View(_userProfile.EditUserProfile(id.Value));
+        //}
 
-        [HttpPost]
-        public ActionResult Edit(UserInfo info)
-        {
-            ViewBag.EditData=_userProfile.PostEditUserProfile(info);
-            return View(info);
+        //[HttpPost]
+        //public ActionResult Edit(UserInfo info)
+        //{
+        //    ViewBag.EditData=_userProfile.PostEditUserProfile(info);
+        //    return View(info);
 
-        }
+        //}
         public ActionResult Delete( int ? id)
         {
             ViewBag.DeleteProfile = _userProfile.DeleteUserProfile(id.Value);
@@ -64,7 +64,7 @@ namespace ComPro.Controllers
 
         public ActionResult Details( int? id)
         {
-            return PartialView("_MemberInformation_PartialView", _userProfile.EditUserProfile(id.Value));
+            return PartialView("_MemberInformation_PartialView", _userProfile.DetailProfile(id.Value));
         }
 
 

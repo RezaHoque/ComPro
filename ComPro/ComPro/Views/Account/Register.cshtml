@@ -2,9 +2,7 @@
 @{
     ViewBag.Title = "Register";
 }
-
 <h2>Get yourself registered.</h2>
-
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
@@ -21,34 +19,24 @@
                 </div>
             </div>
 
-            @*<div class="form-group">
-                @Html.LabelFor(m => m.Photo, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.Photo, new { @class = "form-control" })
-                </div>
-            </div>*@
-
             <div class="form-group">
                 @Html.LabelFor(m => m.Address, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
                 </div>
             </div>
-
             <div class="form-group">
                 @Html.LabelFor(m => m.PostCode, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(m => m.PostCode, new { @class = "form-control" })
                 </div>
             </div>
-
             <div class="form-group">
                 @Html.LabelFor(m => m.City, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
                 </div>
             </div>
-
             <div class="form-group">
                 @Html.LabelFor(m => m.Phone, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
@@ -64,33 +52,7 @@
                 </div>
             </div>
 
-            @*<div class="form-group">
-                @Html.LabelFor(m => m.BirthDate, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control" })
-                </div>
-            </div>*@
 
-            @*<div class="form-group">
-                @Html.LabelFor(m => m.CurrentJobTitle, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.CurrentJobTitle, new { @class = "form-control" })
-                </div>
-            </div>*@
-
-            @*<div class="form-group">
-                @Html.LabelFor(m => m.Skills, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.Skills, new { @class = "form-control" })
-                </div>
-            </div>*@
-
-            @*<div class="form-group">
-                @Html.LabelFor(m => m.CompanyName, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
-                </div>
-            </div>*@
         </div>
     </div>
 
@@ -106,37 +68,50 @@
                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                 </div>
             </div>
-
             <div class="form-group">
                 @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                 </div>
             </div>
-
             <div class="form-group">
                 @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
                 </div>
             </div>
-
         </div>
 
 
-       
-        
+
     </div>
 
+    <div class="card" style="margin-top:10px;">
+        <div class="card-header bg-success mb-3 text-white">
+            Terms And Condition.
+        </div>
+        <p>
+            I hereby decleared my acceptance of all terms and condition <input type="checkbox" id="check" onclick="show()"><br>
 
-    
+            <a href="https://www.thesitewizard.com/" target="_blank">Read More .....</a>
+        </p><br />
+    </div>
+
     <div class="form-group" style="margin-top:5px;">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-primary" value="Register" />
+        <div class="col-md-offset-2 col-md-10" id="buttonholder" style="display: none;">
+            <input type="submit" class="btn btn-primary" id="btn" value="Register" />
         </div>
     </div>
 }
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+<script>
+           function show() {
+               if ($('input[type=checkbox]:checked').length > 0) {
+                   $('#buttonholder').show();
+               } else {
+                   $('#buttonholder').hide();
+               }
+           }
+
+
+</script>

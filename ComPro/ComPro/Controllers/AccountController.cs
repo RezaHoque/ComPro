@@ -79,14 +79,7 @@ namespace ComPro.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            //var userrole1 = _UserProfile.GetUserRole(model.Email);
-            //var userrole2 = UserRole.NewUser.ToString();
-
-            //var emailverification = (_UserProfile.CheckEmailvarification(model.Email));
-
-
-
-            if ((_UserProfile.GetUserRole(model.Email) == UserRole.NewUser.ToString()) || !(_UserProfile.CheckEmailvarification(model.Email)))
+             if ((_UserProfile.GetUserRole(model.Email) == UserRole.NewUser.ToString()) || !(_UserProfile.CheckEmailvarification(model.Email)))
             {
                            TempData["NewLogin"] = Helpers.Constants.NewLoginMessage.ToString();
                 return RedirectToAction("Login");
@@ -438,26 +431,29 @@ namespace ComPro.Controllers
                 {
                     await UserManager.AddToRoleAsync(user.Id, "User");
 
-                    UserInfo uInfo = new UserInfo
-                    {
-                        Name = model.Name,
-                        Email = model.Email,
-                        CurrentJobTitle = model.CurrentJobTitle,
-                        Gender = model.Gender
-                    };
+                    //UserInfo uInfo = new UserInfo
+                    //{
+                    //    Name = model.Name,
+                    //    Email = model.Email,
+                    //    CurrentJobTitle = model.CurrentJobTitle,
+                    //    Gender = model.Gender
+                    //};
 
 
-                    _db.UserInfo.Add(uInfo);
-                    _db.SaveChanges();
+                    //_db.UserInfo.Add(uInfo);
+                    //_db.SaveChanges();
 
-                   
+
+                    _UserProfile.ExternalAddationalInfo(model);
+
 
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
 
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToAction("Login");
+                        //return RedirectToAction("Login");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 AddErrors(result);

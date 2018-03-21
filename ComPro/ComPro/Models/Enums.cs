@@ -43,7 +43,13 @@ namespace ComPro.Models
             NotResponsed=5,
             Public=4,
 
-    }
+        }
+
+        public enum Gender
+        {
+            Male,
+            Female,
+        }
 
 
     }

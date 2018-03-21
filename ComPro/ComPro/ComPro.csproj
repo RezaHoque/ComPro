@@ -413,6 +413,8 @@
     <Content Include="Content\images\facebook-png-6111.png" />
     <Content Include="Content\images\ipl-logo-png-transparent-images-1423.png" />
     <Content Include="Content\images\moens-klint.jpg" />
+    <Content Include="Content\images\Profile\Female.png" />
+    <Content Include="Content\images\Profile\Male.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />

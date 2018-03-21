@@ -19,7 +19,6 @@
             </p>
             <p>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
             </p>
             <hr />
             <div class="form-group">
@@ -41,7 +40,6 @@
                     @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
                 </div>
             </div>
-
             <div class="form-group">
                 @Html.LabelFor(m => m.Gender, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
@@ -55,16 +53,33 @@
                     @Html.TextBoxFor(m => m.CurrentJobTitle, new { @class = "form-control" })
                 </div>
             </div>
+            <div class="card" style="margin-top:10px;">
+                <div class="card-header bg-success mb-3 text-white">
+                    Terms And Condition.
+                </div>
+                <p>
+                    I hereby decleared my acceptance of all terms and condition <input type="checkbox" id="check" onclick="show()">
+                    <a href="https://www.thesitewizard.com/" target="_blank">Read More .....</a>
+                </p><br />
+            </div>
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
+                <div class="col-md-offset-2 col-md-10" id="buttonholder" style="display: none;">
                     <input type="submit" class="btn btn-default" value="Register" />
                 </div>
             </div>
         </div>
     </div>
-  
+
 }
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+<script>
+        function show() {
+            if ($('input[type=checkbox]:checked').length > 0) {
+                $('#buttonholder').show();
+            } else {
+                $('#buttonholder').hide();
+            }
+        }
+
+
+</script>

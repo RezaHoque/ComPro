@@ -10,6 +10,7 @@ namespace ComPro.Interfaces
     public interface IUserProfile
     {
         void AddationalInfo(InternalRegisterViewModel model);
+        void ExternalAddationalInfo(UserInfo model);
         void SetUserRole(string email);
         string GetUserRole(string email);
         bool CheckEmailvarification(string email);
@@ -24,11 +25,13 @@ namespace ComPro.Interfaces
         
 
         IEnumerable<UserInfo> AllUser();
-        UserInfo EditUserProfile(int id);
+
+        UserInfo DetailProfile(int Id);
+        UserInfo EditUserProfile();
         string PostEditUserProfile(UserInfo info);
         string DeleteUserProfile(int id);
 
         string CheckLink(string email);
-
+        string SetProfilePicture(string Gender);
     }
 }
