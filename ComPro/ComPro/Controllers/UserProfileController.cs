@@ -5,7 +5,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ComPro.Models;
-
+using System.IO;
+using Microsoft.AspNet.Identity;
+using ComPro.Helpers;
 
 namespace ComPro.Controllers
 {
@@ -14,11 +16,12 @@ namespace ComPro.Controllers
     public class UserProfileController : Controller
     {
         private readonly IUserProfile _userProfile;
+        private readonly INoticeBoard _noticeBoardManager = new NoticeBoardManager();
         public UserProfileController(IUserProfile UserProfileManager)
         {
             _userProfile = UserProfileManager;
         }
-        
+
         // GET: UserProfile
         public ActionResult Index ()
         {
@@ -36,26 +39,7 @@ namespace ComPro.Controllers
             
         }
 
-        //public ActionResult Index1()
-        //{
-
-        //    return View(_userProfile.AllUser());
-        //}
-
-        //[HttpGet]
-        //public ActionResult Edit( int? id )
-        //{
-
-        //    return View(_userProfile.EditUserProfile(id.Value));
-        //}
-
-        //[HttpPost]
-        //public ActionResult Edit(UserInfo info)
-        //{
-        //    ViewBag.EditData=_userProfile.PostEditUserProfile(info);
-        //    return View(info);
-
-        //}
+        
         public ActionResult Delete( int ? id)
         {
             ViewBag.DeleteProfile = _userProfile.DeleteUserProfile(id.Value);
@@ -81,27 +65,77 @@ namespace ComPro.Controllers
         }
 
 
+        [HttpGet]
         public ActionResult MyPage()
         {
 
             return View();
-
         }
 
-        public ActionResult CurrentUser()
+        
+
+        [HttpGet]
+        public ActionResult MyInfoPage()
         {
-            return PartialView("_CurrentUser_Partialview");
-            //return View(_userProfile.CurrentUserDetail());
+            return PartialView("_PartialMyPageView", _userProfile.EditUserProfile());
 
         }
-        public ActionResult CurrentUserDetails ()
+
+        [HttpPost]
+        public ActionResult MyInfoPage(UserInfo info)
         {
 
-            //return View(_userProfile.CurrentUserDetail());
-            return PartialView("_MemberInformation_PartialView", _userProfile.CurrentUserDetail());
+            var result= _userProfile.PostEditUserProfile(info);
+            //return PartialView("_PartialMyPageView", _userProfile.EditUserProfile());
+            return Content(result.ToString());
+        }
+
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult UploadFile()
+        {
+            string _imgname = string.Empty;
+            if (System.Web.HttpContext.Current.Request.Files.AllKeys.Any())
+            {
+                var pic = System.Web.HttpContext.Current.Request.Files["MyImages"];
+                if (pic.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(pic.FileName);
+                    var _ext = Path.GetExtension(pic.FileName);
+
+                    _imgname = UserInformation.UserName(User.Identity.GetUserName());
+                    var _comPath = Path.Combine(Server.MapPath("~/Content/images/Profile/"), _imgname + _ext);
+                   
+
+                    pic.SaveAs(_comPath);
+
+                    var user = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                    ApplicationDbContext _data = new ApplicationDbContext();
+                    var userinfo1 = _data.Users.FirstOrDefault(x => x.Id == user);
+                    UserInfo userinfo2 = _data.UserInfo.FirstOrDefault(y => y.Email == userinfo1.Email);
+
+                    //userinfo2.Photo = "/Content/images/Profile/" + _imgname + _ext; 
+                    userinfo2.Photo = "/Content/images/Profile/" + _imgname + _ext; 
+                   
+                    _data.SaveChanges();
+
+
+                }
+            }
+
+            return Json(Convert.ToString(_imgname), JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        public ActionResult ProfilePicture()
+        {
+
+            return PartialView("_PartialProfilePictureView", _userProfile.CurrentUserDetail());
 
 
         }
+
 
         [AllowAnonymous]
         public ActionResult CheckLink(string email)

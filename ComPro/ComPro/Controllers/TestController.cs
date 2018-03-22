@@ -15,44 +15,56 @@ namespace ComPro.Controllers
 
    
     public class TestController : Controller
-    {IEvent _event = new EventManager();
-        public ActionResult Index(string s)
-        {
-            
-            var reuslt = _event.AllEvent();
-            return View(reuslt);
-        }
-        [HttpGet]
-        public ActionResult Edit(int id)
-        {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
+    {
+        private MyPoint _v1;
+        private MyPoint _v2;
+        private MyPoint _v3;
 
-            var Result = _event.GetEdit(id);
-            if (Result == null)
+        public TestController (MyPoint v1, MyPoint v2, MyPoint v3)
+		{
+			this._v1 = v1;
+			this._v2 = v2;
+			this._v3 = v3;
+		}
+
+        public TestController(int x1, int y1, int x2, int y2, int x3, int y3)
+        {
+            this._v1 = new MyPoint
             {
-
-                ViewBag.Permission = Helpers.Constants.EventEditPermission;
-                return RedirectToAction("EventDetails", new { id = id });
-
-            }
-            return PartialView("_editpartialviewmodel", Result);
-
-        }
-
-        [HttpPost]
-        public ActionResult Edit(EventModel eventModel)
-
-        {
-            if (ModelState.IsValid)
+                x = x1,
+                y = y1
+            };
+            this._v2 = new MyPoint
             {
-                var x = _event.PostEdit(eventModel).ToString();
-                return Content(x.ToString());
-            }
-            return PartialView("_editpartialviewmodel", eventModel);
+                x = x2,
+                y = y2
+            };
+            this._v3 = new MyPoint
+            {
+                x = x3,
+                y = y3
+            };
         }
+
+
+
+        	
+
+    
+
+    IUtility _Utility = new UtilityManager();
+        public ActionResult Index()
+        {
+            double Perimeter = _Utility.GetPerimeter(_v1, _v2, _v3);
+
+            string MyString = _Utility.GetString(_v1, _v2, _v3);
+
+            var printtype = _Utility.printtype(_v1, _v2, _v3);
+
+            return View();
+           
+        }
+        
 
     }
 }

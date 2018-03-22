@@ -43,34 +43,32 @@ namespace ComPro.Interfaces
                         ResultStirng = null;
                         int Ranking = (int)Searching.Priority0;
 
-                        //var model = new UserInfo();
-                        var properties = x.GetType().GetProperties();
-                        foreach (var item in properties)
+                        if (Matchtext(SearchText, x.Name))
                         {
-                            var finder = item.GetValue(x, null);
-                            if (finder!=null)
-                            if (Matchtext(SearchText, finder.ToString()))
+
+                            if (!(Matchtext(ResultStirng, Helpers.Constants.Start + "Name" + Helpers.Constants.End + x.Name)))
                             {
-                                ResultStirng = ResultStirng +Helpers.Constants.Start+item.Name+Helpers.Constants.End+finder.ToString();
-                                Found = true;
-                                    Ranking++;
+                                ResultStirng = ResultStirng + Helpers.Constants.Start + "Name" + Helpers.Constants.End + x.Name;
                             }
 
-                           
+                            Found = true;
+                            Ranking++;
                         }
-                        
+
 
                         if (Found)
                         {
-                            //var user2 = Data.Users.FirstOrDefault(y => y.Email == x.Email);
+                           
                             SearchResult.Add(new SearchViewModel()
                             {
-                                //ResultId = user2.Id,
+                               
                                 ResultId = x.Id,
                                 ResultName = x.Name,
+                                Description = null,
                                 ResultCatagory = Helpers.Constants.UserResult.ToString(),
                                 MatchedText = ResultStirng,
                                 Priority = Ranking,
+                                SearchText= Search_Text,
                             });
 
 
@@ -90,37 +88,56 @@ namespace ComPro.Interfaces
                         int Ranking = (int)Searching.Priority0;
                         Found = false;
 
-                       
-                        var properties = y.GetType().GetProperties();
-                        foreach (var item in properties)
-                        {
-                           
-                            
-                            var finder = item.GetValue(y, null);
-                            if (finder != null)
-                                if (Matchtext(SearchText, finder.ToString()))
-                                {
-                                    ResultStirng = ResultStirng + Helpers.Constants.Start + item.Name + Helpers.Constants.End + finder.ToString();
-                                    Found = true;
-                                    Ranking++;
-                                }
 
+
+                        string[] SingleSentence = y.Title.Split('!', '.', '?');
+
+                        
+                        foreach (var sentence in SingleSentence)
+                        {
+                            if (Matchtext(SearchText, sentence))
+                            {
+                                if (!(Matchtext(ResultStirng, sentence)))
+                                {
+                                    ResultStirng = ResultStirng + sentence + Helpers.Constants.Start;
+                                }
+                                Found = true;
+                                Ranking++;
+                            }
 
                         }
 
-                        
+                       
+                        SingleSentence = y.Description.Split('!', '.', '?');
+                        foreach (var sentence in SingleSentence)
+                        {
+                            if (Matchtext(SearchText, sentence))
+                            {
+                                if (!(Matchtext(ResultStirng,sentence)))
+                                {
+                                    ResultStirng = ResultStirng + sentence + Helpers.Constants.Start;
+                                }
+                                Found = true;
+                                Ranking++;
+                            }
+                        }
+
+                           
+
+
                         if (Found)
                         {
                            
-                                //var user2 = Data.Users.FirstOrDefault(y => y.Email == x.Email);
                                 SearchResult.Add(new SearchViewModel()
                                 {
-                                    //ResultId = user2.Id,
+                                   
                                     ResultId = y.Id,
                                     ResultName = y.Title,
+                                    Description = y.Description,
                                     ResultCatagory = Helpers.Constants.Notice.ToString(),
                                     MatchedText = ResultStirng,
                                     Priority = Ranking,
+                                    SearchText= Search_Text,
                                 });
                             
 
@@ -131,29 +148,43 @@ namespace ComPro.Interfaces
                     }
 
 
-                    foreach (var z in Event)
+                    foreach (var y in Event)
                     {
                         ResultStirng = null;
                         int Ranking = (int)Searching.Priority0;
                         Found = false;
 
+                        string[] SingleSentence = y.EventTitel.Split('!', '.', '?');
 
-                        var properties = z.GetType().GetProperties();
-                        foreach (var item in properties)
+                       
+                        foreach (var sentence in SingleSentence)
                         {
-
-
-                            var finder = item.GetValue(z, null);
-                            if (finder != null)
-                                if (Matchtext(SearchText, finder.ToString()))
+                            if (Matchtext(SearchText, sentence))
+                            {
+                                if (!(Matchtext(ResultStirng, sentence)))
                                 {
-                                    ResultStirng = ResultStirng + Helpers.Constants.Start + item.Name + Helpers.Constants.End + finder.ToString();
-                                    Found = true;
-                                    Ranking++;
+                                    ResultStirng = ResultStirng + sentence + Helpers.Constants.Start;
                                 }
-
-
+                                Found = true;
+                                Ranking++;
+                            }
                         }
+
+                       
+                        SingleSentence = y.Description.Split('!', '.', '?');
+                        foreach (var sentence in SingleSentence)
+                        {
+                            if (Matchtext(SearchText, sentence))
+                            {
+                                if (!(Matchtext(ResultStirng,  sentence )))
+                                {
+                                    ResultStirng = ResultStirng + sentence + Helpers.Constants.Start;
+                                }
+                                Found = true;
+                                Ranking++;
+                            }
+                        }
+                            
 
 
 
@@ -165,11 +196,13 @@ namespace ComPro.Interfaces
                             SearchResult.Add(new SearchViewModel()
                             {
                                
-                                ResultId = z.Id,
-                                ResultName = z.EventTitel,
+                                ResultId = y.Id,
+                                ResultName = y.EventTitel,
+                                Description=y.Description,
                                 ResultCatagory = Helpers.Constants.Event.ToString(),
                                 MatchedText = ResultStirng,
                                 Priority = Ranking,
+                                SearchText = Search_Text,
                             });
 
 
@@ -204,7 +237,9 @@ namespace ComPro.Interfaces
                             //check1.Priority = check1.Priority + (int)Searching.Priority1;
                             check1.Priority = check1.Priority + check2.Priority;
                             check2.Priority = (int)Searching.Priority0;
-                            check1.MatchedText = check1.MatchedText + Helpers.Constants.Start + check2.MatchedText;
+                            if (!(Matchtext(check1.MatchedText, check2.MatchedText)))
+                            { check1.MatchedText = check1.MatchedText + Helpers.Constants.Start + check2.MatchedText; }
+                                
                         }
 
                     }
@@ -215,7 +250,9 @@ namespace ComPro.Interfaces
                         ResultName = check1.ResultName,
                         ResultCatagory = check1.ResultCatagory,
                         MatchedText = check1.MatchedText,
-                        Priority= check1.Priority,
+                        Priority = check1.Priority,
+                        SearchText = check1.SearchText,
+                        Description=check1.Description,
                     });
                 }
 
@@ -230,21 +267,28 @@ namespace ComPro.Interfaces
 
         }
 
-        private string textformate ()
-        {
-            return null;
-        }
-
+       
         private bool Matchtext (string SearchItem, string TextContainer)
         {
             try
             {
-                
+                string first = null;
+                string second = null;
 
-            string first = TextContainer.ToLower();
-            string second = SearchItem.ToLower();
+              if(TextContainer.Length>=SearchItem.Length)
+                {
+               first = TextContainer.ToLower();
+                  second = SearchItem.ToLower();
+                }
+                else
+                {
+                     second = TextContainer.ToLower();
+                      first= SearchItem.ToLower();
+                }
 
-            bool result = first.Contains(second);
+               first = Regex.Replace(first, "[^a-zA-Z0-9% ._]", string.Empty);
+
+                bool result = first.Contains(second);
 
             return result;
             }
