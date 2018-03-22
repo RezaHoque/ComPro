@@ -7,14 +7,14 @@ using ComPro.Models;
 
 namespace ComPro.Interfaces
 {
-    interface IEvent
+    public interface IEvent
     {
         IEnumerable<EventViewModel> AllEvent();
         IEnumerable<EventViewModel> MyEvent();
         IEnumerable<EventViewModel> NewEvent();
 
         DetailViewModel Detail(int Id);
-        bool Create(EventModel model);
+        EventModel Create(EventModel model,List<string> inviteesIds);
         bool ApproveEvent(int Id);
         EventModel GetEdit(int Id);
         bool PostEdit(EventModel model);

@@ -422,7 +422,8 @@ namespace ComPro.Interfaces
                     CurrentJobTitle = model.CurrentJobTitle,
                     Gender = model.Gender,
                     Photo = SetProfilePicture(model.Gender),
-                    ApprovalDate = DateTime.Now
+                    ApprovalDate = DateTime.Now,
+                    UserId=model.UserId
                 };
 
 

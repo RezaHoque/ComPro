@@ -345,6 +345,14 @@
     <Compile Include="Migrations\201803131831091_updateEventMember.Designer.cs">
       <DependentUpon>201803131831091_updateEventMember.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803221327043_userid.cs" />
+    <Compile Include="Migrations\201803221327043_userid.Designer.cs">
+      <DependentUpon>201803221327043_userid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803221829507_eventIsPublic.cs" />
+    <Compile Include="Migrations\201803221829507_eventIsPublic.Designer.cs">
+      <DependentUpon>201803221829507_eventIsPublic.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChatHisytoryModel.cs" />
@@ -686,6 +694,7 @@
     <Content Include="Views\UserProfile\MyPage.cshtml" />
     <Content Include="Views\UserProfile\_CurrentUser_Partialview.cshtml" />
     <Content Include="Views\Home\Terms.cshtml" />
+    <Content Include="Views\Event\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -767,6 +776,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803131831091_updateEventMember.resx">
       <DependentUpon>201803131831091_updateEventMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803221327043_userid.resx">
+      <DependentUpon>201803221327043_userid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803221829507_eventIsPublic.resx">
+      <DependentUpon>201803221829507_eventIsPublic.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

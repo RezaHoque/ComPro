@@ -1,0 +1,89 @@
+﻿@model ComPro.Models.EventModel
+@{
+    ViewBag.Title = "Create an Event";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/chosen.min.css" rel="stylesheet" />
+<script src="~/Scripts/chosen.jquery.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<h2>Create an Event.</h2>
+@using (Html.BeginForm("Create", "Event", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Title, new { id = "Title", htmlAttributes = new { @class = "form-control", placeholder = "Give it an attractive title" } })
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Description, new { id = "Description", rows = "5", cols = "80", placeholder = " Write few words about it", htmlAttributes = new { @class = "form-control" } })
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Place, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Place, new { id = "Place", htmlAttributes = new { @class = "form-control", placeholder = "Where the event will take place" } })
+
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*@Html.EditorFor(model => model.Date, new { id = "Date", htmlAttributes = new { @class = "form-control" } })*@
+            <input type="text" id="datetimepicker" class="form-control" name="Date">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Send invitation to</label>
+        <div class="col-md-10">
+            <select data-placeholder="select invitees or leave blank if it is public" multiple class="chosen-select form-control" id="slt" name="invitees"></select>
+        </div>
+
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Attach an image</label>
+        <div class="col-md-10">
+            <input type="file" id="fileUpload1" name="fileUpload1" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-success" id="btnEventCreate" />
+        </div>
+    </div>
+
+}
+
+    <script type="text/javascript">
+        $(function () {
+
+            var url = "/UserProfile/UserList";
+            $.ajax({
+                method: "GET",
+                url: url,
+                dataType: "json"
+            })
+                .done(function (data) {
+                    $.each(data, function (k, v) {
+                        console.log(v);
+                        $('<option>').val(v.UserId).text(v.Name).appendTo('#slt');
+                    });
+                    $(".chosen-select").chosen();
+                });
+
+            //   $('#datetimepicker').datepicker();
+
+            $("#datetimepicker").datepicker({ dateFormat: 'dd-mm-yy' });
+
+
+        });
+    </script>

@@ -11,9 +11,13 @@
 </div>
 }
 <div class="container-fluid">
-    <div class="alert alert-light" role="alert">
-        <h3>Displaying @Model.Count() event(s).</h3>
-    </div>
+    @if (Model.Count() > 0)
+    {
+        <div class="alert alert-light" role="alert">
+            <h3>Displaying @Model.Count() event(s).</h3>
+        </div>
+    }
+
     <div class="row">
 
         @foreach (var item in Model)
@@ -28,18 +32,18 @@
                         <img class="card-img-top" src="@item.Images.FirstOrDefault().ImagePath" alt="Card image cap">
                     }
 
-                        <div class="card-body">
-                            <h6 class="card-title"><i>Date: @item.EventDate.ToShortDateString() <br />@item.Place</i></h6>
-                            <p class="card-text">@item.Description</p>
-                            <h6 class="card-title bg-white" style="padding:3px;"><i>Owner: @item.CreatorName</i></h6>
-                        </div>
+                    <div class="card-body">
+                        <h6 class="card-title"><i>Date: @item.EventDate.ToShortDateString() <br />@item.Place</i></h6>
+                        <p class="card-text">@item.Description</p>
+                        <h6 class="card-title bg-white" style="padding:3px;"><i>Owner: @item.CreatorName</i></h6>
+                    </div>
 
                     @if (User.IsInRole("Administrator") && item.Approval == true)
-    {
-                <div style="padding-bottom:5px;padding-top:5px;">
-                    <a href="#" onClick="Approval(@item.Id)" class="btn btn-sm btn-danger">DisApprove</a>
-                </div>
-}
+                    {
+                        <div style="padding-bottom:5px;padding-top:5px;">
+                            <a href="#" onClick="Approval(@item.Id)" class="btn btn-sm btn-danger">DisApprove</a>
+                        </div>
+                    }
 
 
                     <div class="card-footer bg-white border-primary text-center">

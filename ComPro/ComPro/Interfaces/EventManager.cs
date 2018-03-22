@@ -21,12 +21,14 @@ namespace ComPro.Interfaces
         public IEnumerable<EventViewModel> AllEvent()
         {
             List<EventViewModel> Result = new List<EventViewModel>();
+            List<EventModel> events = new List<EventModel>();
 
             try
-            { 
+            {
 
-                    var AllEvent = _data.Event.Where(x => x.EventStatus == true);
+                var AllEvent = _data.Event.Where(x => x.EventStatus && x.Date >= DateTime.Now && x.IsApproved);
 
+                /*
                     foreach (var item in AllEvent)
                     {
                         if (DateTime.Now < item.Creation)
@@ -36,6 +38,11 @@ namespace ComPro.Interfaces
                         }
                     }
                 _data.SaveChanges();
+
+                
+
+
+
 
                 var AllResult = _data.Event.Where(a => a.EventStatus == true && a.IsApproved == true)
                        .AsEnumerable().Select(p => new EventViewModel
@@ -53,12 +60,41 @@ namespace ComPro.Interfaces
                            Members=_data.EventMember.Where(x => x.EventId == p.EventId).ToList(),
                            CreatorName= UserInformation.UserNameById(p.CreatorId)
                        });
+                */
 
-
-                foreach (var item in AllResult)
+                foreach (var item in AllEvent)
                 {
+                    if (item.IsPublic)
+                    {
+                        events.Add(item);
+                    }
+                    else
+                    {
+                        if (_data.EventMember.Any(x => x.EventId == item.EventId && x.MemberID == Current_User_id) || HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString()))
+                        {
+                            events.Add(item);
+                        }
+                    }
+                }
 
-
+                Result = events.AsEnumerable().Select(p => new EventViewModel
+                {
+                    Id = p.EventId,
+                    EventTitel = p.Title,
+                    Approval = p.IsApproved,
+                    CreatorID = p.CreatorId,
+                    Activity = _data.EventMember.FirstOrDefault(x => x.EventId == p.EventId && x.MemberID == Current_User_id)!=null? _data.EventMember.FirstOrDefault(x => x.EventId == p.EventId && x.MemberID == Current_User_id).PerticipetingType:null,
+                    Description = p.Description,
+                    Place = p.Place,
+                    EventDate = p.Date,
+                    Images = _data.SiteImages.Where(x => x.Type == "Event" && x.TypeId == p.EventId).ToList(),
+                    TotalYes = _data.EventMember.Where(x => x.EventId == p.EventId && x.PerticipetingType == "Going").Count(),
+                    Members = _data.EventMember.Where(x => x.EventId == p.EventId).ToList(),
+                    CreatorName = UserInformation.UserNameById(p.CreatorId)
+                    
+                    
+                }).ToList();
+                /*
                     if (_data.EventMember.Any(x => ((x.EventId == item.Id) && (x.MemberID == Current_User_id))) || (HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString())))
                     {
                         if (!(HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString())))
@@ -69,13 +105,13 @@ namespace ComPro.Interfaces
                         Result.Add(item);
                     }
 
-                }
+                */
                 return Result.OrderBy(x=>x.EventDate);
                
            
         }
 
-            catch
+            catch(Exception ex)
             {
                 return Result;
 
@@ -319,7 +355,7 @@ namespace ComPro.Interfaces
         }
 
 
-        public bool Create(EventModel model)
+        public EventModel Create(EventModel model,List<string> inviteesIds)
         {
             try
             {
@@ -337,33 +373,32 @@ namespace ComPro.Interfaces
                 Data.IsApproved = true;
 
                 Data.ApprovalDate = DateTime.Now;
+                Data.IsPublic = inviteesIds.Any() ? false : true;
 
                 _data.Event.Add(Data);
 
                 _data.SaveChanges();
-
-                var AllUsers = _userProfile.AllUser();
-
-                EventMember members = new EventMember();
-                foreach (var User in AllUsers)
+               
+                foreach (var id in inviteesIds)
                 {
-                    var info = _data.Users.FirstOrDefault(x => x.Email == User.Email);
-                    members.MemberID = info.Id;
-                    members.EventId = Data.EventId;
-                    members.ResponseDate = DateTime.Now;
-                    members.PerticipetingType = null;
+                    EventMember member = new EventMember();
+                    var info = _data.Users.FirstOrDefault(x => x.Id == id);
+                    member.MemberID = info.Id;
+                    member.EventId = Data.EventId;
+                    member.ResponseDate = DateTime.Now;
+                    member.PerticipetingType = null;
 
-                    _data.EventMember.Add(members);
+                    _data.EventMember.Add(member);
                     _data.SaveChanges();
                 }
 
                 
-                return true;
+                return Data;
             }
 
-            catch
+            catch(Exception ex)
             {
-                return false;
+                throw;
             }
         }
 

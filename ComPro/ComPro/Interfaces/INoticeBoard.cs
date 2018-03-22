@@ -22,6 +22,6 @@ namespace ComPro.Interfaces
         bool PostComment(PublicComment comment);
         ICollection<PublicComment> GetComments(int noticeId);
         bool SaveImage(SiteImage image);
-        SiteImage GetNoticeImage(int id);
+        SiteImage GetNoticeImage(int id,string type);
     }
 }

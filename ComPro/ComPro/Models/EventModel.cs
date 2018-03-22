@@ -29,6 +29,7 @@ namespace ComPro.Models
 
             public bool IsApproved { get; set; }
             public DateTime ApprovalDate { get; set; }
+            public bool IsPublic { get; set; }
             
         }
 

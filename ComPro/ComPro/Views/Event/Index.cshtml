@@ -1,26 +1,22 @@
-﻿
-<link href="~/Content/chosen.min.css" rel="stylesheet" />
-<script src="~/Scripts/chosen.jquery.min.js"></script>
-
-<script>
+﻿<script>
     $(document).ready(function () {
 
         $("#Events").load("/Event/Events");
-        $("#Create").click(function () {
+        //$("#Create").click(function () {
 
 
-            $("#datacontainer3").load("/Event/Create");
-            $('#createModal').modal();
+        //    $("#datacontainer3").load("/Event/Create");
+        //    $('#createModal').modal();
 
 
 
-        });
+        //});
     });
 
 </script>
 
 <div class="text-md-right">
-    <a href="#" class="card-link btn btn-success" name="Create" id="Create"><i class="fa fa-calendar-alt"></i> Create new Event</a>
+    <a href="/Event/Create" class="card-link btn btn-success" name="Create" id="Create"><i class="fa fa-calendar-alt"></i> Create new Event</a>
 </div>
 
 <div id="Events"></div>

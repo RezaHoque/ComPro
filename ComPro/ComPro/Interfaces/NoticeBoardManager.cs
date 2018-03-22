@@ -21,9 +21,9 @@ namespace ComPro.Interfaces
         {
             _data = new ApplicationDbContext();
         }
-        public SiteImage GetNoticeImage(int id)
+        public SiteImage GetNoticeImage(int id,string type)
         {
-            var image = _data.SiteImages.FirstOrDefault(x => x.TypeId == id);
+            var image = _data.SiteImages.FirstOrDefault(x => x.TypeId == id && x.Type==type);
             return image;
         }
         public IEnumerable<NoticeBoard> GetApprovedNotices()

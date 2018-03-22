@@ -430,20 +430,22 @@ namespace ComPro.Controllers
                 if (result.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(user.Id, "User");
-
-                    //UserInfo uInfo = new UserInfo
-                    //{
-                    //    Name = model.Name,
-                    //    Email = model.Email,
-                    //    CurrentJobTitle = model.CurrentJobTitle,
-                    //    Gender = model.Gender
-                    //};
-
-
-                    //_db.UserInfo.Add(uInfo);
-                    //_db.SaveChanges();
+                    /*
+                    UserInfo uInfo = new UserInfo
+                    {
+                        Name = model.Name,
+                        Email = model.Email,
+                        CurrentJobTitle = model.CurrentJobTitle,
+                        Gender = model.Gender,
+                        UserId=user.Id
+                    };
 
 
+                    _db.UserInfo.Add(uInfo);
+                    _db.SaveChanges();
+
+                    */
+                    model.UserId = user.Id;
                     _UserProfile.ExternalAddationalInfo(model);
 
 

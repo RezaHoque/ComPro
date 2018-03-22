@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -16,12 +17,14 @@ namespace ComPro.Controllers
     [Authorize]
     public class EventController : Controller
     {
-        IEvent _event;
+        private readonly IEvent _eventManager;
+        private readonly INoticeBoard _noticeBoardManager;
         
 
-        public EventController()
+        public EventController(IEvent eventarg,INoticeBoard noticeboardManager)
         {
-            _event = new EventManager();
+           _eventManager = eventarg;
+            _noticeBoardManager = noticeboardManager;
 
         }
 
@@ -39,19 +42,19 @@ namespace ComPro.Controllers
 
         public ActionResult GetEvents()
         {
-            var result = _event.AllEvent();
+            var result = _eventManager.AllEvent();
             return PartialView("_EventList_Partialview", result);
         }
 
         public ActionResult MyEvent()
         {
            
-            var result = _event.MyEvent();
+            var result = _eventManager.MyEvent();
             return PartialView("_EventList_Partialview", result);
         }
         public ActionResult NewEvent()
         {
-            var result = _event.NewEvent();
+            var result = _eventManager.NewEvent();
             return PartialView("_EventList_Partialview", result);
 
         }
@@ -64,7 +67,7 @@ namespace ComPro.Controllers
             //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             //}
 
-            return PartialView("_EventDetails", _event.Detail(id));
+            return PartialView("_EventDetails", _eventManager.Detail(id));
             //return View(_event.Detail(id.Value));
 
         }
@@ -73,20 +76,52 @@ namespace ComPro.Controllers
         // GET: Event/Create
         public ActionResult Create()
         {
-            return PartialView("_Create_PartialView");
+            //return PartialView("_Create_PartialView");
+            return View();
         }
         
         
         [HttpPost]
-        public ActionResult Create(EventModel eventModel)
+        public ActionResult Create(EventModel eventModel,FormCollection frm)
         {
             if (ModelState.IsValid)
             {
-                
-                return Content(_event.Create(eventModel).ToString());
+                var invitees = new List<string>();
+                if (!string.IsNullOrEmpty(frm["invitees"]))
+                {
+                    invitees = frm["invitees"].Split(',').ToList();
+                }
+                var result = _eventManager.Create(eventModel,invitees);
+                if (result!=null)
+                {
+                    if (Request.Files.Count > 0)
+                    {
+                        var file = Request.Files[0];
+
+                        if (file != null && file.ContentLength > 0)
+                        {
+                            var fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
+                            var path = Path.Combine(Server.MapPath("~/Content/images/"), fileName);
+                            file.SaveAs(path);
+                            var image = new SiteImage
+                            {
+                                ImagePath = "/Content/images/" + fileName,
+                                Type = "Event",
+                                TypeId = result.EventId,
+                                UploadDate = DateTime.Now,
+                                UploaderId = result.CreatorId
+
+                            };
+                            _noticeBoardManager.SaveImage(image);
+                        }
+                    }
+                    return RedirectToAction("Index");
+                }
                     
+                //return Content(.ToString());
+
             }
-         return Content(Boolean.FalseString);
+            return View();
 
         }
 
@@ -109,7 +144,7 @@ namespace ComPro.Controllers
 
         public ActionResult ApproveEvent( int ? Id)
         {
-           bool result = _event.ApproveEvent(Id.Value);
+           bool result = _eventManager.ApproveEvent(Id.Value);
             return Content(result.ToString());
           
 
@@ -120,7 +155,7 @@ namespace ComPro.Controllers
         public ActionResult Edit(int id)
         {
            
-            var Result = _event.GetEdit(id);
+            var Result = _eventManager.GetEdit(id);
             if (Result == null)
             {
 
@@ -138,7 +173,7 @@ namespace ComPro.Controllers
         {
             if (ModelState.IsValid)
             {
-                var x = _event.PostEdit(eventModel).ToString();
+                var x = _eventManager.PostEdit(eventModel).ToString();
                 return Content(x.ToString());
             }
             return View(eventModel);
@@ -151,7 +186,7 @@ namespace ComPro.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            bool res = _event.GetDelete(id.Value);
+            bool res = _eventManager.GetDelete(id.Value);
             return Content(res.ToString());
             
         }
@@ -160,7 +195,7 @@ namespace ComPro.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            _event.Disposing(disposing);
+            _eventManager.Disposing(disposing);
             base.Dispose(disposing);
         }
 
@@ -168,7 +203,7 @@ namespace ComPro.Controllers
        public ActionResult MemberResponse(int ID, string Response)
         {
         
-        bool res = _event.MemberResponse(ID, Response);
+        bool res = _eventManager.MemberResponse(ID, Response);
             return Content(res.ToString());
             
             //return RedirectToAction("EventDetails", new { id = ID });

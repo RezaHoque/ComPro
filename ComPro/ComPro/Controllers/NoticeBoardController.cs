@@ -35,7 +35,7 @@ namespace ComPro.Controllers
                 {
                     Notice = n,
                     TotalComments = totalComnts,
-                    NoticeImage = _noticeBoardManager.GetNoticeImage(n.Id)
+                    NoticeImage = _noticeBoardManager.GetNoticeImage(n.Id,"Notice")
                 });
             }
 
