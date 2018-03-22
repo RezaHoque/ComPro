@@ -14,17 +14,17 @@
 <div class="row justify-content-md-center" style="margin-bottom:20px;">
     <div class="col-md-12">
         @using (Html.BeginForm("Index", "Search", FormMethod.Get))
-        {
+    {
 
-            <div style="margin-left:auto;margin-right:auto;margin-top:10px;">
-                <div id="fakeBox" style="float:left">
-                    <input type="text" name="Search" class="fakeInput" />
-                </div>
-                <div style="float:left">
-                    <input type="submit" class="btn btn-primary btn-custom" name="submit" value="Search" />
-                </div>
+        <div style="margin-left:auto;margin-right:auto;margin-top:10px;">
+            <div id="fakeBox" style="float:left">
+                <input type="text" name="Search" id="searchText" placeholder="Write at least 5 charecter" class="fakeInput" />
             </div>
-        }
+            <div style="float:left">
+                <input type="submit" class="btn btn-primary btn-custom " style="display: none;" id="StartSearch" name="submit" value="Search" />
+            </div>
+        </div>
+}
     </div>
 </div>
 
@@ -59,3 +59,17 @@
         </div>
     </div>
 </div>
+
+<script>
+    $("#searchText").keyup(function () {
+        if ($('#searchText').val().length > 4) {
+            $('#StartSearch').show();
+        }
+        else {
+            $('#StartSearch').hide();
+        }
+
+    });
+
+
+</script>

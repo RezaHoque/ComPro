@@ -24,26 +24,25 @@
 
 
             @if (item.ResultCatagory == "User Profile")
-    {
-        @Html.ActionLink(item.ResultCatagory, "Details", "UserProfile", new { id = item.ResultId }, null)
+            {
+        @Html.ActionLink(item.ResultName, "Details", "UserProfile", new { id = item.ResultId }, null)
 
 }
             @if (item.ResultCatagory == "Notice")
-    {
-        @Html.ActionLink(item.ResultCatagory, "Notice", "NoticeBoard", new { id = item.ResultId }, null)
+            {
+        @Html.ActionLink(item.ResultName, "Notice", "NoticeBoard", new { id = item.ResultId }, null)
 
 }
 
             @if (item.ResultCatagory == "Event")
-    {
-        @Html.ActionLink(item.ResultCatagory, "EventDetails", "Event", new { id = item.ResultId }, null)
+            {
+        @Html.ActionLink(item.ResultName, "EventDetails", "Event", new { id = item.ResultId }, null)
 
 }
 
 
-            @Html.DisplayFor(modelItem => item.ResultName)
-            @Html.DisplayFor(modelItem => item.MatchedText)
-
+            <p> <strong>Matched :</strong>@Html.DisplayFor(modelItem => item.MatchedText)</p> 
+            <p> <strong>Description :</strong>@Html.DisplayFor(modelItem => item.Description) </p>
 
 
         </td>
