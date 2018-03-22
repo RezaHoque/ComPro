@@ -267,11 +267,7 @@ namespace ComPro.Interfaces
 
         }
 
-        //private string Textformate ()
-        //{
-        //    return null;
-        //}
-
+       
         private bool Matchtext (string SearchItem, string TextContainer)
         {
             try

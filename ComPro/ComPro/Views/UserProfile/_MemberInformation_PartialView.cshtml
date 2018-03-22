@@ -13,17 +13,16 @@
 
                     <h2>@Html.DisplayFor(model => model.Name)</h2>
 
-                    
-                        <hr />
-                        <dl class="dl-horizontal">
-                            
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Photo)
-                            </dt>
 
-                            <dd>
-                                @Html.DisplayFor(model => model.Photo)
-                            </dd>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dd>
+                            <img src=(@Model.Photo).ToString() height="100" width="100" />
+                        </dd>
+                        @if (User.IsInRole(ComPro.Models.Enums.UserRole.Administrator.ToString()))
+                        {
+
+
 
                             <dt>
                                 @Html.DisplayNameFor(model => model.Address)
@@ -106,10 +105,10 @@
                             </dd>
 
 
+                        }
+                    </dl>
 
-                        </dl>
-                    
-                    
+
 
                 </form>
             </div>

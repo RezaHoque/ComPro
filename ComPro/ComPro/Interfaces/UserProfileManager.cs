@@ -12,8 +12,6 @@ namespace ComPro.Interfaces
 {
     public class UserProfileManager : IUserProfile
     {
-        //string x = Helpers.Constants.PostEdit;
-
         private ApplicationDbContext _data;
         private ApplicationUserManager _userManager;
         public UserProfileManager(ApplicationUserManager userManager)
@@ -271,7 +269,7 @@ namespace ComPro.Interfaces
                 List<ApplicationUser> user2 = _data.Users.ToList();
                 List<User_Approval_Model> NewUser = new List<User_Approval_Model>();
 
-                //User_Approval_Model info = new User_Approval_Model();
+               
                 foreach (var x in user2)
                 {
 
@@ -341,7 +339,7 @@ namespace ComPro.Interfaces
 
 
 
-                var result = _utility.SendEmail(obj);
+                //var result = _utility.SendEmail(obj);
                 return true;
 
             }
@@ -432,7 +430,7 @@ namespace ComPro.Interfaces
             }
             catch
             {
-
+                throw;
             }
         }
 

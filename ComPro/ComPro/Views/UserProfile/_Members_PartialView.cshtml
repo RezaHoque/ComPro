@@ -1,5 +1,4 @@
 ﻿
-
 <div class="card-body">
     <a href="#" class="card-link btn btn-primary" name="AllMember" id="AllMember">All Member</a>
     @if (User.IsInRole("Administrator"))
@@ -8,7 +7,6 @@
 
     }
 </div>
-
 
 <script>
 
@@ -21,7 +19,7 @@
         $("#NewMember").hide();
         $("#AllMember").show();
         $("#MemberList").load("/UserProfile/NewUser");
-        
+
 
     });
 
@@ -39,6 +37,4 @@
     //});
 </script>
 
-
 <div id="MemberList"></div>
-

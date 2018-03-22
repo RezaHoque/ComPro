@@ -646,7 +646,6 @@
     <Content Include="Views\NoticeBoard\Index.cshtml" />
     <Content Include="Views\NoticeBoard\Create.cshtml" />
     <Content Include="Views\NoticeBoard\Notice.cshtml" />
-    <Content Include="Views\UserProfile\Index1.cshtml" />
     <Content Include="Views\UserProfile\Details.cshtml" />
     <Content Include="Views\Home\Member.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
@@ -661,7 +660,6 @@
     <Content Include="Views\NoticeBoard\_CommentPartialView.cshtml" />
     <Content Include="Views\NoticeBoard\_CommentsListPartial.cshtml" />
     <Content Include="Views\UserProfile\Edit.cshtml" />
-    <Content Include="Views\UserProfile\NewUser.cshtml" />
     <Content Include="Views\UserProfile\CurrentUser.cshtml" />
     <Content Include="Views\NoticeBoard\NewNotice.cshtml" />
     <Content Include="Views\Chat\ShowChat.cshtml" />
@@ -690,6 +688,8 @@
     <Content Include="Views\UserProfile\MyPage.cshtml" />
     <Content Include="Views\UserProfile\_CurrentUser_Partialview.cshtml" />
     <Content Include="Views\Home\Terms.cshtml" />
+    <Content Include="Views\UserProfile\_PartialMyPageView.cshtml" />
+    <Content Include="Views\UserProfile\_PartialProfilePictureView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

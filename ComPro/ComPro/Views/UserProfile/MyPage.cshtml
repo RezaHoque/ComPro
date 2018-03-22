@@ -1,18 +1,50 @@
 ﻿
-@{
-    ViewBag.Title = "MyPage";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+@using Microsoft.AspNet.Identity
+@using ComPro.Helpers
+<h2> @UserInformation.UserName(User.Identity.GetUserName())</h2>
 
+<div id="ProfilePicture"></div>
+<div>
+
+    <div class="col-md-10">
+        <input type="file" id="ProfilePhoto" name="ProfilePhoto" />
+    </div>
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Save Image" id="saveImage" class="btn btn-default" />
+    </div>
+</div>
+
+<div id="MyProfile"></div>
 
 <script>
     $(document).ready(function () {
 
-        $("#MyPage").load("/UserProfile/CurrentUser");
+        $("#ProfilePicture").load("/UserProfile/ProfilePicture");
+        $("#MyProfile").load("/UserProfile/MyInfoPage");
 
     });
+    $("#saveImage").click(function () {
+        var data = new FormData();
+        var files = $("#ProfilePhoto").get(0).files;
+        if (files.length > 0) {
+            data.append("MyImages", files[0]);
+        }
+
+        $.ajax({
+            url: "/UserProfile/UploadFile",
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: data,
+            success: function (response) {
+
+                $("#ProfilePicture").load("/UserProfile/ProfilePicture");
+            },
+            error: function (er) {
+                alert(er);
+            }
+
+        });
+    });
+
 </script>
-
-
-
-<div id="MyPage"></div>
