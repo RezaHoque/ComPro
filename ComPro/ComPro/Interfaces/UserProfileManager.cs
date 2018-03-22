@@ -151,7 +151,24 @@ namespace ComPro.Interfaces
 
             try
             {
-                Data.Entry(info).State = EntityState.Modified;
+                string Current_User_id = HttpContext.Current.User.Identity.GetUserId();
+                var user2 = _data.Users.FirstOrDefault(x => x.Id == Current_User_id);
+                var User=Data.UserInfo.FirstOrDefault(x => x.Email == user2.Email);
+
+                User.Name = info.Name;
+                User.Address = info.Address;
+                User.PostCode = info.PostCode;
+                User.City = info.City;
+                User.Phone = info.Phone;
+                User.BirthDate = info.BirthDate;
+                User.CurrentJobTitle = info.CurrentJobTitle;
+                User.CompanyName = info.CompanyName;
+                User.Skills = info.Skills;
+                User.Email = info.Email;
+            
+                //info.Gender = User.Gender;
+                //info.Photo = User.Photo;
+                //Data.Entry(info).State = EntityState.Modified;
                 Data.SaveChanges();
                 return Helpers.Constants.PostEdit;
             }
@@ -195,9 +212,9 @@ namespace ComPro.Interfaces
         public UserInfo CurrentUserDetail()
         {
             var email = HttpContext.Current.User.Identity.GetUserName();
-            return Data.UserInfo.FirstOrDefault(x => x.Email == email);
+            var result=  Data.UserInfo.FirstOrDefault(x => x.Email == email);
 
-
+            return result;
         }
 
         public void SetUserRole(string email)

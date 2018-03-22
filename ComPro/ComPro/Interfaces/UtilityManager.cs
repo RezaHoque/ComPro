@@ -8,6 +8,7 @@ using System.Web.Helpers;
 using System.Data.Entity;
 using static ComPro.Models.Enums;
 using System.Text.RegularExpressions;
+using System.Drawing;
 
 namespace ComPro.Interfaces
 {
@@ -90,7 +91,40 @@ namespace ComPro.Interfaces
 
         }
 
-        
+        public string printtype(MyPoint a, MyPoint b, MyPoint c)
+        {
+            string Result = null;
+            if (Distance(a, b) == Distance(c, b) && Distance(a, b) == Distance(a, c))
+            {
+                Result = "equilateral";
+            }
+            else if (Distance(a, b) == Distance(c, b) || Distance(c, b) == Distance(a, c) || Distance(a, c) == Distance(a, b))
+            {
+                Result = "isosceles";
+            }
+            else
+            {
+                Result = "scalene";
+            }
+            return Result;
+        }
+
+        private double Distance(MyPoint a, MyPoint b)
+        {
+           return Math.Sqrt(Math.Pow((a.x - b.x), 2) + Math.Pow((a.y - b.y), 2));
+        }
+        public double GetPerimeter(MyPoint a, MyPoint b, MyPoint c)
+        {
+
+            return Distance(a,b) + Distance(c, b) + Distance(a, c);
+        }
+
+        public string GetString(MyPoint a, MyPoint b, MyPoint c)
+        {
+
+            return "Triangle @ (" + a.x + ", " + a.y + "), (" + b.x + ", " + b.y + "), (" + c.x + ", " + c.y + ")";
+             
+        }
 
     }
 }

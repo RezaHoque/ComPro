@@ -85,9 +85,9 @@ namespace ComPro.Controllers
         public ActionResult MyInfoPage(UserInfo info)
         {
 
-            _userProfile.PostEditUserProfile(info);
-            return RedirectToAction("MyPage");
-
+            var result= _userProfile.PostEditUserProfile(info);
+            //return PartialView("_PartialMyPageView", _userProfile.EditUserProfile());
+            return Content(result.ToString());
         }
 
 
@@ -104,7 +104,8 @@ namespace ComPro.Controllers
                     var _ext = Path.GetExtension(pic.FileName);
 
                     _imgname = UserInformation.UserName(User.Identity.GetUserName());
-                    var _comPath = Server.MapPath("/Content/images/Profile/") + _imgname + _ext;
+                    var _comPath = Path.Combine(Server.MapPath("~/Content/images/Profile/"), _imgname + _ext);
+                   
 
                     pic.SaveAs(_comPath);
 
@@ -113,7 +114,9 @@ namespace ComPro.Controllers
                     var userinfo1 = _data.Users.FirstOrDefault(x => x.Id == user);
                     UserInfo userinfo2 = _data.UserInfo.FirstOrDefault(y => y.Email == userinfo1.Email);
 
-                    userinfo2.Photo = "/Content/images/Profile/" + _imgname + _ext; ;
+                    //userinfo2.Photo = "/Content/images/Profile/" + _imgname + _ext; 
+                    userinfo2.Photo = "/Content/images/Profile/" + _imgname + _ext; 
+                   
                     _data.SaveChanges();
 
 

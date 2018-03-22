@@ -10,18 +10,26 @@
         <input type="file" id="ProfilePhoto" name="ProfilePhoto" />
     </div>
     <div class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Save Image" id="saveImage" class="btn btn-default" />
+        <input type="button" value="Save Image" id="saveImage" class="btn btn-default" />
     </div>
 </div>
 
-<div id="MyProfile"></div>
+
+<form id="Pofile">
+
+    <div  id="MyProfile"></div>
+    <div  class="col-md-offset-2 col-md-10 ">
+        <input type="button" value="Save" id="saveInfo"class="btn btn-default" />
+        
+    </div>
+</form>
 
 <script>
     $(document).ready(function () {
 
         $("#ProfilePicture").load("/UserProfile/ProfilePicture");
         $("#MyProfile").load("/UserProfile/MyInfoPage");
-
+        
     });
     $("#saveImage").click(function () {
         var data = new FormData();
@@ -46,5 +54,30 @@
 
         });
     });
+
+            $("#saveInfo").click(function (ev) {
+        
+                $.ajax({
+                        url: "/UserProfile/MyInfoPage",
+                        type: 'post',
+                        dataType: 'json',
+                        data: $('#Pofile').serialize(),
+                    success: function (data) {
+                        //$("#MyProfile").html(data);
+                        alert("done");
+                    },
+                    error: function (data) {
+                        alert("error");
+                    }
+
+                });
+
+               
+
+               
+                
+
+    });
+    
 
 </script>
