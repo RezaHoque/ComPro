@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using ComPro.Helpers;
+using static ComPro.Helpers.UserInformation;
 using ComPro.Models;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
@@ -33,14 +33,14 @@ namespace ComPro.Interfaces
                 foreach (var item in AllPartner)
                 {
 
-                    Reciever.Add(new ChatModel() { PartnerName = UserInformation.UserName(item.SenderID), PartnerId = item.SenderID });
+                    Reciever.Add(new ChatModel() { PartnerName = Helpers.UserInformation.UserName(item.SenderID), PartnerId = item.SenderID });
                 }
 
              List<MessageRecieveModel> AllPartnerForReciever = _data.RecieveMessage.Where(x => (x.MessageThreadID.Contains(Current_User_id)) && (x.RecieverID != Current_User_id)).ToList();
 
                 foreach (var item in AllPartnerForReciever)
                 {
-                    Reciever.Add(new ChatModel() { PartnerName = UserInformation.UserName(item.RecieverID), PartnerId = item.RecieverID });
+                    Reciever.Add(new ChatModel() { PartnerName = Helpers.UserInformation.UserName(item.RecieverID), PartnerId = item.RecieverID });
                 }
 
                     
@@ -66,7 +66,7 @@ namespace ComPro.Interfaces
             foreach ( var User in allUser)
             {
                 var user2 = _data.Users.FirstOrDefault(x=>x.Email==User.Email);
-                Reciever.Add(new ChatModel() { PartnerName = UserInformation.UserName(user2.Id), PartnerId = user2.Id });
+                Reciever.Add(new ChatModel() { PartnerName = Helpers.UserInformation.UserName(user2.Id), PartnerId = user2.Id });
 
 
             }
@@ -80,7 +80,7 @@ namespace ComPro.Interfaces
             ChatModel User = new ChatModel();
             try
             {
-                User.PartnerName = UserInformation.UserName(Id);
+                User.PartnerName = Helpers.UserInformation.UserName(Id);
                     User.PartnerId = Id ;
 
                 
@@ -156,14 +156,15 @@ namespace ComPro.Interfaces
                 foreach (var item in allMessage)
                 {
                     ChatHistory.Add(new ChatHisytoryModel() {
-                        SenderName = UserInformation.UserName(item.SenderID),
+                        SenderName = Helpers.UserInformation.UserName(item.SenderID),
                         Message = item.Massage,
                         Date_Time = item.Date_Time });
                 }
-                return ChatHistory;
 
-                   
-                
+                         return ChatHistory.OrderByDescending(x => x.Date_Time);
+
+
+
             }
 
 

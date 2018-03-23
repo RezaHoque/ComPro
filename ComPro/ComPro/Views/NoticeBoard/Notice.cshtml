@@ -21,7 +21,11 @@
         <div class="card-body">
             @Model.Notice.Description
             <p style="margin-top:10px;">
-                <img src="@Model.NoticeImage.ImagePath" alt="@Model.Notice.Title" class="img-thumbnail" width="200px" height="200px">
+                @if (Model.NoticeImage.ImagePath != null)
+    {
+            <img src="@Model.NoticeImage.ImagePath" alt="@Model.Notice.Title" class="img-thumbnail" width="200px" height="200px">
+
+}
             </p>
             <hr />
             <i>@UserInformation.UserNameById(Model.Notice.CreatorId) </i>

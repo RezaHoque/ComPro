@@ -18,10 +18,16 @@
                     </tr>
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                            @if (User.IsInRole(ComPro.Models.Enums.UserRole.Administrator.ToString()))
-                            {
-                                <a href="#" onClick="MemberDetails(@item.Id)" ;>Profile</a>}
+                            <p>@Html.DisplayFor(modelItem => item.Name)</p>
+                            <p><strong>Position:</strong> @Html.DisplayFor(modelItem => item.CurrentJobTitle)</p>
+                            <p><strong>Skills:</strong>@Html.DisplayFor(modelItem => item.Skills)</p>
+                            <p><strong>Employee:</strong> @Html.DisplayFor(modelItem => item.CompanyName)</p>
+                            <p>
+                                @if (User.IsInRole(ComPro.Models.Enums.UserRole.Administrator.ToString()))
+    {
+                            <a href="#" onClick="MemberDetails(@item.Id)" ;>Profile</a>}
+                            </p>
+                            
 
                         </td>
                     </tr>
@@ -36,52 +42,6 @@
 
 
 
-@*<table class="table">
-    <tr>
-        <th>
-            Members
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Phone)
-        </th>
-
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th></th>
-    </tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                <div>
-                    <tabe>
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.Photo)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.Name)</td>
-        </tr>
-        </tabe>
-        </div>
-        </td>
-
-        <@*td>
-                <a href="#" onClick="MemberDetails(@item.Id)" ;>@item.Name</a>
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-
-
-        </tr>
-    }
-    </table>*@
 <script>
     function MemberDetails(id) {
         var id = id;

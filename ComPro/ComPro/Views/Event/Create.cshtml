@@ -7,7 +7,6 @@
 <script src="~/Scripts/chosen.jquery.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <h2>Create an Event.</h2>
 @using (Html.BeginForm("Create", "Event", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -16,7 +15,6 @@
         @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Title, new { id = "Title", htmlAttributes = new { @class = "form-control", placeholder = "Give it an attractive title" } })
-
         </div>
     </div>
 
@@ -24,7 +22,6 @@
         @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.TextAreaFor(model => model.Description, new { id = "Description", rows = "5", cols = "80", placeholder = " Write few words about it", htmlAttributes = new { @class = "form-control" } })
-
         </div>
     </div>
 
@@ -32,7 +29,6 @@
         @Html.LabelFor(model => model.Place, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Place, new { id = "Place", htmlAttributes = new { @class = "form-control", placeholder = "Where the event will take place" } })
-
         </div>
     </div>
     <div class="form-group">
@@ -47,7 +43,6 @@
         <div class="col-md-10">
             <select data-placeholder="select invitees or leave blank if it is public" multiple class="chosen-select form-control" id="slt" name="invitees"></select>
         </div>
-
     </div>
     <div class="form-group">
         <label class="control-label col-md-2">Attach an image</label>
@@ -62,9 +57,7 @@
     </div>
 
 }
-
-    <script type="text/javascript">
-        $(function () {
+<script type="text/javascript">$(function () {
 
             var url = "/UserProfile/UserList";
             $.ajax({
@@ -85,5 +78,4 @@
             $("#datetimepicker").datepicker({ dateFormat: 'dd-mm-yy' });
 
 
-        });
-    </script>
+        });</script>

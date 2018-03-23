@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using ComPro.Models;
 using System.IO;
 using Microsoft.AspNet.Identity;
-using ComPro.Helpers;
+using static ComPro.Helpers.UserInformation;
 
 namespace ComPro.Controllers
 {
@@ -103,7 +103,7 @@ namespace ComPro.Controllers
                     var fileName = Path.GetFileName(pic.FileName);
                     var _ext = Path.GetExtension(pic.FileName);
 
-                    _imgname = UserInformation.UserName(User.Identity.GetUserName());
+                    _imgname = Helpers.UserInformation.UserName(User.Identity.GetUserName());
                     var _comPath = Path.Combine(Server.MapPath("~/Content/images/Profile/"), _imgname + _ext);
                    
 

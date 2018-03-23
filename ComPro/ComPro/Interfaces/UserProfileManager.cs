@@ -45,9 +45,9 @@ namespace ComPro.Interfaces
                 UserInformation.BirthDate = null;
 
 
-                UserInformation.CurrentJobTitle = null;
-                UserInformation.CompanyName = null;
-                UserInformation.Skills = null;
+                UserInformation.CurrentJobTitle = "Not Specified";
+                UserInformation.CompanyName = "Not Specified";
+                UserInformation.Skills = "Not Specified";
 
                 UserInformation.Email = model.Email;
 
@@ -438,11 +438,20 @@ namespace ComPro.Interfaces
                     Gender = model.Gender,
                     Photo = SetProfilePicture(model.Gender),
                     ApprovalDate = DateTime.Now,
-                    UserId=model.UserId
+                    UserId = model.UserId,
+                    Address = "Not Specified",
+                    PostCode =  "Not Specified",
+                    City = "Not Specified",
+                    BirthDate= null,
+                    CompanyName = "Not Specified",
+                    Skills = "Not Specified",
                 };
 
 
-                Data.UserInfo.Add(uInfo);
+
+
+
+        Data.UserInfo.Add(uInfo);
                 Data.SaveChanges();
 
             }

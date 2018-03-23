@@ -682,7 +682,6 @@
     <Content Include="Views\NoticeBoard\Delete.cshtml" />
     <Content Include="Views\Event\_EventList_PartialView.cshtml" />
     <Content Include="Views\Event\_Events_PartialView.cshtml" />
-    <Content Include="Views\Event\_Create_PartialView.cshtml" />
     <Content Include="Views\Event\_EditPartialView.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Test\_editpartialviewmodel.cshtml" />
@@ -696,6 +695,9 @@
     <Content Include="Views\Home\Terms.cshtml" />
     <Content Include="Views\UserProfile\_PartialMyPageView.cshtml" />
     <Content Include="Views\UserProfile\_PartialProfilePictureView.cshtml" />
+    <Content Include="Views\Chat\_MessagePartialViewView.cshtml" />
+    <Content Include="Views\Chat\_NewChatPartialview.cshtml" />
+    <Content Include="Views\Event\_Create_PartialView.cshtml" />
     <Content Include="Views\Event\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
