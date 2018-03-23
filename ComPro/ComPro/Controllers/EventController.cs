@@ -203,11 +203,8 @@ namespace ComPro.Controllers
        public ActionResult MemberResponse(int ID, string Response)
         {
         
-        bool res = _eventManager.MemberResponse(ID, Response);
-            return Content(res.ToString());
-            
-            //return RedirectToAction("EventDetails", new { id = ID });
-            
+            bool res = _eventManager.MemberResponse(ID, Response);
+            return Content(res.ToString());           
             
         }
 

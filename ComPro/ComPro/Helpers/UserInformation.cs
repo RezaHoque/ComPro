@@ -10,7 +10,7 @@ namespace ComPro.Helpers
     public static class UserInformation
     {
         
-        public static string UserName (string Email)
+        public static string UserName (this string Email)
         {
             IUtility _utility = new UtilityManager();
             ApplicationDbContext Data = new ApplicationDbContext();

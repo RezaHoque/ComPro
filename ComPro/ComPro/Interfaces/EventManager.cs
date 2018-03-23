@@ -540,29 +540,48 @@ namespace ComPro.Interfaces
 
         public bool MemberResponse(int Id, string Response)
         {
-            EventMember NewPerticipent = new EventMember();
+            
             try
             {
                 var perticipent = _data.EventMember.FirstOrDefault(x => x.EventId == Id && x.MemberID==Current_User_id);
-                if (perticipent.PerticipetingType == null)
+                if (perticipent != null)
                 {
+                    perticipent.PerticipetingType = Response;
+                    perticipent.ResponseDate = DateTime.Now;
+                    _data.SaveChanges();
+                }
+                else
+                {
+                    
+                    EventMember NewPerticipent = new EventMember();
                     NewPerticipent.EventId = Id;
                     NewPerticipent.MemberID = Current_User_id;
                     NewPerticipent.PerticipetingType = Response;
                     NewPerticipent.ResponseDate = DateTime.Now;
-
                     _data.EventMember.Add(NewPerticipent);
-
-                }
-                else
-                {
-                    perticipent.PerticipetingType = Response;
-                    perticipent.ResponseDate = DateTime.Now;
-                    _data.Entry(perticipent).State = EntityState.Modified;
+                    _data.SaveChanges();
 
                 }
 
-                _data.SaveChanges();
+                //if (perticipent.PerticipetingType == null)
+                //{
+                //    NewPerticipent.EventId = Id;
+                //    NewPerticipent.MemberID = Current_User_id;
+                //    NewPerticipent.PerticipetingType = Response;
+                //    NewPerticipent.ResponseDate = DateTime.Now;
+
+                //    _data.EventMember.Add(NewPerticipent);
+
+                //}
+                //else
+                //{
+                //    perticipent.PerticipetingType = Response;
+                //    perticipent.ResponseDate = DateTime.Now;
+                //    _data.Entry(perticipent).State = EntityState.Modified;
+
+                //}
+
+                //_data.SaveChanges();
                 return true;
             }
 

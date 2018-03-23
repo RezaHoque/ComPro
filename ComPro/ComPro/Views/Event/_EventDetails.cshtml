@@ -1,6 +1,7 @@
 ﻿@model ComPro.Models.DetailViewModel
 @using Microsoft.AspNet.Identity;
 @using ComPro.Models;
+@using ComPro.Helpers;
 
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="MyModal">
@@ -22,7 +23,23 @@
                     @Model.Description
                 </p>
                 <p>
-                    
+                    @if (Model.MembersList.Count() == 0)
+                    {
+                        <div class="alert alert-light" role="alert">
+                            <h5>No one responded to this event yet</h5>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-light" role="alert">
+                            <h5>These members are going to this event</h5>
+                            @foreach (var m in Model.MembersList.Where(x=>x.PerticipetingType=="Going"))
+                            {
+                            <h6><a href="#"> @m.Member.UserName.UserName()</a></h6>
+                            }
+                        </div>
+                      
+                    }
                 </p>
             </div>
             <div class="modal-footer">
