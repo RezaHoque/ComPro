@@ -14,8 +14,6 @@ namespace ComPro.Interfaces
         void ConfirmEmai(string email);
         //string ConvertUrlsToLinks(string msg);
 
-        string printtype(MyPoint a, MyPoint b, MyPoint c);
-        double GetPerimeter(MyPoint a, MyPoint b, MyPoint c);
-        string GetString(MyPoint a, MyPoint b, MyPoint c);
+        
     }
 }

@@ -1,28 +1,22 @@
 ﻿@model ComPro.Models.EventModel
 
-
 <form>
     <div class="form-group">
         @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Title, new { id = "Title", htmlAttributes = new { @class = "form-control" } })
-
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.TextAreaFor(model => model.Description, new { id = "Description", htmlAttributes = new { @class = "form-control" } })
-
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.Place, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Place, new { id = "Place", htmlAttributes = new { @class = "form-control" } })
-
         </div>
     </div>
     <div class="form-group">
@@ -32,28 +26,21 @@
             <input type="text" id="datetimepicker" class="form-control">
         </div>
     </div>
-  <div class="form-group">
-      <label>Send invitation to</label>
-      <div class="col-md-10">
-          <select data-placeholder="Choose a member..." multiple class="chosen-select form-control" id="slt">
-          </select>
-      </div>
-
-  </div>
-
+    <div class="form-group">
+        <label>Send invitation to</label>
+        <div class="col-md-10">
+            <select data-placeholder="Choose a member..." multiple class="chosen-select form-control" id="slt"></select>
+        </div>
+    </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Create" class="btn btn-default" id="btnEventCreate" />
         </div>
     </div>
 
-
 </form>
 
-
-
-<script type="text/javascript">
-    $(function () {
+<script type="text/javascript">$(function () {
 
         var url = "/UserProfile/UserList";
         $.ajax({
@@ -69,6 +56,5 @@
                 $(".chosen-select").chosen();
             });
 
-      
-    });
-</script>
+
+    });</script>

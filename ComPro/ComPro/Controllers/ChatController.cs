@@ -26,13 +26,35 @@ namespace ComPro.Controllers
             return View(_chat.Allmember());
         }
 
+
+
         
-        
+        public ActionResult NewMessage()
+        {
+            return PartialView("_NewChatPartialview");
+        }
+
+        [HttpPost]
+        public ActionResult PostNewMessage(FormCollection frm)
+        {
+            if (ModelState.IsValid)
+            {
+                var invitees = new List<string>();
+                if (!string.IsNullOrEmpty(frm["invitees"]))
+                {
+                    invitees = frm["invitees"].Split(',').ToList();
+                }
+                /*var result = _eventManager.Create(eventModel, invitees);*/
+            }
+                return PartialView("_NewChatPartialview");
+        }
+
 
         public ActionResult Message(string Id)
         {
-            //return View(Id);
-            return View(_chat.Chat(Id));
+            
+            return PartialView("_MessagePartialViewView", _chat.Chat(Id));
+            
         }
 
         [HttpPost]
