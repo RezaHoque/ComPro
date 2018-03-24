@@ -64,7 +64,7 @@ namespace ComPro.Interfaces
 
                 foreach (var item in AllEvent)
                 {
-                    if (item.IsPublic)
+                    if (item.IsPublic || item.CreatorId==Current_User_id)
                     {
                         events.Add(item);
                     }
