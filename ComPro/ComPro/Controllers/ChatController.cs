@@ -21,14 +21,14 @@ namespace ComPro.Controllers
         }
 
 
-        public ActionResult Create_Chat()
-        {
-            return View(_chat.Allmember());
-        }
+        //public ActionResult Create_Chat()
+        //{
+        //    return View(_chat.Allmember());
+        //}
 
 
 
-        
+
         public ActionResult NewMessage()
         {
             return PartialView("_NewChatPartialview");
@@ -44,9 +44,11 @@ namespace ComPro.Controllers
                 {
                     invitees = frm["invitees"].Split(',').ToList();
                 }
-                /*var result = _eventManager.Create(eventModel, invitees);*/
+                var result = _chat.CreateNewChat(frm["Message"], invitees);
             }
-                return PartialView("_NewChatPartialview");
+            //return PartialView("_NewChatPartialview");
+
+            return RedirectToAction("ShowChat");
         }
 
 
@@ -63,7 +65,7 @@ namespace ComPro.Controllers
 
             if (model != null)
             {
-                
+
                 var result = _chat.Save_Message(model);
 
                 return Content(result.ToString());
@@ -77,9 +79,9 @@ namespace ComPro.Controllers
             return PartialView("_ChatPostPartialview");
         }
         [Authorize]
-        public ActionResult ChatGet(string Emai)
+        public ActionResult ChatGet(string MessageThreadID)
         {
-            var result = _chat.Chat_History(Emai);
+            var result = _chat.Chat_History(MessageThreadID);
             return PartialView("_ChatListPartial", result);
         }
 

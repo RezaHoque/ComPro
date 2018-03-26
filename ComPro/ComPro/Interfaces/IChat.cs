@@ -11,7 +11,10 @@ namespace ComPro.Interfaces
     {
         IEnumerable<ChatModel> All_reciever();
         IEnumerable<ChatModel> Allmember();
-        IEnumerable<ChatHisytoryModel> Chat_History(string email);
+
+        bool CreateNewChat (string Message, List<string> Recievers);
+
+        IEnumerable<ChatHisytoryModel> Chat_History(string MessageThreadID);
         //IEnumerable<ChatModel> Save_Message(string ID2, string Message);
         ChatModel Chat(string Id);
         bool Save_Message(Chat_Data_Pass model);
