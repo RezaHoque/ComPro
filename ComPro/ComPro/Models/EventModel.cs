@@ -30,7 +30,8 @@ namespace ComPro.Models
             public bool IsApproved { get; set; }
             public DateTime ApprovalDate { get; set; }
             public bool IsPublic { get; set; }
-            
+            public DateTime End { get; set; }
+             
         }
 
     public class EventMember
@@ -82,6 +83,7 @@ namespace ComPro.Models
         public string Activity { get; set; }
         public string Description { get; set; }
         public DateTime EventDate { get; set; }
+        public DateTime EventEndDate { get; set; }
         public string Place { get; set; }
         public List<SiteImage> Images { get; set; }
         public int TotalYes { get; set; }
@@ -100,6 +102,7 @@ namespace ComPro.Models
         public string Description { get; set; }
                 
         public DateTime Date { get; set; }
+        public DateTime EndDate { get; set; }
 
         public string Place { get; set; }
 

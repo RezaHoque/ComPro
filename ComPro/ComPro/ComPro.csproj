@@ -357,6 +357,10 @@
     <Compile Include="Migrations\201803212227352_modify_search_view_model.Designer.cs">
       <DependentUpon>201803212227352_modify_search_view_model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803251803199_eventend.cs" />
+    <Compile Include="Migrations\201803251803199_eventend.Designer.cs">
+      <DependentUpon>201803251803199_eventend.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChatHisytoryModel.cs" />
@@ -789,6 +793,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803221829507_eventIsPublic.resx">
       <DependentUpon>201803221829507_eventIsPublic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803251803199_eventend.resx">
+      <DependentUpon>201803251803199_eventend.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

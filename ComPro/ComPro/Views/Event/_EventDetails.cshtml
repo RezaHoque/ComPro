@@ -15,7 +15,13 @@
             </div>
             <div class="modal-body">
                 <p>
-                    <i>@Model.Date.ToShortDateString() at @Model.Place</i>
+                    <i>Starts: @Model.Date.ToString("dd.MMM.yyyy hh:mm") at @Model.Place</i>
+                    <br />
+                    @if (Model.EndDate >= Model.Date)
+                    {
+                        <span> Ends: @Model.EndDate.ToString("dd.MMM.yyyy hh:mm")</span>
+                    }
+                    
                     <br />
                     <i>Owner: @Model.CreatorName</i>
                 </p>

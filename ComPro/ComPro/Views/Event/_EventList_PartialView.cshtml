@@ -33,7 +33,7 @@
                     }
 
                         <div class="card-body">
-                            <h6 class="card-title"><i>Date: @item.EventDate.ToShortDateString() <br />@item.Place</i></h6>
+                            <h6 class="card-title"><i>Date: @item.EventDate.ToString("dd.MMM.yyyy hh:mm") <br />@item.Place</i></h6>
 
                             @if (!string.IsNullOrEmpty(item.Description))
                             {

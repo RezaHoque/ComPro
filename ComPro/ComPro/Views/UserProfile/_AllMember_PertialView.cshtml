@@ -1,43 +1,30 @@
 ﻿@model IEnumerable<ComPro.Models.UserInfo>
 
-<table class="table">
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                <table>
-
-                    <tr>
-                        <td>
-
-                            <img src="@item.Photo" height="100" width="100" />
-
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>@Html.DisplayFor(modelItem => item.Name)</p>
-                            <p><strong>Position:</strong> @Html.DisplayFor(modelItem => item.CurrentJobTitle)</p>
-                            <p><strong>Skills:</strong>@Html.DisplayFor(modelItem => item.Skills)</p>
-                            <p><strong>Employee:</strong> @Html.DisplayFor(modelItem => item.CompanyName)</p>
-                            <p>
-                                @if (User.IsInRole(ComPro.Models.Enums.UserRole.Administrator.ToString()))
-    {
-                            <a href="#" onClick="MemberDetails(@item.Id)" ;>Profile</a>}
-                            </p>
-                            
-
-                        </td>
-                    </tr>
-                </table>
-            </td>
-
-
-        </tr>
-    }
-</table>
+@foreach (var item in Model)
+{
+    <div class="row border border-light rounded" style="margin-bottom:3px;">
+        <div class="col col-2">
+            <img src="@item.Photo" alt="@item.Name" class="img-thumbnail" style="width:100px;height:100px;">
+        </div>
+        <div class="col col-10">
+            <p><h3>@item.Name</h3></p>
+            <p>
+                Current position: @item.CurrentJobTitle
+                <br />
+                Employee: @item.CompanyName
+                <br />
+                Skills: @item.Skills
+            </p>
+            <p>
+            @if (User.IsInRole(ComPro.Models.Enums.UserRole.Administrator.ToString()))
+            {
+                <a href="#" onClick="MemberDetails(@item.Id)" ;>Profile</a>
+            }
+            </p>
+        </div>
+    </div>
+}
 
 
 

@@ -91,6 +91,21 @@ namespace ComPro.Controllers
                 {
                     invitees = frm["invitees"].Split(',').ToList();
                 }
+
+                if (!string.IsNullOrEmpty(frm["startTime"]) && frm["startTime"]!= "Choose...")
+                {
+                    var timearr = frm["startTime"].Split(':');
+                    var time = new TimeSpan(int.Parse(timearr[0]), int.Parse(timearr[1]), 0);
+                    eventModel.Date = eventModel.Date.Add(time);
+                }
+                if (!string.IsNullOrEmpty(frm["endTime"]) && frm["endTime"] != "Choose...")
+                {
+                    var timearr = frm["endTime"].Split(':');
+                    var time = new TimeSpan(int.Parse(timearr[0]), int.Parse(timearr[1]), 0);
+                    eventModel.End = eventModel.End.Add(time);
+                }
+
+
                 var result = _eventManager.Create(eventModel,invitees);
                 if (result!=null)
                 {

@@ -32,10 +32,110 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @*@Html.EditorFor(model => model.Date, new { id = "Date", htmlAttributes = new { @class = "form-control" } })*@
-            <input type="text" id="datetimepicker" class="form-control" name="Date">
+        <div class="form-row">
+            <div class="col col-md-4">
+                <label class="control-label col-md-5">Start date</label>
+                <div class="col-md-5">
+                    @*@Html.EditorFor(model => model.Date, new { id = "Date", htmlAttributes = new { @class = "form-control" } })*@
+                    <input type="text" id="startDatetimepicker" class="form-control" name="Date" style="width:200px;">
+                </div>
+            </div>
+            <div class="col col-md-4">
+                <label class="control-label col-md-5">Start time</label>
+                <div class="col-md-5">
+                    @*@Html.EditorFor(model => model.Date, new { id = "Date", htmlAttributes = new { @class = "form-control" } })*@
+                    <select id="startTime" class="form-control" name="startTime">
+                        <option selected>Choose...</option>
+                        <option>08:00</option>
+                        <option>08:30</option>
+                        <option>09:00</option>
+                        <option>09:30</option>
+                        <option>10:00</option>
+                        <option>10:30</option>
+                        <option>11:00</option>
+                        <option>11:30</option>
+                        <option>12:00</option>
+                        <option>12:30</option>
+                        <option>13:00</option>
+                        <option>13:30</option>
+                        <option>14:00</option>
+                        <option>14:30</option>
+                        <option>15:00</option>
+                        <option>15:30</option>
+                        <option>16:00</option>
+                        <option>16:30</option>
+                        <option>17:00</option>
+                        <option>17:30</option>
+                        <option>18:00</option>
+                        <option>18:30</option>
+                        <option>19:00</option>
+                        <option>19:30</option>
+                        <option>20:00</option>
+                        <option>20:30</option>
+                        <option>21:00</option>
+                        <option>21:30</option>
+                        <option>22:00</option>
+                        
+
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+
+        
+        
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col col-md-4">
+                <label class="control-label col-md-5">End date</label>
+                <div class="col-md-5">
+                    @*@Html.EditorFor(model => model.Date, new { id = "Date", htmlAttributes = new { @class = "form-control" } })*@
+                    <input type="text" id="endDatetimepicker" class="form-control" name="End" style="width:200px;">
+                </div>
+            </div>
+            <div class="col col-md-4">
+                <label class="control-label col-md-5">End time</label>
+                <div class="col-md-5">
+                    @*@Html.EditorFor(model => model.Date, new { id = "Date", htmlAttributes = new { @class = "form-control" } })*@
+                    <select id="startTime" class="form-control" name="endTime">
+                        <option selected>Choose...</option>
+                        <option>08:00</option>
+                        <option>08:30</option>
+                        <option>09:00</option>
+                        <option>09:30</option>
+                        <option>10:00</option>
+                        <option>10:30</option>
+                        <option>11:00</option>
+                        <option>11:30</option>
+                        <option>12:00</option>
+                        <option>12:30</option>
+                        <option>13:00</option>
+                        <option>13:30</option>
+                        <option>14:00</option>
+                        <option>14:30</option>
+                        <option>15:00</option>
+                        <option>15:30</option>
+                        <option>16:00</option>
+                        <option>16:30</option>
+                        <option>17:00</option>
+                        <option>17:30</option>
+                        <option>18:00</option>
+                        <option>18:30</option>
+                        <option>19:00</option>
+                        <option>19:30</option>
+                        <option>20:00</option>
+                        <option>20:30</option>
+                        <option>21:00</option>
+                        <option>21:30</option>
+                        <option>22:00</option>
+
+
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
     <div class="form-group">
@@ -57,25 +157,27 @@
     </div>
 
 }
-<script type="text/javascript">$(function () {
+<script type="text/javascript">
+$(function () {
 
-            var url = "/UserProfile/UserList";
-            $.ajax({
-                method: "GET",
-                url: url,
-                dataType: "json"
-            })
-                .done(function (data) {
-                    $.each(data, function (k, v) {
-                        console.log(v);
-                        $('<option>').val(v.UserId).text(v.Name).appendTo('#slt');
-                    });
-                    $(".chosen-select").chosen();
+        var url = "/UserProfile/UserList";
+        $.ajax({
+            method: "GET",
+            url: url,
+            dataType: "json"
+        })
+            .done(function (data) {
+                $.each(data, function (k, v) {
+                    console.log(v);
+                    $('<option>').val(v.UserId).text(v.Name).appendTo('#slt');
                 });
+                $(".chosen-select").chosen();
+            });
 
-            //   $('#datetimepicker').datepicker();
+        //   $('#datetimepicker').datepicker();
 
-            $("#datetimepicker").datepicker({ dateFormat: 'dd-mm-yy' });
+        $("#startDatetimepicker").datepicker({ dateFormat: 'dd-mm-yy' });
+        $("#endDatetimepicker").datepicker({ dateFormat: 'dd-mm-yy' });
 
 
-        });</script>
+    });</script>

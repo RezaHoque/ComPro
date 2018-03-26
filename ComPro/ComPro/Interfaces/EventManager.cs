@@ -90,7 +90,8 @@ namespace ComPro.Interfaces
                     Images = _data.SiteImages.Where(x => x.Type == "Event" && x.TypeId == p.EventId).ToList(),
                     TotalYes = _data.EventMember.Where(x => x.EventId == p.EventId && x.PerticipetingType == "Going").Count(),
                     Members = _data.EventMember.Where(x => x.EventId == p.EventId).ToList(),
-                    CreatorName = UserInformation.UserNameById(p.CreatorId)
+                    CreatorName = UserInformation.UserNameById(p.CreatorId),
+                    EventEndDate=p.End
                     
                     
                 }).ToList();
@@ -314,6 +315,7 @@ namespace ComPro.Interfaces
                     Result.CreatorId = eventModel.CreatorId;
                     Result.ApprovalDate = eventModel.ApprovalDate;
                     Result.IsApproved = eventModel.IsApproved;
+                    Result.EndDate = eventModel.End;
 
 
                     if (Result.MembersList.Any(x => x.MemberID == Current_User_id)&& !(Result.CreatorId == Current_User_id))
@@ -371,7 +373,7 @@ namespace ComPro.Interfaces
 
                 Data.EventStatus = true;
                 Data.IsApproved = true;
-
+                Data.End = model.End;
                 Data.ApprovalDate = DateTime.Now;
                 Data.IsPublic = inviteesIds.Any() ? false : true;
 
