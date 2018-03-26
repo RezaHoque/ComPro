@@ -28,7 +28,7 @@ namespace ComPro.Interfaces
 
         UserInfo DetailProfile(int Id);
         UserInfo EditUserProfile();
-        string PostEditUserProfile(UserInfo info);
+        bool PostEditUserProfile(UserInfo info);
         string DeleteUserProfile(int id);
 
         string CheckLink(string email);

@@ -1,83 +1,359 @@
 ﻿
-@using Microsoft.AspNet.Identity
-@using ComPro.Helpers
-<h2> @UserInformation.UserName(User.Identity.GetUserName())</h2>
+@model ComPro.Models.UserInfo
 
-<div id="ProfilePicture"></div>
-<div>
+<link href="~/Content/chosen.min.css" rel="stylesheet" />
+<script src="~/Scripts/chosen.jquery.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <div class="col-md-10">
-        <input type="file" id="ProfilePhoto" name="ProfilePhoto" />
-    </div>
-    <div class="col-md-offset-2 col-md-10">
-        <input type="button" value="Save Image" id="saveImage" class="btn btn-default" />
-    </div>
+<h2>My Page</h2>
+
+<div class="alert alert-success alert-dismissible fade hide" role="alert" id="Success">
+      Your Profile is modified .<strong>Thank you !</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
+<div class="alert alert alert-danger alert-dismissible fade hide" role="alert" id="Fail">
+    <strong>Sorry !</strong>   Your Profile is not modified. Try Again  .
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@*@using (Html.BeginForm("MyPage", "UserProfile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()*@
+<form id="contactForm1" action="https://localhost:44307/UserProfile/MyPage" method="post">
 
-
-<form id="Pofile">
-
-    <div  id="MyProfile"></div>
-    <div  class="col-md-offset-2 col-md-10 ">
-        <input type="button" value="Save" id="saveInfo"class="btn btn-default" />
-        
+    <img src="@Model.Photo" height="100" width="100" />
+    <div class="form-group">
+        <label class="control-label col-md-2">Attach an image</label>
+        <div class="col-md-10">
+            <input type="file" id="Photo" name="fileUpload1" />
+        </div>
     </div>
-</form>
 
-<script>
-    $(document).ready(function () {
 
-        $("#ProfilePicture").load("/UserProfile/ProfilePicture");
-        $("#MyProfile").load("/UserProfile/MyInfoPage");
-        
-    });
-    $("#saveImage").click(function () {
-        var data = new FormData();
-        var files = $("#ProfilePhoto").get(0).files;
-        if (files.length > 0) {
-            data.append("MyImages", files[0]);
-        }
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { id = "Title", htmlAttributes = new { @class = "form-control", placeholder = "Give it an attractive title" } })
+        </div>
+    </div>
 
-        $.ajax({
-            url: "/UserProfile/UploadFile",
-            type: "POST",
-            processData: false,
-            contentType: false,
-            data: data,
-            success: function (response) {
+    <div class="form-group">
+        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Address, new { id = "Description", rows = "5", cols = "80", placeholder = " Write few words about it", htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
 
-                $("#ProfilePicture").load("/UserProfile/ProfilePicture");
-            },
-            error: function (er) {
-                alert(er);
-            }
+    <div class="form-group">
+        @Html.LabelFor(model => model.PostCode, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PostCode, new { id = "Place", htmlAttributes = new { @class = "form-control", placeholder = "Where the event will take place" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.City, new { id = "Place", htmlAttributes = new { @class = "form-control", placeholder = "Where the event will take place" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Phone, new { id = "Place", htmlAttributes = new { @class = "form-control", placeholder = "Where the event will take place" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*@Html.EditorFor(model => model.Date, new { id = "Date", htmlAttributes = new { @class = "form-control" } })*@
+            <input type="text" id="datetimepicker" value="@Model.BirthDate" class="form-control" name="Date">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CurrentJobTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CurrentJobTitle, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.CompanyName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CompanyName, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Skills, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Skills, new { id = "Description", rows = "5", cols = "80", placeholder = " Write few words about it", htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" value="Save" class="btn btn-success" id="EditProfile" />
+        </div>
+    </div>
+
+    @*}*@
+
+    </form>
+
+    <script type="text/javascript">
+        $(function () {
+
+            $("#datetimepicker").datepicker({ dateFormat: 'dd-mm-yy' });
+
 
         });
-    });
 
-            $("#saveInfo").click(function (ev) {
-        
-                $.ajax({
-                        url: "/UserProfile/MyInfoPage",
-                        type: 'post',
-                        dataType: 'json',
-                        data: $('#Pofile').serialize(),
+        $("#EditProfile").click(function () {
+
+            
+            var frm = $('#contactForm1');
+                 $.ajax({
+                    type: frm.attr('method'),
+                    url: frm.attr('action'),
+                    data: frm.serialize(),
                     success: function (data) {
-                        //$("#MyProfile").html(data);
-                        alert("done");
+                         var data = new FormData();
+                        var files = $("#Photo").get(0).files;
+                            if (files.length > 0) {
+                                data.append("MyImages", files[0]);
+                            }
+
+                            $.ajax({
+                                url: "/UserProfile/UploadFile",
+                                type: "POST",
+                                processData: false,
+                                contentType: false,
+                                data: data,
+                                success: function (response) {
+
+                                    $("#Success").removeClass("hide");
+                                    $("#Success").addClass("show");
+                                    
+                                },
+                                error: function (er) {
+                                    $("#Fail").removeClass("hide");
+                                    $("#Fail").addClass("show");
+                                }
+
+                            });
+                       
+
+                        
                     },
                     error: function (data) {
-                        alert("error");
+                        $("#Fail").removeClass("hide");
+                        $("#Fail").addClass("show");
+                    },
+                });
+           
+        });
+       
+
+    </script>
+
+
+
+
+
+    @*@model ComPro.Models.UserInfo
+
+            <link href="~/Content/chosen.min.css" rel="stylesheet" />
+            <script src="~/Scripts/chosen.jquery.min.js"></script>
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10" >
+                    @Html.TextAreaFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.PostCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PostCode, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PostCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" id="datetimepicker" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CurrentJobTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CurrentJobTitle, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CurrentJobTitle, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CompanyName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Skills, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Skills, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Skills, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <script type="text/javascript">
+                $(document).load(function () {
+                    $("#datetimepicker").datepicker({ dateFormat: 'dd-mm-yy' });
+                });
+
+
+
+
+        </script>
+
+    *@
+
+
+
+
+
+    @*@using Microsoft.AspNet.Identity
+        @using ComPro.Helpers
+        <h2> @UserInformation.UserName(User.Identity.GetUserName())</h2>
+
+        <div id="ProfilePicture"></div>
+        <div>
+
+            <div class="col-md-10">
+                <input type="file" id="ProfilePhoto" name="ProfilePhoto" />
+            </div>
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Save Image" id="saveImage" class="btn btn-default" />
+            </div>
+        </div>
+
+
+        <form id="Pofile">
+
+            <div  id="MyProfile"></div>
+            <div  class="col-md-offset-2 col-md-10 ">
+                <input type="button" value="Save" id="saveInfo"class="btn btn-default" />
+
+            </div>
+        </form>
+
+        <script>
+            $(document).ready(function () {
+
+                $("#ProfilePicture").load("/UserProfile/ProfilePicture");
+                $("#MyProfile").load("/UserProfile/MyInfoPage");
+
+            });
+            $("#saveImage").click(function () {
+                var data = new FormData();
+                var files = $("#ProfilePhoto").get(0).files;
+                if (files.length > 0) {
+                    data.append("MyImages", files[0]);
+                }
+
+                $.ajax({
+                    url: "/UserProfile/UploadFile",
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: data,
+                    success: function (response) {
+
+                        $("#ProfilePicture").load("/UserProfile/ProfilePicture");
+                    },
+                    error: function (er) {
+                        alert(er);
                     }
 
                 });
+            });
 
-               
+                    $("#saveInfo").click(function (ev) {
 
-               
-                
+                        $.ajax({
+                                url: "/UserProfile/MyInfoPage",
+                                type: 'post',
+                                dataType: 'json',
+                                data: $('#Pofile').serialize(),
+                            success: function (data) {
+                                //$("#MyProfile").html(data);
+                                alert("done");
+                            },
+                            error: function (data) {
+                                alert("error");
+                            }
 
-    });
-    
+                        });
 
-</script>
+
+
+
+
+
+            });
+
+
+        </script>*@
