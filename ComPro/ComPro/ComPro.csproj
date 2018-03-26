@@ -670,13 +670,13 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\NoticeBoard\_CommentPartialView.cshtml" />
     <Content Include="Views\NoticeBoard\_CommentsListPartial.cshtml" />
-    <Content Include="Views\UserProfile\Edit.cshtml" />
+    <Content Include="Views\UserProfile\%28Lage na %29Edit.cshtml" />
     <Content Include="Views\NoticeBoard\NewNotice.cshtml" />
     <Content Include="Views\Chat\ShowChat.cshtml" />
-    <Content Include="Views\Chat\Create_Chat.cshtml" />
+    <Content Include="Views\Chat\%28Lage na%29Create_Chat.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Event\_EventDetails.cshtml" />
-    <Content Include="Views\Chat\Message.cshtml" />
+    <Content Include="Views\Chat\%28Lage na%29Message.cshtml" />
     <Content Include="Views\Chat\_ChatPostPartialview.cshtml" />
     <Content Include="Views\Chat\_ChatListPartial.cshtml" />
     <Content Include="Views\Home\_LatestMember.cshtml" />
@@ -697,11 +697,11 @@
     <Content Include="Views\UserProfile\MyPage.cshtml" />
     <Content Include="Views\UserProfile\%28Lage na%29_CurrentUser_Partialview.cshtml" />
     <Content Include="Views\Home\Terms.cshtml" />
-    <Content Include="Views\UserProfile\_PartialMyPageView.cshtml" />
-    <Content Include="Views\UserProfile\_PartialProfilePictureView.cshtml" />
+    <Content Include="Views\UserProfile\%28Lage na %29_PartialMyPageView.cshtml" />
+    <Content Include="Views\UserProfile\%28Lage na %29_PartialProfilePictureView.cshtml" />
     <Content Include="Views\Chat\_MessagePartialViewView.cshtml" />
     <Content Include="Views\Chat\_NewChatPartialview.cshtml" />
-    <Content Include="Views\Event\_Create_PartialView.cshtml" />
+    <Content Include="Views\Event\%28Lage na%29_Create_PartialView.cshtml" />
     <Content Include="Views\Event\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>

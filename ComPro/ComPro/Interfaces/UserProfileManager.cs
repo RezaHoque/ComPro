@@ -146,7 +146,7 @@ namespace ComPro.Interfaces
 
 
 
-        public string PostEditUserProfile(UserInfo info)
+        public bool PostEditUserProfile(UserInfo info)
         {
 
             try
@@ -160,22 +160,27 @@ namespace ComPro.Interfaces
                 User.PostCode = info.PostCode;
                 User.City = info.City;
                 User.Phone = info.Phone;
-                User.BirthDate = info.BirthDate;
+                if(info.Photo != null)
+                { User.Photo = info.Photo;}
+                
+                if(info.BirthDate != null)
+                {User.BirthDate = info.BirthDate;
+                  }
+                
                 User.CurrentJobTitle = info.CurrentJobTitle;
                 User.CompanyName = info.CompanyName;
                 User.Skills = info.Skills;
                 User.Email = info.Email;
             
                 //info.Gender = User.Gender;
-                //info.Photo = User.Photo;
                 //Data.Entry(info).State = EntityState.Modified;
                 Data.SaveChanges();
-                return Helpers.Constants.PostEdit;
+                return true;
             }
 
             catch
             {
-                throw;
+                return false;
             }
         }
 

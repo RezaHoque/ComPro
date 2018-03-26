@@ -378,23 +378,34 @@ namespace ComPro.Interfaces
                 Data.IsPublic = inviteesIds.Any() ? false : true;
 
                 _data.Event.Add(Data);
-
                 _data.SaveChanges();
-               
-                foreach (var id in inviteesIds)
-                {
-                    EventMember member = new EventMember();
-                    var info = _data.Users.FirstOrDefault(x => x.Id == id);
-                    member.MemberID = info.Id;
-                    member.EventId = Data.EventId;
-                    member.ResponseDate = DateTime.Now;
-                    member.PerticipetingType = null;
+                CreateMember(Data, inviteesIds);
 
-                    _data.EventMember.Add(member);
-                    _data.SaveChanges();
-                }
+                //EventMember member = new EventMember();
+                //List<EventMember> MemberList = new List<EventMember>();
+                //int ID = 0;
 
-                
+                //foreach (var id in inviteesIds)
+                //{
+                //    //ID = Int32.Parse(id);
+
+                //    //var user = _data.UserInfo.FirstOrDefault(x=>x.Id==ID);
+                //    //var info = _data.Users.FirstOrDefault(x => x.Id == user.Email);
+                //    //member.MemberID = info.Id;
+                //    MemberList.Add(new EventMember() {
+                //    MemberID = id,
+                //    EventId = Data.EventId,
+                //    ResponseDate = DateTime.Now,
+                //    PerticipetingType = null,
+
+                //});
+
+
+
+                //}
+                //_data.EventMember.AddRange(MemberList);
+                //_data.SaveChanges();
+
                 return Data;
             }
 
@@ -404,6 +415,46 @@ namespace ComPro.Interfaces
             }
         }
 
+
+        public void CreateMember(EventModel Data, List<string> inviteesIds)
+        {
+            try
+            {
+
+                EventMember member = new EventMember();
+                List<EventMember> MemberList = new List<EventMember>();
+                int ID = 0;
+
+                foreach (var id in inviteesIds)
+                {
+                    //ID = Int32.Parse(id);
+
+                    //var user = _data.UserInfo.FirstOrDefault(x=>x.Id==ID);
+                    //var info = _data.Users.FirstOrDefault(x => x.Id == user.Email);
+                    //member.MemberID = info.Id;
+                    MemberList.Add(new EventMember()
+                    {
+                        MemberID = id,
+                        EventId = Data.EventId,
+                        ResponseDate = DateTime.Now,
+                        PerticipetingType = null,
+
+                    });
+
+
+
+                }
+                _data.EventMember.AddRange(MemberList);
+                _data.SaveChanges();
+
+               
+            }
+
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
 
         public bool ApproveEvent(int Id)
         {

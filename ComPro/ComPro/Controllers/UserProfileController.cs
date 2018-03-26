@@ -69,26 +69,62 @@ namespace ComPro.Controllers
         public ActionResult MyPage()
         {
 
-            return View();
+            return View(_userProfile.EditUserProfile());
         }
 
-        
-
-        [HttpGet]
-        public ActionResult MyInfoPage()
-        {
-            return PartialView("_PartialMyPageView", _userProfile.EditUserProfile());
-
-        }
 
         [HttpPost]
-        public ActionResult MyInfoPage(UserInfo info)
+        public ActionResult MyPage(UserInfo info, FormCollection frm)
         {
 
-            var result= _userProfile.PostEditUserProfile(info);
-            //return PartialView("_PartialMyPageView", _userProfile.EditUserProfile());
-            return Content(result.ToString());
+            //if (Request.Files.Count > 0)
+            //{
+            //    var file = Request.Files[0];
+
+            //    if (file != null && file.ContentLength > 0)
+            //    {
+            //        var fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
+                    
+            //        var path = Path.Combine(Server.MapPath("~/Content/images/Profile/"), fileName);
+            //        file.SaveAs(path);
+                   
+            //        info.Photo = "/Content/images/Profile/" + fileName;
+            //    }
+            //}
+            if (!string.IsNullOrEmpty(frm["Date"]))
+            {
+               
+                info.BirthDate = DateTime.Parse(frm["Date"]);
+            }
+            var result = _userProfile.PostEditUserProfile(info);
+            return View(_userProfile.EditUserProfile());
         }
+
+
+        //[HttpGet]
+        //public ActionResult MyInfoPage()
+        //{
+        //    return PartialView("_PartialMyPageView", _userProfile.EditUserProfile());
+
+        //}
+
+        //[HttpPost]
+        //public ActionResult MyInfoPage(UserInfo info , FormCollection frm)
+        //{
+
+        //    var result = _userProfile.PostEditUserProfile(info);
+        //    //return PartialView("_PartialMyPageView", _userProfile.EditUserProfile());
+        //    return Content(result.ToString());
+        //}
+
+        //[HttpPost]
+        //public ActionResult MyInfoPage(UserInfo info)
+        //{
+
+        //    var result= _userProfile.PostEditUserProfile(info);
+        //    //return PartialView("_PartialMyPageView", _userProfile.EditUserProfile());
+        //    return Content(result.ToString());
+        //}
 
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -105,7 +141,7 @@ namespace ComPro.Controllers
 
                     _imgname = Helpers.UserInformation.UserName(User.Identity.GetUserName());
                     var _comPath = Path.Combine(Server.MapPath("~/Content/images/Profile/"), _imgname + _ext);
-                   
+
 
                     pic.SaveAs(_comPath);
 
@@ -115,8 +151,8 @@ namespace ComPro.Controllers
                     UserInfo userinfo2 = _data.UserInfo.FirstOrDefault(y => y.Email == userinfo1.Email);
 
                     //userinfo2.Photo = "/Content/images/Profile/" + _imgname + _ext; 
-                    userinfo2.Photo = "/Content/images/Profile/" + _imgname + _ext; 
-                   
+                    userinfo2.Photo = "/Content/images/Profile/" + _imgname + _ext;
+
                     _data.SaveChanges();
 
 
@@ -128,13 +164,13 @@ namespace ComPro.Controllers
 
 
 
-        public ActionResult ProfilePicture()
-        {
+        //public ActionResult ProfilePicture()
+        //{
 
-            return PartialView("_PartialProfilePictureView", _userProfile.CurrentUserDetail());
+        //    return PartialView("_PartialProfilePictureView", _userProfile.CurrentUserDetail());
 
 
-        }
+        //}
 
 
         [AllowAnonymous]

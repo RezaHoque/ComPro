@@ -19,43 +19,90 @@ namespace ComPro.Interfaces
 
         string Current_User_id = HttpContext.Current.User.Identity.GetUserId();
 
+
         public IEnumerable<ChatModel> All_reciever()
         {
-            
 
-            try {
 
-            List<ChatModel> Reciever = new List<ChatModel>();
-              
+            try
+            {
 
-            var AllPartner = _data.SendMessage.Where(x =>( x.MessageThreadID.Contains(Current_User_id)) && (x.SenderID != Current_User_id));
-            
+                List<ChatModel> Reciever = new List<ChatModel>();
+
+
+                var AllPartner = _data.SendMessage.Where(x => x.MessageThreadID.Contains(Current_User_id));
+
+                var Recievers = new List<string>();
+                string MessageTitel = null;
+                
+
                 foreach (var item in AllPartner)
                 {
+                    Recievers = item.MessageThreadID.Split(',').ToList();
 
-                    Reciever.Add(new ChatModel() { PartnerName = Helpers.UserInformation.UserName(item.SenderID), PartnerId = item.SenderID });
+                    MessageTitel = null;
+                    foreach (var partner in Recievers)
+                    {
+                        if(partner!= Current_User_id)
+                        {
+                            MessageTitel = Helpers.UserInformation.UserName(partner) + "," + MessageTitel;
+                        }
+                    }
+                    MessageTitel = MessageTitel.Remove(MessageTitel.Length - 1);
+
+                    Reciever.Add(new ChatModel() { PartnerName = MessageTitel, PartnerId = item.MessageThreadID });
                 }
 
-             List<MessageRecieveModel> AllPartnerForReciever = _data.RecieveMessage.Where(x => (x.MessageThreadID.Contains(Current_User_id)) && (x.RecieverID != Current_User_id)).ToList();
+               
+                var result = Reciever.DistinctBy(x => x.PartnerName).ToList();
+                return result;
 
-                foreach (var item in AllPartnerForReciever)
-                {
-                    Reciever.Add(new ChatModel() { PartnerName = Helpers.UserInformation.UserName(item.RecieverID), PartnerId = item.RecieverID });
-                }
-
-                    
-                
-            return Reciever.DistinctBy(x => x.PartnerName).ToList();
-                
             }
 
-        catch
+            catch
             {
                 return null;
             }
 
-         
+
         }
+        //public IEnumerable<ChatModel> All_reciever()
+        //{
+
+
+        //    try {
+
+        //    List<ChatModel> Reciever = new List<ChatModel>();
+
+
+        //    var AllPartner = _data.SendMessage.Where(x =>( x.MessageThreadID.Contains(Current_User_id)) && (x.SenderID != Current_User_id));
+
+        //        foreach (var item in AllPartner)
+        //        {
+
+        //            Reciever.Add(new ChatModel() { PartnerName = Helpers.UserInformation.UserName(item.SenderID), PartnerId = item.SenderID });
+        //        }
+
+        //     List<MessageRecieveModel> AllPartnerForReciever = _data.RecieveMessage.Where(x => (x.MessageThreadID.Contains(Current_User_id)) && (x.RecieverID != Current_User_id)).ToList();
+
+        //        foreach (var item in AllPartnerForReciever)
+        //        {
+        //            Reciever.Add(new ChatModel() { PartnerName = Helpers.UserInformation.UserName(item.RecieverID), PartnerId = item.RecieverID });
+        //        }
+
+
+
+        //    return Reciever.DistinctBy(x => x.PartnerName).ToList();
+
+        //    }
+
+        //catch
+        //    {
+        //        return null;
+        //    }
+
+
+        //}
 
         public IEnumerable<ChatModel> Allmember()
         {
@@ -80,8 +127,29 @@ namespace ComPro.Interfaces
             ChatModel User = new ChatModel();
             try
             {
-                User.PartnerName = Helpers.UserInformation.UserName(Id);
-                    User.PartnerId = Id ;
+                //User.PartnerName = Helpers.UserInformation.UserName(Id);
+                List<ChatModel> Reciever = new List<ChatModel>();
+
+
+                 var Recievers = new List<string>();
+                string MessageTitel = null;
+
+
+               
+                    Recievers = Id.Split(',').ToList();
+
+                    foreach (var partner in Recievers)
+                    {
+                        if (partner != Current_User_id)
+                        {
+                            MessageTitel = Helpers.UserInformation.UserName(partner) + "," + MessageTitel;
+                        }
+                    }
+                MessageTitel = MessageTitel.Remove(MessageTitel.Length - 1);
+
+                User.PartnerName = MessageTitel;
+               
+                User.PartnerId = Id ;
 
                 
                 return User;
@@ -145,12 +213,13 @@ namespace ComPro.Interfaces
                 return false;
             }
         }
-        public IEnumerable<ChatHisytoryModel> Chat_History(string email)
+        public IEnumerable<ChatHisytoryModel> Chat_History(string MessageThreadID)
         {
             List<ChatHisytoryModel> ChatHistory = new List<ChatHisytoryModel>(); 
             try
             {
-               var allMessage = _data.SendMessage.Where(x => (x.MessageThreadID.Contains(Current_User_id)) && (x.MessageThreadID.Contains(email)));
+                //var allMessage = _data.SendMessage.Where(x => (x.MessageThreadID.Contains(Current_User_id)) && (x.MessageThreadID.Contains(email)));
+                var allMessage = _data.SendMessage.Where(x => x.MessageThreadID== MessageThreadID);
 
 
                 foreach (var item in allMessage)
@@ -176,7 +245,64 @@ namespace ComPro.Interfaces
 
         }
 
-        
+
+
+        public bool CreateNewChat (string Message, List<string> Recievers)
+        {
+            try
+            {
+                
+
+              
+
+                List<string> Names = new List<string>();
+                Names = Recievers;
+                Names.Add(Current_User_id);
+                Names.Sort();
+                string ChatThread = null;
+
+                foreach (var reciever in Names)
+                {
+                    ChatThread = ChatThread +","+ reciever;
+                }
+
+
+                MessageSendingModel sendmessage = new MessageSendingModel();
+
+                sendmessage.SenderID = Current_User_id;
+                sendmessage.Massage = Message;
+                sendmessage.MessageThreadID = ChatThread;
+                sendmessage.Date_Time = DateTime.Now;
+                _data.SendMessage.Add(sendmessage);
+
+
+                List<MessageRecieveModel> recivemessage = new List<MessageRecieveModel>();
+                foreach (var reciever in Recievers)
+                {
+                    recivemessage.Add(new MessageRecieveModel()
+                    {
+                        RecieverID = reciever,
+                    MessageThreadID = ChatThread,
+                    HasRead= null,
+                    ReadingDateTime=null,
+                });
+
+
+                }
+                   
+
+                _data.RecieveMessage.AddRange(recivemessage);
+                _data.SaveChanges();
+
+
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+               return false;
+            }
+        }
 
 
 

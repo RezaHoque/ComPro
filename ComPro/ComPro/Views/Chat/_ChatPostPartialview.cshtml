@@ -2,7 +2,7 @@
 <script>
     var PartnerId = $("#hPartnerId").val();
     $(document).ready(function () {
-        $("#messageList").load("/Chat/ChatGet?Emai=" + PartnerId);
+        $("#messageList").load("/Chat/ChatGet?MessageThreadID=" + PartnerId);
     });
      $("#saveMessage").click(function () {
          var txt = $("#Text").val();
@@ -17,7 +17,7 @@
                 })
                     .done(function (msg) {
                         $("#Text").val("");
-                        $("#messageList").load("/Chat/ChatGet?Emai=" + PartnerId);
+                        $("#messageList").load("/Chat/ChatGet?MessageThreadID=" + PartnerId);
                     });
             }
         });

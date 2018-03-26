@@ -28,12 +28,13 @@
 
 
                 @foreach (var item in Model)
-                {
-                    @*@Html.ActionLink(item.PartnerName, "Message", new { Id = item.PartnerId })*@
-                    <a href="#" id="LoadMessage" value=@item.PartnerId>@item.PartnerName</a>
-
-
-                }
+    {
+            @*@Html.ActionLink(item.PartnerName, "Message", new { Id = item.PartnerId })*@
+            @*<a href="#" id="LoadMessage" value=@item.PartnerId>@item.PartnerName</a><br />*@
+            <a href="#" onclick="Show(this)"  data-assigned-id="@item.PartnerId" >@item.PartnerName</a><br />
+            @*<a href="#" id="@item.PartnerId" >@item.PartnerName</a><br />*@
+            
+}
 
             </td>
 
@@ -50,30 +51,67 @@
 </div>
 
 <script>
-
-
-
-
-
-    $("#LoadMessage").click(function () {
-
-        var a = $(this).attr("value");
-
-
-        $.ajax({
+    function Show(elem) {
+        var id = $(elem).data('assigned-id');
+       //   alert("id");
+     $.ajax({
 
             url: "/Chat/Message",
-            data: { Id: a },
+         data: { Id: id },
 
-            success: function (data) {
+           success: function (data) {
 
-                $("#MessageContainer").html(data);
-            }
+               $("#MessageContainer").html(data);
+         }
 
-        });
+      });
+
+    
 
 
-    });
+
+
+    }
+
+
+    
+
+    //   alert("Helo");
+    //    $.ajax({
+
+    //        url: "/Chat/Message",
+    //        data: { Id: Id },
+
+    //        success: function (data) {
+
+    //            $("#MessageContainer").html(data);
+    //        }
+
+    //    });
+
+    //}
+
+
+
+    //$("#LoadMessage").click(function () {
+
+    //    var a = $(this).attr("value");
+
+
+    //    $.ajax({
+
+    //        url: "/Chat/Message",
+    //        data: { Id: a },
+
+    //        success: function (data) {
+
+    //            $("#MessageContainer").html(data);
+    //        }
+
+    //    });
+
+
+    //});
 
 
     $("#NewMessage").click(function () {
