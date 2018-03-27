@@ -14,6 +14,7 @@ namespace ComPro.Interfaces
     {
         private ApplicationDbContext _data;
         private ApplicationUserManager _userManager;
+        Email_Service_Model obj = new Email_Service_Model();
         public UserProfileManager(ApplicationUserManager userManager)
         {
            
@@ -351,7 +352,7 @@ namespace ComPro.Interfaces
 
                 Data.SaveChanges();
 
-                Email_Service_Model obj = new Email_Service_Model();
+               
 
                 obj.ToEmail = UserInfo.Email;
                 obj.EmailSubject = Helpers.Constants.Emailsubject;
@@ -361,7 +362,7 @@ namespace ComPro.Interfaces
 
 
 
-                //var result = _utility.SendEmail(obj);
+                var result = _utility.SendEmail(obj);
                 return true;
 
             }
@@ -466,6 +467,28 @@ namespace ComPro.Interfaces
             }
         }
 
+
+        public void ForgotPassword(string userId,string action, string link)
+        {
+
+            try
+            {
+                var User = _data.Users.FirstOrDefault(x=>x.Id== userId);
+
+                obj.ToEmail = User.Email;
+                obj.EmailSubject = action;
+                
+                obj.EMailBody = link;
+
+                var result = _utility.SendEmail(obj);
+            }
+
+            catch
+            {
+
+                throw;
+            }
+        }
 
     }
 }

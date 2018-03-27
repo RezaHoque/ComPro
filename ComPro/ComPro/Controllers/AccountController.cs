@@ -182,13 +182,14 @@ namespace ComPro.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    //For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                    //Send an email with this link
+
+                    //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     // Note : _UserAccountProfile doesnt work as it has a constructor parameter
                     //_UserAccountProfile.AddationalInfo(model);
@@ -243,13 +244,14 @@ namespace ComPro.Controllers
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    return View("ForgotPasswordWarning");
                 }
 
                
                  string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+               _UserProfile.ForgotPassword(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                //await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
 
             }
@@ -266,13 +268,62 @@ namespace ComPro.Controllers
             return View();
         }
 
-        //
-        // GET: /Account/ResetPassword
-        [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
+
+        public ActionResult AccountSettings()
         {
-            return code == null ? View("Error") : View();
+            return View();
         }
+
+        public ActionResult ResetMyPassword()
+        {
+
+            return PartialView("_MyPasswordPartialView");
+        }
+
+        //
+        // POST: /Account/ForgotPassword
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResetMyPassword(ResetMyPasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+
+              
+                var UserId = User.Identity.GetUserId();
+               string code = await UserManager.GeneratePasswordResetTokenAsync(UserId);
+               //bool  aa = UserManager.CheckPasswordAsync(UserId, model.OldPassword);
+                //var user = UserManager.Find(UserId, model.OldPassword);
+                //if(user!=null)
+                {
+                var result = await UserManager.ResetPasswordAsync(UserId, code, model.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return Content(true.ToString());
+
+                    }
+                }
+               
+
+            }
+
+
+            return Content(false.ToString());
+        }
+
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+        
+        // GET: /Account/ResetPassword
+        //[AllowAnonymous]
+        //public ActionResult ResetPassword(string code)
+        //{
+        //    return code == null ? View("Error") : View();
+        //}
 
         //
         // POST: /Account/ResetPassword

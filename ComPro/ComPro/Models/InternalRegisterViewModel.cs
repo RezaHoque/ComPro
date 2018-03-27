@@ -36,19 +36,19 @@ namespace ComPro.Models
         [Display(Name = "Gender")]
         public string Gender { get; set; }
 
-        [Required]
+        
         [Display(Name = "Date of Birth")]
         public System.DateTime? BirthDate { get; set; }
 
-        [Required]
+       
         [Display(Name = "Current Job Title")]
         public string CurrentJobTitle { get; set; }
 
-        [Required]
+        
         [Display(Name = "Company Name")]
         public string CompanyName { get; set; }
 
-        [Required]
+        
         [Display(Name = "Skills")]
         public string Skills { get; set; }
 

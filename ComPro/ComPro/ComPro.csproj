@@ -703,6 +703,9 @@
     <Content Include="Views\Chat\_NewChatPartialview.cshtml" />
     <Content Include="Views\Event\%28Lage na%29_Create_PartialView.cshtml" />
     <Content Include="Views\Event\Create.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordWarning.cshtml" />
+    <Content Include="Views\Account\AccountSettings.cshtml" />
+    <Content Include="Views\Account\_MyPasswordPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
