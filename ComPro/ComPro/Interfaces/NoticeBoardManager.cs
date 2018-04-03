@@ -43,6 +43,33 @@ namespace ComPro.Interfaces
             }
         }
 
+
+        public List<NoticeBoardViewModel> GetMyNotice()
+        {
+            try
+            { var MynoticeList = new List<NoticeBoardViewModel>();
+
+               var Mynotice=  _data.Notice.Where(x => x.IsApproved == true&& x.CreatorId== Current_User_id);
+               
+                foreach (var n in Mynotice)
+                {
+                    var totalComnts = GetComments(n.Id).Count();
+                    MynoticeList.Add(new NoticeBoardViewModel
+                    {
+                        Notice = n,
+                        TotalComments = totalComnts,
+                        NoticeImage = GetNoticeImage(n.Id, "Notice")
+                    });
+                }
+
+                return MynoticeList;
+            }
+
+            catch
+            {
+                throw;
+            }
+        }
         public IEnumerable<NoticeBoard> GetNewNotices()
         {
             try
@@ -88,6 +115,7 @@ namespace ComPro.Interfaces
                 */
                 nvm.NoticeImage = _data.SiteImages.FirstOrDefault(x => x.TypeId == noticeDetails.Id);
 
+               
                 return nvm;
             }
             return new NoticeBoardViewModel();

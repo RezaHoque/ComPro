@@ -10,6 +10,7 @@ namespace ComPro.Interfaces
     public interface INoticeBoard
     {
         IEnumerable<NoticeBoard> GetApprovedNotices();
+        List<NoticeBoardViewModel> GetMyNotice();
         IEnumerable<NoticeBoard> GetNewNotices();
         NoticeBoard PostNotices(NoticeBoard model);
         NoticeBoardViewModel GetDetails(int id);

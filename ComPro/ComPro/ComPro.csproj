@@ -426,6 +426,7 @@
     <Content Include="Content\font-awesome\webfonts\fa-solid-900.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\images\bellevue-strandbad.jpg" />
+    <Content Include="Content\images\Event\DefaultImage2.jpg" />
     <Content Include="Content\images\facebook-png-6111.png" />
     <Content Include="Content\images\ipl-logo-png-transparent-images-1423.png" />
     <Content Include="Content\images\moens-klint.jpg" />

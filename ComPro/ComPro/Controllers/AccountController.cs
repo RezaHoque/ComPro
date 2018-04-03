@@ -318,14 +318,7 @@ namespace ComPro.Controllers
             return View();
         }
         
-        // GET: /Account/ResetPassword
-        //[AllowAnonymous]
-        //public ActionResult ResetPassword(string code)
-        //{
-        //    return code == null ? View("Error") : View();
-        //}
-
-        //
+        
         // POST: /Account/ResetPassword
         [HttpPost]
         [AllowAnonymous]

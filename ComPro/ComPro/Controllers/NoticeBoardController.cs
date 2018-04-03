@@ -42,6 +42,12 @@ namespace ComPro.Controllers
             return View(noticeVMList);
         }
 
+        public ActionResult MyNotice()
+        {
+           
+            return View("Index",_noticeBoardManager.GetMyNotice());
+        }
+
         [HttpGet]
         public ActionResult Create()
         {
@@ -72,13 +78,32 @@ namespace ComPro.Controllers
                         TypeId = notice.Id,
                         UploadDate = DateTime.Now,
                         UploaderId = notice.CreatorId
-                        
+
                     };
                     _noticeBoardManager.SaveImage(image);
                 }
+
+                else
+                {
+                    var image = new SiteImage
+                    {
+                        ImagePath = "/Content/images/Event/DefaultImage2.jpg",
+                        Type = "Notice",
+                        TypeId = notice.Id,
+                        UploadDate = DateTime.Now,
+                        UploaderId = notice.CreatorId
+
+                    };
+                    _noticeBoardManager.SaveImage(image);
+
+                }
+                
+
             }
-            
-           
+
+
+
+
 
             return RedirectToAction("Index");
         }
