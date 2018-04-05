@@ -46,16 +46,52 @@ namespace ComPro.Interfaces
                         if (Matchtext(SearchText, x.Name))
                         {
 
-                            if (!(Matchtext(ResultStirng, Helpers.Constants.Start + "Name" + Helpers.Constants.End + x.Name)))
+                            if (!(Matchtext(ResultStirng, "Name" + Helpers.Constants.End + x.Name + Helpers.Constants.Start)))
                             {
-                                ResultStirng = ResultStirng + Helpers.Constants.Start + "Name" + Helpers.Constants.End + x.Name;
+                                ResultStirng = ResultStirng + "Name" + Helpers.Constants.End + x.Name + Helpers.Constants.Start;
                             }
 
                             Found = true;
                             Ranking++;
                         }
 
+                        if (Matchtext(SearchText, x.CompanyName))
+                        {
 
+                            if (!(Matchtext(ResultStirng, "Company Name" + Helpers.Constants.End + x.CompanyName + Helpers.Constants.Start)))
+                            {
+                                ResultStirng = ResultStirng + "Company Name" + Helpers.Constants.End + x.CompanyName + Helpers.Constants.Start;
+                            }
+
+                            Found = true;
+                            Ranking++;
+                        }
+
+                        if (Matchtext(SearchText, x.CurrentJobTitle))
+                        {
+
+                            if (!(Matchtext(ResultStirng, "Current Job Title" + Helpers.Constants.End + x.CurrentJobTitle + Helpers.Constants.Start)))
+                            {
+                                ResultStirng = ResultStirng + "Current Job Title" + Helpers.Constants.End + x.CurrentJobTitle + Helpers.Constants.Start;
+                            }
+
+                            Found = true;
+                            Ranking++;
+                        }
+
+                        if (Matchtext(SearchText, x.Skills))
+                        {
+
+                            if (!(Matchtext(ResultStirng, "Skills" + Helpers.Constants.End + x.Skills + Helpers.Constants.Start)))
+                            {
+                                ResultStirng = ResultStirng + "Skills" + Helpers.Constants.End + x.Skills + Helpers.Constants.Start;
+                            }
+
+                            Found = true;
+                            Ranking++;
+                        }
+
+                        string Describe = "Name : " + x.Name + " Work at : " + x.CompanyName + " Skilled on : " + x.Skills;
                         if (Found)
                         {
                            
@@ -64,9 +100,9 @@ namespace ComPro.Interfaces
                                
                                 ResultId = x.Id,
                                 ResultName = x.Name,
-                                Description = null,
+                                Description = Describe,
                                 ResultCatagory = Helpers.Constants.UserResult.ToString(),
-                                MatchedText = ResultStirng,
+                                MatchedText = ResultStirng.Remove(ResultStirng.Length - 1),
                                 Priority = Ranking,
                                 SearchText= Search_Text,
                             });
@@ -91,8 +127,8 @@ namespace ComPro.Interfaces
 
 
                         string[] SingleSentence = y.Title.Split('!', '.', '?');
+                        SingleSentence = SingleSentence.Take(SingleSentence.Count() - 1).ToArray();
 
-                        
                         foreach (var sentence in SingleSentence)
                         {
                             if (Matchtext(SearchText, sentence))
@@ -109,6 +145,8 @@ namespace ComPro.Interfaces
 
                        
                         SingleSentence = y.Description.Split('!', '.', '?');
+                        SingleSentence = SingleSentence.Take(SingleSentence.Count() - 1).ToArray();
+
                         foreach (var sentence in SingleSentence)
                         {
                             if (Matchtext(SearchText, sentence))

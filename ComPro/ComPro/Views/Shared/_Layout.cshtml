@@ -21,18 +21,15 @@
             <a href="/" class="navbar-brand"><i class="fas fa-users fa-2x" data-fa-transform="grow-6"></i></a>
 
 
-            @*@Html.ActionLink("ComPro", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+           
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item"><a href="/NoticeBoard/Index" class="nav-link"><i class="fa fa-newspaper"></i> Notice Board</a></li>
                     <li class="nav-item"><a href="/UserProfile/Index" class="nav-link"><i class="fa fa-user-circle"></i> Members</a></li>
                     <li class="nav-item"><a href="/Event/Index" class="nav-link"><i class="fa fa-calendar-alt"></i> Events</a></li>
+                    <li class="nav-item "><a href="/Chat/ShowChat" class="nav-link "><i class="fas fa-envelope-open"></i> Messages</a></li>
 
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li class="nav-item"><a href="/Chat/ShowChat" class="nav-link">Messages</a></li>
-
-                    }
+                    
                 </ul>
 
             </div>
