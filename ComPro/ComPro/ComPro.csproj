@@ -671,8 +671,6 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\NoticeBoard\_CommentPartialView.cshtml" />
     <Content Include="Views\NoticeBoard\_CommentsListPartial.cshtml" />
-    <Content Include="Views\UserProfile\%28Lage na %29Edit.cshtml" />
-    <Content Include="Views\NoticeBoard\NewNotice.cshtml" />
     <Content Include="Views\Chat\ShowChat.cshtml" />
     <Content Include="Views\Chat\%28Lage na%29Create_Chat.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
@@ -684,7 +682,6 @@
     <Content Include="Views\Home\_LatestNoticePartialView.cshtml" />
     <Content Include="Views\Home\_LatestEventPartialView.cshtml" />
     <Content Include="Views\NoticeBoard\Edit.cshtml" />
-    <Content Include="Views\NoticeBoard\Delete.cshtml" />
     <Content Include="Views\Event\_EventList_PartialView.cshtml" />
     <Content Include="Views\Event\_Events_PartialView.cshtml" />
     <Content Include="Views\Event\_EditPartialView.cshtml" />
@@ -696,10 +693,7 @@
     <Content Include="Views\UserProfile\_AllMember_PertialView.cshtml" />
     <Content Include="Views\UserProfile\_MemberInformation_PartialView.cshtml" />
     <Content Include="Views\UserProfile\MyPage.cshtml" />
-    <Content Include="Views\UserProfile\%28Lage na%29_CurrentUser_Partialview.cshtml" />
     <Content Include="Views\Home\Terms.cshtml" />
-    <Content Include="Views\UserProfile\%28Lage na %29_PartialMyPageView.cshtml" />
-    <Content Include="Views\UserProfile\%28Lage na %29_PartialProfilePictureView.cshtml" />
     <Content Include="Views\Chat\_MessagePartialViewView.cshtml" />
     <Content Include="Views\Chat\_NewChatPartialview.cshtml" />
     <Content Include="Views\Event\%28Lage na%29_Create_PartialView.cshtml" />

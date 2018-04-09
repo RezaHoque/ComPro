@@ -30,13 +30,14 @@
             <hr />
             <i>@UserInformation.UserNameById(Model.Notice.CreatorId) </i>
             <i>@Model.Notice.SubmitDate.ToShortDateString()</i>
-            @if ((User.Identity.Name == Model.Notice.Creator.UserName) || User.IsInRole("Administrator"))
+
+            @*@if ((User.Identity.Name == Model.Notice.Creator.UserName) || User.IsInRole("Administrator"))
             {
 
                 <i>@Html.ActionLink("Edit", "Edit", new { id = Model.Notice.Id })</i>
 
                 <i>@Html.ActionLink("Delete", "Delete", new { id = Model.Notice.Id })</i>
-            }
+            }*@
         </div>
     </div>
 </div>

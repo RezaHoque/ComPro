@@ -15,6 +15,7 @@ namespace ComPro.Controllers
     [Authorize]
     public class NoticeBoardController : Controller
     {
+        ApplicationDbContext _data = new ApplicationDbContext();
         private readonly INoticeBoard _noticeBoardManager;
         private ApplicationUserManager _userManager;
         public NoticeBoardController(INoticeBoard noticeBoardManager, ApplicationUserManager userManager)
@@ -126,13 +127,13 @@ namespace ComPro.Controllers
 
         }
 
-        public ActionResult NewNotice()
-        {
-            if(User.IsInRole(UserRole.Administrator.ToString()))
-                return View(_noticeBoardManager.GetNewNotices());
-            else
-                return RedirectToAction("Index");
-        }
+        //public ActionResult NewNotice()
+        //{
+        //    if(User.IsInRole(UserRole.Administrator.ToString()))
+        //        return View(_noticeBoardManager.GetNewNotices());
+        //    else
+        //        return RedirectToAction("Index");
+        //}
         [HttpPost]
         public ActionResult PostComment(PublicComment model)
         {
@@ -174,39 +175,70 @@ namespace ComPro.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(NoticeBoard Model)
+        public ActionResult Edit(NoticeBoardViewModel Model)
 
         {
             if (ModelState.IsValid)
             {
                 ViewBag.NoticeEdit = _noticeBoardManager.PostEdit(Model);
 
+
+                if (Request.Files.Count > 0)
+                {
+                    var file = Request.Files[0];
+
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        var fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
+                        var path = Path.Combine(Server.MapPath("~/Content/images/"), fileName);
+                        file.SaveAs(path);
+                        var image = _data.SiteImages.FirstOrDefault(x => x.TypeId == Model.Notice.Id && x.Type == "Notice");
+
+                        path = Path.Combine(Server.MapPath(image.ImagePath));
+                        
+                        System.IO.File.Delete(path);
+                       
+                        image.ImagePath = "/Content/images/" + fileName;
+
+                        _data.SaveChanges();
+
+
+                    }
+
+                    
+
+
+                }
                 return RedirectToAction("Index");
             }
             return View(Model);
         }
 
-        // GET: Event/Delete/5
+        // GET: Notice/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+           bool Result = _noticeBoardManager.DeleteNotice(id.Value);
+            if (Result)
+            {
+                var image = _data.SiteImages.FirstOrDefault(x => x.TypeId == id && x.Type == "Notice");
 
-            return View(_noticeBoardManager.GetEdit(id.Value));
+                var path = Path.Combine(Server.MapPath(image.ImagePath));
+
+                System.IO.File.Delete(path);
+
+                _data.SiteImages.Remove(image);
+                _data.SaveChanges();
+            }
+
+            return Content(Result.ToString());
             
         }
 
-        // POST: Event/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-           ViewBag.Delete = _noticeBoardManager.PostDelete(id);
-           return RedirectToAction("Index");
-
-        }
+       
 
 
     }

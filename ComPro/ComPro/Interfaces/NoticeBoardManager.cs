@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
@@ -70,33 +71,33 @@ namespace ComPro.Interfaces
                 throw;
             }
         }
-        public IEnumerable<NoticeBoard> GetNewNotices()
-        {
-            try
-            {
+        //public IEnumerable<NoticeBoard> GetNewNotices()
+        //{
+        //    try
+        //    {
                 
                  
                 
-                IEnumerable<NoticeBoard> Notice; 
-                if (HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString()))
-                {
+        //        IEnumerable<NoticeBoard> Notice; 
+        //        if (HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString()))
+        //        {
                    
-                    return _data.Notice.Where(x => x.IsApproved == false);
-                }
-                else
-                 Notice = _data.Notice.Where(x=>x.IsApproved==true);
-                return Notice.OrderByDescending(x=>x.SubmitDate);
+        //            return _data.Notice.Where(x => x.IsApproved == false);
+        //        }
+        //        else
+        //         Notice = _data.Notice.Where(x=>x.IsApproved==true);
+        //        return Notice.OrderByDescending(x=>x.SubmitDate);
 
-            }
+        //    }
 
-            catch
-            {
-                throw;
+        //    catch
+        //    {
+        //        throw;
                 
                 
 
-            }
-        }
+        //    }
+        //}
 
         public NoticeBoardViewModel GetDetails(int id)
         {
@@ -176,39 +177,47 @@ namespace ComPro.Interfaces
             return comments.OrderByDescending(x => x.CommentDateTime).ToList();
         }
 
-        public NoticeBoard GetEdit(int id)
+        public NoticeBoardViewModel GetEdit(int id)
         {
             NoticeBoard notice = new NoticeBoard();
+            NoticeBoardViewModel noticeVMList = new NoticeBoardViewModel();
             try
             {
                var  notice2 = _data.Notice.FirstOrDefault(x => (x.Id == id));
                 if ( (notice2.CreatorId == Current_User_id) || (HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString())))
                 {
-                    notice = notice2;
+
+                    noticeVMList.Notice = notice2;
+                    noticeVMList.NoticeImage = GetNoticeImage(notice2.Id, "Notice");
+                   
+                    
                 }
-                return notice;
+                return noticeVMList;
                     
             }
             catch
             {
-                return notice;
+                return noticeVMList;
             }
         }
 
-        public string PostEdit(NoticeBoard model)
+        public string PostEdit(NoticeBoardViewModel model)
         {
             try
             {
-                var notice = _data.Notice.FirstOrDefault(x => (x.Id == model.Id));
+                var notice = _data.Notice.FirstOrDefault(x => (x.Id == model.Notice.Id));
 
                 if ((notice.CreatorId == Current_User_id) || (HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString())))
                 {
-                    notice.Title = model.Title;
-                    notice.Description = model.Description;
-                    notice.WebLink = model.WebLink;
-                    notice.ActionDate = model.ActionDate;
+                    notice.Title = model.Notice.Title;
+                    notice.Description = model.Notice.Description;
+                    notice.WebLink = model.Notice.WebLink;
+                    //notice.ActionDate = model.ActionDate;
 
                     _data.Entry(notice).State = EntityState.Modified;
+
+                    
+
                     _data.SaveChanges();
                     return Helpers.Constants.PostEdit;
                 }
@@ -224,7 +233,7 @@ namespace ComPro.Interfaces
 
         }
 
-        public string PostDelete(int id)
+        public bool DeleteNotice(int id)
         {
 
             NoticeBoard notice = new NoticeBoard();
@@ -236,13 +245,17 @@ namespace ComPro.Interfaces
 
                     _data.PublicComments.RemoveRange(comment);
                     _data.Notice.Remove(notice);
+
+                   
+
+                    _data.SaveChanges();
                     _data.SaveChanges();
 
-                    return Helpers.Constants.Delete;
+                    return true;
                 }
                 else
                 {
-                    return Helpers.Constants.DeleteFail;
+                    return false;
                 }
                 
                 }
@@ -250,7 +263,7 @@ namespace ComPro.Interfaces
            
             catch
             {
-                return Helpers.Constants.DeleteFail;
+               return false;
             }
         }
 

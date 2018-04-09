@@ -11,14 +11,14 @@ namespace ComPro.Interfaces
     {
         IEnumerable<NoticeBoard> GetApprovedNotices();
         List<NoticeBoardViewModel> GetMyNotice();
-        IEnumerable<NoticeBoard> GetNewNotices();
+        //IEnumerable<NoticeBoard> GetNewNotices();
         NoticeBoard PostNotices(NoticeBoard model);
         NoticeBoardViewModel GetDetails(int id);
         void ApproveNotice(int id);
 
-        NoticeBoard GetEdit(int id);
-        string PostEdit(NoticeBoard model);
-        string PostDelete(int id);
+        NoticeBoardViewModel GetEdit(int id);
+        string PostEdit(NoticeBoardViewModel model);
+        bool DeleteNotice(int id);
 
         bool PostComment(PublicComment comment);
         ICollection<PublicComment> GetComments(int noticeId);
