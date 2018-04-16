@@ -672,10 +672,8 @@
     <Content Include="Views\NoticeBoard\_CommentPartialView.cshtml" />
     <Content Include="Views\NoticeBoard\_CommentsListPartial.cshtml" />
     <Content Include="Views\Chat\ShowChat.cshtml" />
-    <Content Include="Views\Chat\%28Lage na%29Create_Chat.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Event\_EventDetails.cshtml" />
-    <Content Include="Views\Chat\%28Lage na%29Message.cshtml" />
     <Content Include="Views\Chat\_ChatPostPartialview.cshtml" />
     <Content Include="Views\Chat\_ChatListPartial.cshtml" />
     <Content Include="Views\Home\_LatestMember.cshtml" />

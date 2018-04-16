@@ -51,7 +51,7 @@ namespace ComPro.Interfaces
                 UserInformation.Skills = "Not Specified";
 
                 UserInformation.Email = model.Email;
-
+               
 
 
 
@@ -59,7 +59,11 @@ namespace ComPro.Interfaces
                 //_data.UserInfo.Add(UserInformation);
                 //_data.SaveChanges();
                 Data.UserInfo.Add(UserInformation);
+
                 Data.SaveChanges();
+
+                
+
             }
             catch
             {
@@ -473,7 +477,7 @@ namespace ComPro.Interfaces
 
             try
             {
-                var User = _data.Users.FirstOrDefault(x=>x.Id== userId);
+                var User = Data.Users.FirstOrDefault(x=>x.Id== userId);
 
                 obj.ToEmail = User.Email;
                 obj.EmailSubject = action;
@@ -486,6 +490,40 @@ namespace ComPro.Interfaces
             catch
             {
 
+                throw;
+            }
+        }
+
+        public bool Accounttype()
+        {
+            try
+            {
+
+                var User = HttpContext.Current.User.Identity.GetUserId();
+                
+                return Data.UserLogins.Any(x=>x.UserId==User);
+
+            }
+
+            catch
+            {
+                return false;
+            }
+
+
+        }
+
+        public string GetCode(string email)
+        {
+            try
+            {
+
+                var User = Data.Users.FirstOrDefault(x=>x.Email==email);
+                return User.Id;
+            }
+
+            catch
+            {
                 throw;
             }
         }

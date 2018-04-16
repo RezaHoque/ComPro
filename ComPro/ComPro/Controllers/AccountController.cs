@@ -271,6 +271,7 @@ namespace ComPro.Controllers
 
         public ActionResult AccountSettings()
         {
+            ViewBag.type = _UserProfile.Accounttype();
             return View();
         }
 
@@ -313,6 +314,8 @@ namespace ComPro.Controllers
             return Content(false.ToString());
         }
 
+        [HttpGet]
+        [AllowAnonymous]
         public ActionResult ResetPassword()
         {
             return View();
@@ -335,7 +338,10 @@ namespace ComPro.Controllers
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            
+            string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+           
+            var result = await UserManager.ResetPasswordAsync(user.Id, code, model.Password);
             if (result.Succeeded)
             {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");

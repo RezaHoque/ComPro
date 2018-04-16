@@ -34,5 +34,8 @@ namespace ComPro.Interfaces
         string CheckLink(string email);
         string SetProfilePicture(string Gender);
         void ForgotPassword(string userId, string action, string link);
+
+        bool Accounttype();
+        string GetCode(string email); 
     }
 }
