@@ -193,8 +193,8 @@ namespace ComPro.Interfaces
                         Found = false;
 
                         string[] SingleSentence = y.EventTitel.Split('!', '.', '?');
+                        SingleSentence = SingleSentence.Take(SingleSentence.Count() - 1).ToArray();
 
-                       
                         foreach (var sentence in SingleSentence)
                         {
                             if (Matchtext(SearchText, sentence))
@@ -210,6 +210,8 @@ namespace ComPro.Interfaces
 
                        
                         SingleSentence = y.Description.Split('!', '.', '?');
+                        SingleSentence = SingleSentence.Take(SingleSentence.Count() - 1).ToArray();
+
                         foreach (var sentence in SingleSentence)
                         {
                             if (Matchtext(SearchText, sentence))
