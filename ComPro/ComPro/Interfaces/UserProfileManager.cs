@@ -356,7 +356,7 @@ namespace ComPro.Interfaces
 
                 Data.SaveChanges();
 
-               
+               /* Email verification is turned off
 
                 obj.ToEmail = UserInfo.Email;
                 obj.EmailSubject = Helpers.Constants.Emailsubject;
@@ -366,7 +366,8 @@ namespace ComPro.Interfaces
 
 
 
-                var result = _utility.SendEmail(obj);
+                var result = _utility.SendEmail(obj); */
+
                 return true;
 
             }

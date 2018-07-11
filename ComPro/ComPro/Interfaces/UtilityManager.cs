@@ -58,7 +58,7 @@ namespace ComPro.Interfaces
                 //WebMail.SmtpPort = 587;
                 WebMail.SmtpPort = Int32.Parse(Helpers.Constants.SmtpPort);
 
-
+                
                 WebMail.SmtpUseDefaultCredentials = true;
                 //sending emails with secure protocol  
                 WebMail.EnableSsl = true;

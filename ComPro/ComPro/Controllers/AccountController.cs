@@ -79,9 +79,11 @@ namespace ComPro.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-             if ((_UserProfile.GetUserRole(model.Email) == UserRole.NewUser.ToString()) || !(_UserProfile.CheckEmailvarification(model.Email)))
+            //if ((_UserProfile.GetUserRole(model.Email) == UserRole.NewUser.ToString()) || !(_UserProfile.CheckEmailvarification(model.Email)))
+            if ((_UserProfile.GetUserRole(model.Email) == UserRole.NewUser.ToString()) )
+
             {
-                           TempData["NewLogin"] = Helpers.Constants.NewLoginMessage.ToString();
+                TempData["NewLogin"] = Helpers.Constants.NewLoginMessage.ToString();
                 return RedirectToAction("Login");
              }
 

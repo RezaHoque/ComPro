@@ -23,7 +23,7 @@ namespace ComPro.Helpers
         public const string NotVerified = "your email is Not verified. Please please verify your email to login ";
 
         public const string  Emailsubject = "Approval Of Your Account In ComPro ";
-        public const string  Emailbody = "https://localhost:44307/UserProfile/CheckLink?email=";
+        public const string  Emailbody = "Please Click this link to confirm your email address:   https://localhost:44307/UserProfile/CheckLink?email=";
         public const string Send = "Email Sent Successfully.";
         public const string Fail = "Problem while sending email, Please check details.";
         public const string SmtpServer = "smtp.gmail.com" ;
