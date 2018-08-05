@@ -176,8 +176,29 @@ $(function () {
 
         //   $('#datetimepicker').datepicker();
 
-        $("#startDatetimepicker").datepicker({ dateFormat: 'dd-mm-yy' });
-        $("#endDatetimepicker").datepicker({ dateFormat: 'dd-mm-yy' });
+    //$("#startDatetimepicker").datepicker({ minDate: 0, dateFormat: 'dd-mm-yy' });
+    //var MinEndDate = $("#startDatetimepicker").datepicker({ minDate: 0, dateFormat: 'dd-mm-yy' });
+
+  // $("#endDatetimepicker").datepicker({ minDate: MinEndDate, dateFormat: 'dd-mm-yy' });
+
+
+    $("#startDatetimepicker").datepicker({
+        minDate: 0,
+        defaultDate: "+1w",
+        changeMonth: true,
+        onClose: function (selectedDate) {
+            $("#endDatetimepicker").datepicker("option", "minDate", selectedDate);
+        }, dateFormat: 'dd-mm-yy'
+    });
+    $("#endDatetimepicker").datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        onClose: function (selectedDate) {
+            $("#startDatetimepicker").datepicker("option", "maxDate", selectedDate);
+        }, dateFormat: 'dd-mm-yy'
+    
+    });
+
 
 
     });</script>

@@ -1,0 +1,6 @@
+1. All previour Notice and Event should be saved in Archived.
+2. Admin must have the right to down any profile, event or notice.
+3.Email verification option is ready but omited. It will be activated very soon.
+4. In member index page message sending option should be placed with each profile.
+5.To Creat an event the end time should be later then the start time.
+6.Notece e 3 ta ba tar beshi comment hole seta r keu edit delete korte pare na .

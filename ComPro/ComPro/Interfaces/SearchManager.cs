@@ -125,9 +125,18 @@ namespace ComPro.Interfaces
                         Found = false;
 
 
+                        
 
                         string[] SingleSentence = y.Title.Split('!', '.', '?');
-                        SingleSentence = SingleSentence.Take(SingleSentence.Count() - 1).ToArray();
+                        if(SingleSentence.Length !=0)
+                        {
+                        SingleSentence[0] = y.Title;
+                        }
+                        else
+                        {
+                            SingleSentence = SingleSentence.Take(SingleSentence.Count() - 1).ToArray();
+                        }
+                        
 
                         foreach (var sentence in SingleSentence)
                         {
@@ -193,7 +202,15 @@ namespace ComPro.Interfaces
                         Found = false;
 
                         string[] SingleSentence = y.EventTitel.Split('!', '.', '?');
-                        SingleSentence = SingleSentence.Take(SingleSentence.Count() - 1).ToArray();
+
+                        if (SingleSentence.Length != 0)
+                        {
+                            SingleSentence[0] = y.EventTitel;
+                        }
+                        else
+                        {
+                            SingleSentence = SingleSentence.Take(SingleSentence.Count() - 1).ToArray();
+                        }
 
                         foreach (var sentence in SingleSentence)
                         {

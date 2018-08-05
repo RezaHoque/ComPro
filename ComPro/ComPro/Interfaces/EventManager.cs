@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using System.Data.Entity;
 using ComPro.Helpers;
 
+
 namespace ComPro.Interfaces
 {
     public class EventManager :IEvent
@@ -62,19 +63,38 @@ namespace ComPro.Interfaces
                        });
                 */
 
-                foreach (var item in AllEvent)
+
+                if( HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString()))
                 {
-                    if (item.IsPublic || item.CreatorId==Current_User_id)
+                    
+                    foreach (var item in AllEvent)
                     {
-                        events.Add(item);
+                       events.Add(item);
+                        
                     }
-                    else
-                    {
-                        if (_data.EventMember.Any(x => x.EventId == item.EventId && x.MemberID == Current_User_id) || HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString()))
+
+
+                    
+                }
+                else
+                {
+                       foreach (var item in AllEvent)
                         {
-                            events.Add(item);
+                            if (item.IsPublic || item.CreatorId==Current_User_id)
+                            {
+                                events.Add(item);
+                            }
+                            else
+                            {
+                                if (_data.EventMember.Any(x => x.EventId == item.EventId && x.MemberID == Current_User_id) || HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString()))
+                                {
+                                    events.Add(item);
+                                }
+                            }
                         }
-                    }
+
+
+
                 }
 
                 Result = events.AsEnumerable().Select(p => new EventViewModel
@@ -95,6 +115,8 @@ namespace ComPro.Interfaces
                     
                     
                 }).ToList();
+
+                
                 /*
                     if (_data.EventMember.Any(x => ((x.EventId == item.Id) && (x.MemberID == Current_User_id))) || (HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString())))
                     {
@@ -107,6 +129,8 @@ namespace ComPro.Interfaces
                     }
 
                 */
+
+
                 return Result.OrderBy(x=>x.EventDate);
                
            
@@ -114,7 +138,7 @@ namespace ComPro.Interfaces
 
             catch(Exception ex)
             {
-                return Result;
+                return Result; 
 
             }
         }
@@ -380,6 +404,8 @@ namespace ComPro.Interfaces
                 _data.Event.Add(Data);
                 _data.SaveChanges();
                 CreateMember(Data, inviteesIds);
+
+                
 
                 //EventMember member = new EventMember();
                 //List<EventMember> MemberList = new List<EventMember>();

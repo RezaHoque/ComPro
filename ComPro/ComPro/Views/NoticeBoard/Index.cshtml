@@ -104,24 +104,25 @@ else
 
                         <h6 class="card-title bg-white" style="padding:3px;">
                             <i>
-                                Posted by: <a href="/Home/Member?name=@UserInformation.UserName(i.Notice.Creator.UserName)">@UserInformation.UserName(i.Notice.Creator.UserName)</a>
+                                @*Posted by: <a href="/Home/Member?name=@UserInformation.UserName(i.Notice.Creator.UserName)">@UserInformation.UserName(i.Notice.Creator.UserName)</a>*@
+                                Posted by: @UserInformation.UserName(i.Notice.Creator.UserName)
                                 <br />
                                 @i.Notice.SubmitDate.ToShortDateString()
                             </i>
-                        </h6>
+        </h6>
 
-                        @if ((User.Identity.Name == i.Notice.Creator.UserName) || User.IsInRole("Administrator"))
-                        {
-                        <div class="card-footer bg-white border-success">
+        @if ((User.Identity.Name == i.Notice.Creator.UserName) || User.IsInRole("Administrator"))
+        {
+        <div class="card-footer bg-white border-success">
 
-                            <i>@Html.ActionLink("Edit", "Edit", new { id = i.Notice.Id })</i>
+            <i>@Html.ActionLink("Edit", "Edit", new { id = i.Notice.Id })</i>
 
-                            @*<i>@Html.ActionLink("Delete", "Delete", new { id = i.Notice.Id })</i>*@
+            @*<i>@Html.ActionLink("Delete", "Delete", new { id = i.Notice.Id })</i>*@
 
-                            <a href="#" onClick="Delete(@i.Notice.Id)" >Delete</a>
+                                <a href="#" onClick="Delete(@i.Notice.Id)">Delete</a>
 
 
-                        </div>
+</div>
 
                         }
                     </div>
