@@ -51,12 +51,12 @@ namespace ComPro.Controllers
             return View();
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+        //public ActionResult Contact()
+        //{
+        //    ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
+        //    return View();
+        //}
         public ActionResult Member(string name)
         {
             if (!string.IsNullOrEmpty(name))
@@ -79,6 +79,19 @@ namespace ComPro.Controllers
         public ActionResult Terms()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Contact()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Contact(FormCollection message)
+        {
+            bool Result = _Home.Contac_Admin(message);
+            return Content(Result.ToString());
         }
     }
 }

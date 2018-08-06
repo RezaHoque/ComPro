@@ -51,6 +51,8 @@ namespace ComPro.Helpers
         public const string EventDeleteFail = "Event Is failed to Deleted please Try Again .";
 
 
+        public const string User_Feedback = "User FeedBack from ComPro .";
+
 
 
     }

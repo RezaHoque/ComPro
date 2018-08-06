@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
+using System.Web.Mvc;
 using ComPro.Helpers;
 using ComPro.Interfaces;
 using ComPro.Models;
@@ -12,10 +14,15 @@ namespace ComPro.Interfaces
 {
     public class HomeManager : IHome
     {
+        Email_Service_Model obj = new Email_Service_Model();
+        IUtility _utility = new UtilityManager();
+
         public IEnumerable<ChatModel> LatestMember(int length)
         {
             ApplicationDbContext _data = new ApplicationDbContext();
             List<ChatModel> LatestMember = new List<ChatModel>();
+
+          
             try
             {
                 IUserProfile _userProfile = new UserProfileManager();
@@ -102,6 +109,26 @@ namespace ComPro.Interfaces
             catch
             {
                 return LatestEvent;
+            }
+        }
+
+
+        public bool Contac_Admin(FormCollection Message)
+        {
+            try
+            {
+                obj.ToEmail = System.Configuration.ConfigurationManager.AppSettings["From"];
+                obj.EmailSubject = Helpers.Constants.User_Feedback;
+
+                obj.EMailBody = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/Email_Templets/") + "User_Feedback" + ".cshtml").Replace("UserName", Message["Name"]).Replace("UserPhone", Message["Phone"]).Replace("UserEmail", Message["Email"]).Replace("UserMessage", Message["Message"]).ToString();
+
+                var result = _utility.SendEmail(obj);
+                return true;
+            }
+
+            catch
+            {
+                return false;
             }
         }
     }

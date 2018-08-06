@@ -366,6 +366,7 @@
     <Compile Include="Models\ChatHisytoryModel.cs" />
     <Compile Include="Models\ChatModel.cs" />
     <Compile Include="Models\Chat_Data_Pass.cs" />
+    <Compile Include="Models\Contac_View_Model.cs" />
     <Compile Include="Models\Email_Service_Model.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\EventModel.cs" />
@@ -587,6 +588,7 @@
     <Content Include="Content\bootstrap\alerts.less" />
     <Content Include="Content\_bootstrap-datetimepicker.less" />
     <Content Include="Content\bootstrap-datetimepicker-build.less" />
+    <Content Include="Email_Templets\User_Feedback.cshtml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\EventScript.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />

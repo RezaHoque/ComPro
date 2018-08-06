@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using ComPro.Models;
 
 namespace ComPro.Interfaces
@@ -12,5 +13,7 @@ namespace ComPro.Interfaces
         IEnumerable<ChatModel> LatestMember(int length);
         IEnumerable<ChatModel> LatestNotice(int length);
         IEnumerable<ChatModel> LatestEvent(int length);
+
+        bool Contac_Admin(FormCollection Message);
     }
 }
