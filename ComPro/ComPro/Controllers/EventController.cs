@@ -46,12 +46,13 @@ namespace ComPro.Controllers
             return PartialView("_EventList_Partialview", result);
         }
 
-        public ActionResult MyEvent()
-        {
+        //public ActionResult MyEvent()
+        //{
            
-            var result = _eventManager.MyEvent();
-            return PartialView("_EventList_Partialview", result);
-        }
+        //    var result = _eventManager.MyEvent();
+        //    return View("Index", result);
+        //    //return PartialView("_EventList_Partialview", result);
+        //}
         public ActionResult NewEvent()
         {
             var result = _eventManager.NewEvent();
@@ -128,6 +129,21 @@ namespace ComPro.Controllers
 
                             };
                             _noticeBoardManager.SaveImage(image);
+                        }
+
+                        else
+                        {
+                            var image = new SiteImage
+                            {
+                                ImagePath = "/Content/images/Event/DefaultImage2.jpg",
+                                Type = "Event",
+                                TypeId = result.EventId,
+                                UploadDate = DateTime.Now,
+                                UploaderId = result.CreatorId
+
+                            };
+                            _noticeBoardManager.SaveImage(image);
+
                         }
                     }
                     return RedirectToAction("Index");

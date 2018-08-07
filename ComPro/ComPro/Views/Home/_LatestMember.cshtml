@@ -1,6 +1,9 @@
 ﻿
 @model IEnumerable<ComPro.Models.ChatModel>
 
+
+
+
 <table class="table">
 
 
@@ -8,12 +11,16 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(item.PartnerName, "Details","UserProfile", new { id = Int32.Parse(item.PartnerId) },null)
-              </td>
+                
+                @Html.ActionLink(item.PartnerName, "Latest_Details", "UserProfile", new { id = Int32.Parse(item.PartnerId) }, null)
+            </td>
 
         </tr>
 
-       
+
+
     }
+
+   
 
 </table>

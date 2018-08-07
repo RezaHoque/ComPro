@@ -41,15 +41,16 @@ namespace ComPro.Controllers
 
             return PartialView("_LatestEventPartialView", _Home.LatestEvent(3));
         }
+       
 
 
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+        //public ActionResult About()
+        //{
+        //    ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
+        //    return View();
+        //}
 
         //public ActionResult Contact()
         //{

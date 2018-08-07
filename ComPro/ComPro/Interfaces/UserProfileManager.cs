@@ -44,6 +44,8 @@ namespace ComPro.Interfaces
                 UserInformation.Photo = SetProfilePicture(model.Gender);
 
                 UserInformation.BirthDate = null;
+                var user = Data.Users.FirstOrDefault(x=>x.Email== model.Email);
+                UserInformation.UserId = user.Id;
 
 
                 UserInformation.CurrentJobTitle = "Not Specified";
@@ -123,7 +125,8 @@ namespace ComPro.Interfaces
             try
             {
 
-                return Data.UserInfo.FirstOrDefault(x => x.Id == Id);
+                 var res= Data.UserInfo.FirstOrDefault(x => x.Id == Id);
+                return res;
             }
 
             catch

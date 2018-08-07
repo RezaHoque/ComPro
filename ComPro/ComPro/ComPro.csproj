@@ -361,6 +361,18 @@
     <Compile Include="Migrations\201803251803199_eventend.Designer.cs">
       <DependentUpon>201803251803199_eventend.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808070002005_latest_member.cs" />
+    <Compile Include="Migrations\201808070002005_latest_member.Designer.cs">
+      <DependentUpon>201808070002005_latest_member.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808072025388_user_feedback_model.cs" />
+    <Compile Include="Migrations\201808072025388_user_feedback_model.Designer.cs">
+      <DependentUpon>201808072025388_user_feedback_model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808072034163_correction.cs" />
+    <Compile Include="Migrations\201808072034163_correction.Designer.cs">
+      <DependentUpon>201808072034163_correction.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChatHisytoryModel.cs" />
@@ -383,6 +395,7 @@
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\User_Approval_Model.cs" />
+    <Compile Include="Models\User_Feedback_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -701,6 +714,7 @@
     <Content Include="Views\Account\ForgotPasswordWarning.cshtml" />
     <Content Include="Views\Account\AccountSettings.cshtml" />
     <Content Include="Views\Account\_MyPasswordPartialView.cshtml" />
+    <Content Include="Views\Home\Latest_Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -794,6 +808,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803251803199_eventend.resx">
       <DependentUpon>201803251803199_eventend.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808070002005_latest_member.resx">
+      <DependentUpon>201808070002005_latest_member.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808072025388_user_feedback_model.resx">
+      <DependentUpon>201808072025388_user_feedback_model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808072034163_correction.resx">
+      <DependentUpon>201808072034163_correction.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

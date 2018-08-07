@@ -37,7 +37,8 @@ namespace ComPro.Models
         public DbSet<EventModel> Event { get; set; }
         public DbSet<EventMember> EventMember { get; set; }
         public DbSet<SiteImage> SiteImages { get; set; }
-       
+        public DbSet<User_Feedback_Model> User_Feedback { get; set; }
+
 
 
 
@@ -47,6 +48,8 @@ namespace ComPro.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<ComPro.Models.User_Approval_Model> User_Approval_Model { get; set; }
 
         //public System.Data.Entity.DbSet<ComPro.Models.MemberViewModel> MemberViewModels { get; set; }
 

@@ -117,6 +117,21 @@ namespace ComPro.Interfaces
         {
             try
             {
+                User_Feedback_Model feedback = new User_Feedback_Model
+                {
+                    Name = Message["Name"],
+                    Phone= Int32.Parse(Message["Phone"]),
+                    Email= Message["Email"],
+                    Message= Message["Message"],
+                    Status= false,
+                    SubmitDate= DateTime.Now,
+                };
+
+                ApplicationDbContext _data = new ApplicationDbContext();
+                _data.User_Feedback.Add(feedback);
+                _data.SaveChanges();
+
+
                 obj.ToEmail = System.Configuration.ConfigurationManager.AppSettings["From"];
                 obj.EmailSubject = Helpers.Constants.User_Feedback;
 

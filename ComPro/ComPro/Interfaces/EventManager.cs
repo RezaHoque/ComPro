@@ -29,21 +29,25 @@ namespace ComPro.Interfaces
 
                 var AllEvent = _data.Event.Where(x => x.EventStatus && x.Date >= DateTime.Now && x.IsApproved);
 
-                /*
-                    foreach (var item in AllEvent)
-                    {
-                        if (DateTime.Now < item.Creation)
-                        {
-                            item.EventStatus = false;
-                        
-                        }
-                    }
-                _data.SaveChanges();
-
                 
+                //    foreach (var item in AllEvent)
+                //    {
+                //        if (DateTime.Now > item.End)
+                //        {
+                //            item.EventStatus = false;
+                        
+                //        }
+                //    _data.Entry(item).State = EntityState.Modified;
+                    
+                //    }
+
+                //_data.SaveChanges();
 
 
 
+
+
+                /*
 
                 var AllResult = _data.Event.Where(a => a.EventStatus == true && a.IsApproved == true)
                        .AsEnumerable().Select(p => new EventViewModel
@@ -64,7 +68,7 @@ namespace ComPro.Interfaces
                 */
 
 
-                if( HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString()))
+                if ( HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString()))
                 {
                     
                     foreach (var item in AllEvent)
@@ -155,7 +159,7 @@ namespace ComPro.Interfaces
 
                 foreach (var item in AllEvent)
                 {
-                    if (DateTime.Now < item.Creation)
+                    if (DateTime.Now > item.End)
                     {
                         item.EventStatus = false;
 
@@ -223,45 +227,58 @@ namespace ComPro.Interfaces
 
         public IEnumerable<EventViewModel> MyEvent()
         {
+
             List<EventViewModel> Result = new List<EventViewModel>();
+            List<EventModel> events = new List<EventModel>();
 
             try
             {
 
+                var AllEvent = _data.Event.Where(x => x.EventStatus && x.Date >= DateTime.Now && x.IsApproved);
 
-                var AllEvent = _data.Event.Where(x => x.EventStatus == true);
 
-                foreach (var item in AllEvent)
-                {
-                    if (DateTime.Now < item.Creation)
+                    foreach (var item in AllEvent)
                     {
-                        item.EventStatus = false;
-
+                        if (item.CreatorId == Current_User_id)
+                        {
+                            events.Add(item);
+                        }
+                        
                     }
-                }
-                _data.SaveChanges();
 
 
 
+               
+
+                Result = events.AsEnumerable().Select(p => new EventViewModel
+                {
+                    Id = p.EventId,
+                    EventTitel = p.Title,
+                    Approval = p.IsApproved,
+                    CreatorID = p.CreatorId,
+                    Activity = _data.EventMember.FirstOrDefault(x => x.EventId == p.EventId && x.MemberID == Current_User_id) != null ? _data.EventMember.FirstOrDefault(x => x.EventId == p.EventId && x.MemberID == Current_User_id).PerticipetingType : null,
+                    Description = p.Description,
+                    Place = p.Place,
+                    EventDate = p.Date,
+                    Images = _data.SiteImages.Where(x => x.Type == "Event" && x.TypeId == p.EventId).ToList(),
+                    TotalYes = _data.EventMember.Where(x => x.EventId == p.EventId && x.PerticipetingType == "Going").Count(),
+                    Members = _data.EventMember.Where(x => x.EventId == p.EventId).ToList(),
+                    CreatorName = UserInformation.UserNameById(p.CreatorId),
+                    EventEndDate = p.End
 
 
-                var AllResult = _data.Event.Where(a => a.EventStatus == true && a.CreatorId == Current_User_id)
-                    .AsEnumerable().Select(p => new EventViewModel
-                    {
-                        Id = p.EventId,
-                        EventTitel = p.Title,
-                        Approval = p.IsApproved,
-                        CreatorID = p.CreatorId,
-                        Activity = null
-                        });
+                }).ToList();
 
-                    return AllResult;
 
                 
 
+
+                return Result.OrderBy(x => x.EventDate);
+
+
             }
 
-            catch
+            catch 
             {
                 return Result;
 
@@ -385,8 +402,9 @@ namespace ComPro.Interfaces
         {
             try
             {
+                
                 EventModel Data = new EventModel();
-
+                
                 Data.Title = model.Title;
                 Data.Description = model.Description;
                 Data.Date = model.Date;
@@ -400,10 +418,14 @@ namespace ComPro.Interfaces
                 Data.End = model.End;
                 Data.ApprovalDate = DateTime.Now;
                 Data.IsPublic = inviteesIds.Any() ? false : true;
-
+                
                 _data.Event.Add(Data);
                 _data.SaveChanges();
-                CreateMember(Data, inviteesIds);
+                if (Data.IsPublic == false)
+                {
+                    CreateMember(Data, inviteesIds);
+                }
+                   
 
                 
 
@@ -449,7 +471,7 @@ namespace ComPro.Interfaces
 
                 EventMember member = new EventMember();
                 List<EventMember> MemberList = new List<EventMember>();
-                int ID = 0;
+               
 
                 foreach (var id in inviteesIds)
                 {
