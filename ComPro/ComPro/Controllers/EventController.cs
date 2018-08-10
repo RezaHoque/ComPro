@@ -46,13 +46,13 @@ namespace ComPro.Controllers
             return PartialView("_EventList_Partialview", result);
         }
 
-        //public ActionResult MyEvent()
-        //{
-           
-        //    var result = _eventManager.MyEvent();
-        //    return View("Index", result);
-        //    //return PartialView("_EventList_Partialview", result);
-        //}
+        public ActionResult MyEvent()
+        {
+
+            var result = _eventManager.MyEvent();
+            return View(result);
+            //return PartialView("_EventList_Partialview", result);
+        }
         public ActionResult NewEvent()
         {
             var result = _eventManager.NewEvent();
@@ -63,14 +63,9 @@ namespace ComPro.Controllers
         
         public ActionResult EventDetails(int id)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
 
             return PartialView("_EventDetails", _eventManager.Detail(id));
-            //return View(_event.Detail(id.Value));
-
+           
         }
 
 

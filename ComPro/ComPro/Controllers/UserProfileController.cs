@@ -51,12 +51,7 @@ namespace ComPro.Controllers
             return PartialView("_MemberInformation_PartialView", _userProfile.DetailProfile(id.Value));
         }
 
-        public ActionResult Latest_Details(int? id)
-        {
-
-            return View(_userProfile.DetailProfile(id.Value));
-        }
-
+        
         public ActionResult NewUser()
         {
              return PartialView("_NewUser_PartialView", _userProfile.NewUserforApproval());

@@ -24,6 +24,8 @@ namespace ComPro.Controllers
         { 
            return View();
         }
+
+       
         public ActionResult LatestMember()
         {
 

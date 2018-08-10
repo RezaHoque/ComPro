@@ -7,7 +7,7 @@ using static ComPro.Models.Enums;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity;
 using ComPro.Helpers;
-
+using System.IO;
 
 namespace ComPro.Interfaces
 {
@@ -140,7 +140,7 @@ namespace ComPro.Interfaces
            
         }
 
-            catch(Exception ex)
+            catch
             {
                 return Result; 
 
@@ -599,16 +599,42 @@ namespace ComPro.Interfaces
                 EventModel eventModel = _data.Event.Find(Id);
                 if ((eventModel.CreatorId == Current_User_id) || (HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString())))
                 {
-                    SendMessage(Id, Helpers.Constants.EventDeleteMessage);
+                    var Members = _data.EventMember.Where(x => x.EventId == Id).ToList();
 
-
-                    var Members = _data.EventMember.Where(x => x.EventId == Id);
-                    foreach (var item in Members)
+                    if (Members.Count()>0)
                     {
-                        _data.EventMember.Remove(item);
+                       SendMessage(Id, Helpers.Constants.EventDeleteMessage);
+
+                        foreach (var item in Members)
+                        {
+                            _data.EventMember.Remove(item);
+                        }
+
+
+                    }
+                  
+                                        
+                   
+
+                    var Image = _data.SiteImages.FirstOrDefault(x=>x.Type=="Event" && x.TypeId==Id);
+
+                    if(Image!=null)
+                    {
+
+                    var filepath = System.Web.HttpContext.Current.Server.MapPath(Image.ImagePath);
+                    if (File.Exists(filepath))
+                    {
+                        File.Delete(filepath);
+
                     }
 
+                      _data.SiteImages.Remove(Image);
+
+                    }
+                   
+                    
                     _data.Event.Remove(eventModel);
+
 
                     _data.SaveChanges();
 

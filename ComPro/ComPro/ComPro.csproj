@@ -373,6 +373,14 @@
     <Compile Include="Migrations\201808072034163_correction.Designer.cs">
       <DependentUpon>201808072034163_correction.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808092119290_uselss.cs" />
+    <Compile Include="Migrations\201808092119290_uselss.Designer.cs">
+      <DependentUpon>201808092119290_uselss.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808092158499_hudai.cs" />
+    <Compile Include="Migrations\201808092158499_hudai.Designer.cs">
+      <DependentUpon>201808092158499_hudai.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChatHisytoryModel.cs" />
@@ -715,6 +723,7 @@
     <Content Include="Views\Account\AccountSettings.cshtml" />
     <Content Include="Views\Account\_MyPasswordPartialView.cshtml" />
     <Content Include="Views\Home\Latest_Details.cshtml" />
+    <Content Include="Views\Event\MyEvent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -817,6 +826,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808072034163_correction.resx">
       <DependentUpon>201808072034163_correction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808092119290_uselss.resx">
+      <DependentUpon>201808092119290_uselss.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808092158499_hudai.resx">
+      <DependentUpon>201808092158499_hudai.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

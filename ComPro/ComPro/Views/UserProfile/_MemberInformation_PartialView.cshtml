@@ -19,6 +19,31 @@
                         <dd>
                             <img src="@Model.Photo" height="100" width="100" />
                         </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CurrentJobTitle)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CurrentJobTitle)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CompanyName)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CompanyName)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Skills)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Skills)
+                        </dd>
+
                         @if (User.IsInRole(ComPro.Models.Enums.UserRole.Administrator.ToString()))
                         {
 
@@ -72,29 +97,6 @@
                                 @Html.DisplayFor(model => model.BirthDate)
                             </dd>
 
-                            <dt>
-                                @Html.DisplayNameFor(model => model.CurrentJobTitle)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.CurrentJobTitle)
-                            </dd>
-
-                            <dt>
-                                @Html.DisplayNameFor(model => model.CompanyName)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.CompanyName)
-                            </dd>
-
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Skills)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.Skills)
-                            </dd>
 
                             <dt>
                                 @Html.DisplayNameFor(model => model.Email)
@@ -103,9 +105,9 @@
                             <dd>
                                 @Html.DisplayFor(model => model.Email)
                             </dd>
-
-
                         }
+
+
                     </dl>
 
 

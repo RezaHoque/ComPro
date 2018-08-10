@@ -8,8 +8,10 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(item.PartnerName, "EventDetails", "Event", new { id = Int32.Parse(item.PartnerId) }, null)
-               </td>
+                @*@Html.ActionLink(item.PartnerName, "EventDetails", "Event", new { id = Int32.Parse(item.PartnerId) }, null)*@
+
+                <a href="#" onclick="Latest_Event_Details(@item.PartnerId)">@item.PartnerName</a>
+            </td>
 
         </tr>
 
@@ -17,3 +19,29 @@
     }
 
 </table>
+
+
+<script>
+
+    function Latest_Event_Details(id) {
+
+       
+        var url = "/Event/EventDetails";
+
+        $.ajax({
+
+            url: url,
+            data: { id: id },
+
+            success: function (data) {
+               
+                $('#Latest_Event_Container').html(data);
+                $('#MyModal').modal();
+            }
+
+        });
+
+    }
+</script>
+<div id="Latest_Event_Container">
+</div>

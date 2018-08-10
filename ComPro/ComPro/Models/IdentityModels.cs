@@ -49,7 +49,9 @@ namespace ComPro.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<ComPro.Models.User_Approval_Model> User_Approval_Model { get; set; }
+       // public System.Data.Entity.DbSet<ComPro.Models.User_Approval_Model> User_Approval_Model { get; set; }
+
+        //public System.Data.Entity.DbSet<ComPro.Models.EventViewModel> EventViewModels { get; set; }
 
         //public System.Data.Entity.DbSet<ComPro.Models.MemberViewModel> MemberViewModels { get; set; }
 

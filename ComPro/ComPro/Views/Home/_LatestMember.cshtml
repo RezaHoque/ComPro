@@ -11,8 +11,9 @@
     {
         <tr>
             <td>
-                
-                @Html.ActionLink(item.PartnerName, "Latest_Details", "UserProfile", new { id = Int32.Parse(item.PartnerId) }, null)
+
+                 <a href="#" onclick="Latest_Member_Details(@item.PartnerId)">@item.PartnerName</a>
+
             </td>
 
         </tr>
@@ -21,6 +22,30 @@
 
     }
 
-   
-
 </table>
+
+
+
+<script>
+
+    function Latest_Member_Details(id) {
+
+
+        var url = "/UserProfile/Details";
+
+        $.ajax({
+
+            url: url,
+            data: { id: id },
+
+            success: function (data) {
+                $('#Latest_Detailscontainer').html(data);
+                $('#MemDetails').modal();
+            }
+
+        });
+
+    }
+</script>
+<div id="Latest_Detailscontainer">
+</div>
