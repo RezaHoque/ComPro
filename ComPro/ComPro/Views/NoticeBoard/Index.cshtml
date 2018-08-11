@@ -38,41 +38,69 @@
             <div class="card bg-light mb-3 border-success" style="max-width: 18rem;">
                 <div class="card-header"><a href="/NoticeBoard/Notice?Id=@i.Notice.Id">@i.Notice.Title</a> </div>
                 @if (i.NoticeImage != null)
-            {
-                <img class="card-img-top" src="@i.NoticeImage.ImagePath" alt="@i.Notice.Title">
-        }
+                {
+                    <img class="card-img-top" src="@i.NoticeImage.ImagePath" alt="@i.Notice.Title">
+                }
                 <div class="card-body">
                     <p class="card-text">
                         @if (i.Notice.Description.Length > 200)
-                    {
-                        @i.Notice.Description.Substring(0, 190) <span>...</span>
-                }
-                else
-                {
-                    @i.Notice.Description
-            }
+                        {
+                            @i.Notice.Description.Substring(0, 190) <span>...</span>
+                        }
+                        else
+                        {
+                            @i.Notice.Description
+                        }
                         <a href="/NoticeBoard/Notice?Id=@i.Notice.Id" class="alert-link">more</a>
                         @if (!string.IsNullOrEmpty(i.Notice.WebLink))
-                    {
-                    <p><a href="@i.Notice.WebLink" target="_blank"><i class="fa fa-external-link-alt"></i> go to link</a></p><a href="@i.Notice.WebLink" target="_blank">go to link</a>
-            }
+                        {
+                        <p><a href="@i.Notice.WebLink" target="_blank"><i class="fa fa-external-link-alt"></i> go to link</a></p><a href="@i.Notice.WebLink" target="_blank">go to link</a>
+                    }
 
                         <h6 class="card-title bg-white" style="padding:3px;">
-                            <i>
-                                Posted by: <a href="/Home/Member?name=@UserInformation.UserName(i.Notice.Creator.UserName)">@UserInformation.UserName(i.Notice.Creator.UserName)</a>
-                                <br />
-                                @i.Notice.SubmitDate.ToShortDateString()
-                            </i>
+                            @if (@UserInformation.UserName(i.Notice.Creator.UserName) == "Admin")
+                            {
+                                <i>
+                                    Posted by: @UserInformation.UserName(i.Notice.Creator.UserName)
+                                    <br />
+                                    @i.Notice.SubmitDate.ToShortDateString()
+                                </i>
+                            }
+                            else
+                            {
+                                <i>
+                                    Posted by: <a href="#" onclick="Notice_Creator_Details('@i.Notice.CreatorId')">@UserInformation.UserName(i.Notice.Creator.UserName)</a>
+
+                                    <br />
+                                    @i.Notice.SubmitDate.ToShortDateString()
+                                </i>
+                            }
+
+
+
                         </h6>
                     </div>
+
+                    @if ((User.Identity.Name == i.Notice.Creator.UserName) || User.IsInRole("Administrator"))
+                    {
+                        <div class="card-footer bg-white border-success">
+
+                            <i>@Html.ActionLink("Edit", "Edit", new { id = i.Notice.Id })</i>
+
+                            <a href="#" onClick="Delete(@i.Notice.Id)">Delete</a>
+
+
+                        </div>
+
+                    }
 
 
                     <div class="card-footer bg-white border-success">
                         <a href="/NoticeBoard/Notice?Id=@i.Notice.Id">
                             <i class="fas fa-comments"></i> Comments @if (i.TotalComments > 0)
-                        {
-                            <span class="badge badge-primary">@i.TotalComments</span>
-                    }
+                            {
+                                <span class="badge badge-primary">@i.TotalComments</span>
+                            }
                         </a>
                     </div>
                 </div>
@@ -150,6 +178,42 @@ else
 
 
 <script>
+    function Notice_Creator_Details(id) {
+        
+        
+       
+
+        var url = "/UserProfile/ChangeId";
+
+        $.ajax({
+
+            url: url,
+            data: { id: id },
+
+            success: function (data) {
+
+                id = data;
+                var url = "/UserProfile/Details";
+
+                $.ajax({
+
+                    url: url,
+                    data: { id: id },
+
+                    success: function (data) {
+                        $('#Latest_Detailscontainer').html(data);
+                        $('#MemDetails').modal();
+                    }
+
+                });
+
+            }
+
+        });
+
+        
+
+    }
 
     function Delete(Noticeid) {
 
@@ -181,4 +245,5 @@ else
 </script>
 
 
-
+<div id="Latest_Detailscontainer">
+</div>
