@@ -19,7 +19,7 @@
 
 
         @Html.AntiForgeryToken()
-
+        <h2>You can write to us.</h2>
         <div class="form-horizontal">
             
             <hr />
@@ -51,14 +51,15 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Message, new { htmlAttributes = new { @class = "form-control" } })
+                    @*@Html.EditorFor(model => model.Message, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.TextAreaFor(model=>model.Message, new { @class = "form-control" , @rows = 4 ,@cols=10})
                     @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input id="contac" type="button" value="Send Message" class="btn btn-outline-primary" />
+                    <input id="contac" type="button" value="Send Message" class="btn btn-primary" />
                 </div>
             </div>
         </div>
@@ -76,18 +77,18 @@
 
                         if (data == "True") {
                             $('#Contac_Data').trigger("reset");
-                            $('#Result_Message').html('<div class="alert alert-success">\<strong> Thanks!</strong> Your Message Has been Delevered to ComPro.</div>');
+                            $('#Result_Message').html('<div class="alert alert-success">\<strong> Thanks!</strong> Your message has been delivered.</div>');
 
 
                         }
                         else {
-                            $('#Result_Message').html('<div class="alert alert-warning"><strong> Sorry!</strong> YYour Message Has Been Delevered to ComPro. Try Again.</div>');
+                            $('#Result_Message').html('<div class="alert alert-danger"><strong> Sorry!</strong> Something went wrong. Have you filled in all fields?</div>');
 
                         }
 
                     },
                     error: function (data) {
-                        $('#Result_Message').html('<div class="alert alert-warning"><strong> Sorry!</strong> Your Message Has Not Been Delevered to ComPro. Try Again.</div>');
+                        $('#Result_Message').html('<div class="alert alert-danger"><strong> This is embarrassing!</strong> Something went wrong. Please try again</div>');
 
                     },
                 });

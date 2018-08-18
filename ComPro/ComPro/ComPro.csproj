@@ -381,6 +381,10 @@
     <Compile Include="Migrations\201808092158499_hudai.Designer.cs">
       <DependentUpon>201808092158499_hudai.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808172056007_contributors.cs" />
+    <Compile Include="Migrations\201808172056007_contributors.Designer.cs">
+      <DependentUpon>201808172056007_contributors.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChatHisytoryModel.cs" />
@@ -399,6 +403,8 @@
     <Compile Include="Models\NoticeBoardViewModel.cs" />
     <Compile Include="Models\PublicComment.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
+    <Compile Include="Models\SiteContibuter.cs" />
+    <Compile Include="Models\SiteFeaturePlan.cs" />
     <Compile Include="Models\SiteImage.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\UserInfo.cs" />
@@ -724,6 +730,7 @@
     <Content Include="Views\Account\_MyPasswordPartialView.cshtml" />
     <Content Include="Views\Home\Latest_Details.cshtml" />
     <Content Include="Views\Event\MyEvent.cshtml" />
+    <Content Include="Views\Home\Contributer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -832,6 +839,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808092158499_hudai.resx">
       <DependentUpon>201808092158499_hudai.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808172056007_contributors.resx">
+      <DependentUpon>201808172056007_contributors.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

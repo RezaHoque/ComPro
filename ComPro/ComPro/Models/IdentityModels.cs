@@ -38,6 +38,8 @@ namespace ComPro.Models
         public DbSet<EventMember> EventMember { get; set; }
         public DbSet<SiteImage> SiteImages { get; set; }
         public DbSet<User_Feedback_Model> User_Feedback { get; set; }
+        public DbSet<SiteContibuter> SiteContibuters { get; set; }
+        public DbSet<SiteFeaturePlan> SiteFeaturePlans { get; set; }
 
 
 

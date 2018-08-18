@@ -43,16 +43,16 @@ namespace ComPro.Controllers
 
             return PartialView("_LatestEventPartialView", _Home.LatestEvent(3));
         }
-       
 
 
 
-        //public ActionResult About()
-        //{
-        //    ViewBag.Message = "Your application description page.";
 
-        //    return View();
-        //}
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return View();
+        }
 
         //public ActionResult Contact()
         //{
@@ -95,6 +95,12 @@ namespace ComPro.Controllers
         {
             bool Result = _Home.Contac_Admin(message);
             return Content(Result.ToString());
+        }
+
+        public ActionResult Contributer()
+        {
+            var model = _Home.GetContributers();
+            return View(model);
         }
     }
 }

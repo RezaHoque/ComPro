@@ -15,5 +15,6 @@ namespace ComPro.Interfaces
         IEnumerable<ChatModel> LatestEvent(int length);
 
         bool Contac_Admin(FormCollection Message);
+        IEnumerable<SiteContibuter> GetContributers();
     }
 }

@@ -18,10 +18,16 @@ namespace ComPro.Interfaces
     {
         Email_Service_Model obj = new Email_Service_Model();
         IUtility _utility = new UtilityManager();
+        private readonly ApplicationDbContext _data;
+
+        public HomeManager()
+        {
+            _data=new ApplicationDbContext();
+        }
 
         public IEnumerable<ChatModel> LatestMember(int length)
         {
-            ApplicationDbContext _data = new ApplicationDbContext();
+           // ApplicationDbContext _data = new ApplicationDbContext();
             List<ChatModel> LatestMember = new List<ChatModel>();
 
           
@@ -50,7 +56,7 @@ namespace ComPro.Interfaces
 
         public IEnumerable<ChatModel> LatestNotice(int length)
         {
-            ApplicationDbContext _data = new ApplicationDbContext();
+           // ApplicationDbContext _data = new ApplicationDbContext();
             List<ChatModel> LatestNotice = new List<ChatModel>();
             try
             {
@@ -77,7 +83,7 @@ namespace ComPro.Interfaces
 
         public IEnumerable<ChatModel> LatestEvent(int length)
         {
-            ApplicationDbContext _data = new ApplicationDbContext();
+            //ApplicationDbContext _data = new ApplicationDbContext();
             List<ChatModel> LatestEvent = new List<ChatModel>();
             string Current_User_id = HttpContext.Current.User.Identity.GetUserId();
             try
@@ -210,6 +216,12 @@ namespace ComPro.Interfaces
             {
                 return false;
             }
+        }
+
+        public IEnumerable<SiteContibuter> GetContributers()
+        {
+            var contributers = _data.SiteContibuters.ToList();
+            return contributers;
         }
     }
 }

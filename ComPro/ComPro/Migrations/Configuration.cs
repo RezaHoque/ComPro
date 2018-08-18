@@ -30,13 +30,13 @@ namespace ComPro.Migrations
             //    );
             //  
 
-            // SeedUser(context);
-            // SeedRole(context);
-            //SeedUserRole(context);
-            //SeedNotice(context);
-            // SeedEvents(context);
+            SeedUser(context);
+            SeedRole(context);
+            SeedUserRole(context);
+            SeedNotice(context);
+            SeedEvents(context);
             //SeedImages(context);
-            
+
 
         }
         private void SeedImages(ApplicationDbContext context)
