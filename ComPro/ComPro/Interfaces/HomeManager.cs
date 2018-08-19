@@ -25,32 +25,29 @@ namespace ComPro.Interfaces
             _data=new ApplicationDbContext();
         }
 
-        public IEnumerable<ChatModel> LatestMember(int length)
+        public IEnumerable<UserInfo> LatestMember(int length)
         {
            // ApplicationDbContext _data = new ApplicationDbContext();
-            List<ChatModel> LatestMember = new List<ChatModel>();
+            List<UserInfo> LatestMembers = new List<UserInfo>();
 
           
             try
             {
                 IUserProfile _userProfile = new UserProfileManager();
                 
-                 LatestMember = _userProfile.AllUser().OrderByDescending(i => i.ApprovalDate)
-                                               .Take(length).AsEnumerable().Select(p => new ChatModel
-                                               {
-                                                   PartnerName = p.Name,
-                                                   PartnerId = p.Id.ToString()
-                                               }).ToList();
+                LatestMembers = _userProfile.AllUser().OrderByDescending(i => i.ApprovalDate)
+                                               .Take(length).ToList();
+
 
                 
                
-                return LatestMember;
+                return LatestMembers;
             }
             
 
             catch
             {
-                return LatestMember;
+                return LatestMembers;
             }
         }
 
@@ -221,6 +218,10 @@ namespace ComPro.Interfaces
         public IEnumerable<SiteContibuter> GetContributers()
         {
             var contributers = _data.SiteContibuters.ToList();
+            foreach (var c in contributers)
+            {
+                c.PhotoPath = c.PhotoPath ?? "/Content/images/Profile/male.png";
+            }
             return contributers;
         }
     }

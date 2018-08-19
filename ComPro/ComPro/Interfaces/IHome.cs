@@ -10,7 +10,7 @@ namespace ComPro.Interfaces
 {
     interface IHome
     {
-        IEnumerable<ChatModel> LatestMember(int length);
+        IEnumerable<UserInfo> LatestMember(int length);
         IEnumerable<ChatModel> LatestNotice(int length);
         IEnumerable<ChatModel> LatestEvent(int length);
 

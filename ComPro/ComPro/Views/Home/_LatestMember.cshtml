@@ -1,29 +1,22 @@
 ﻿
-@model IEnumerable<ComPro.Models.ChatModel>
+@model IEnumerable<ComPro.Models.UserInfo>
 
-
-
-
-<table class="table">
-
+<div class="row">
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
 
-                 <a href="#" onclick="Latest_Member_Details(@item.PartnerId)">@item.PartnerName</a>
 
-            </td>
-
-        </tr>
-
+        <div class="col-sm-auto">
+            <img src="@item.Photo" class="img-thumbnail" style="width:80px;height:80px;" />
+        </div>
+        <div class="col-sm">
+            <a href="#" onclick="Latest_Member_Details(@item.UserId)">@item.Name</a> , <i>@item.CurrentJobTitle</i> just joined.
+        </div>
 
 
     }
-
-</table>
-
+</div>
 
 
 <script>

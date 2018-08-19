@@ -7,12 +7,13 @@
 }
 
 <h3>Contributers to this project</h3>
+<hr/>
 <div>
     @foreach (var c in Model)
     {
-        <div class="row">
+        <div class="row border border-light rounded" style="margin-bottom:3px; padding: 3px;">
             <div class="col-md-2">
-                <img src="" class="img-thumbnail"/>
+                <img src="@c.PhotoPath" class="img-thumbnail" style="width:100px;height:100px;"/>
             </div>
             <div class="col-md-10">
                 <h4> @UserInformation.UserName(c.ContributingUser.Email)</h4>
