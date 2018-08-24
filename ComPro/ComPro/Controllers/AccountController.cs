@@ -83,9 +83,8 @@ namespace ComPro.Controllers
             if ((_UserProfile.GetUserRole(model.Email) == UserRole.NewUser.ToString()) )
 
             {
-                TempData["NewLogin"] = Helpers.Constants.NewLoginMessage.ToString();
-                return RedirectToAction("Login");
-             }
+                return RedirectToAction("New_Registration");
+            }
 
             
 
