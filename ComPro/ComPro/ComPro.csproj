@@ -731,6 +731,7 @@
     <Content Include="Views\Home\Latest_Details.cshtml" />
     <Content Include="Views\Event\MyEvent.cshtml" />
     <Content Include="Views\Home\Contributer.cshtml" />
+    <Content Include="Views\Account\New_Registration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

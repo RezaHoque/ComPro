@@ -199,8 +199,7 @@ namespace ComPro.Controllers
 
                     _UserProfile.AddationalInfo(model);
                     _UserProfile.SetUserRole(model.Email);
-                    TempData["NewLogin"] = Helpers.Constants.NewRegistrationMessage.ToString();
-                    return RedirectToAction("Login");
+                    return RedirectToAction("New_Registration");
 
                 }
                 AddErrors(result);
@@ -210,7 +209,13 @@ namespace ComPro.Controllers
             return View(model);
         }
 
-        
+        [AllowAnonymous]
+        public ActionResult New_Registration()
+        {
+            TempData["NewLogin"] = Helpers.Constants.NewRegistrationMessage.ToString();
+
+            return View();
+        }
 
         //
         // GET: /Account/ConfirmEmail
