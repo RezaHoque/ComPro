@@ -21,7 +21,7 @@
 @*@using (Html.BeginForm("MyPage", "UserProfile", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()*@
-<form id="contactForm1" action="https://localhost:44307/UserProfile/MyPage" method="post">
+<form id="contactForm1" action="/UserProfile/MyPage" method="post">
     <div class="row">
         <div class="col-md-8">
             <div class="form-group">
@@ -113,13 +113,6 @@
         </div>
     </div>
     
-    
-
-    
-
-
-    
-
     @*}*@
 
     </form>
@@ -127,7 +120,12 @@
     <script type="text/javascript">
         $(function () {
 
-            $("#datetimepicker").datepicker({ dateFormat: 'dd-mm-yy' });
+            $("#datetimepicker").datepicker({
+                dateFormat: 'dd-mm-yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-60:+0"
+            });
 
 
         });
