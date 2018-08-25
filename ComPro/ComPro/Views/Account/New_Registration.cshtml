@@ -1,14 +1,16 @@
-﻿
+﻿@model ComPro.Models.UserInfo
 @{
-    ViewBag.Title = "New_Registration";
+    ViewBag.Title = "New Registration";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
+<div class="alert alert-info">
+    <h3>Hej @Model.Name</h3>
+    <br/>
+    Thank you for your registration. 
+    <br/>
+    You will get an email as soon as Admin approve your registration.
 
-<h2 style="color:forestgreen;">
-    @if (TempData["NewLogin"] != null)
-    {@TempData["NewLogin"]}
-</h2>
-
+</div>
 

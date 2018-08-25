@@ -23,7 +23,7 @@ namespace ComPro.Interfaces
         }
         public UserProfileManager()
         {
-         
+            _data = new ApplicationDbContext();
         }
         ApplicationDbContext Data = new ApplicationDbContext();
         IUtility _utility = new UtilityManager();
