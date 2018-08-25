@@ -66,3 +66,24 @@ textarea {
 .dt{
     font-size:11px;
 }
+#common-message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    font-size: 28px;
+    line-height: 70px;
+    text-align: center;
+    color: #FFFFFF;
+    background: #5CB85C;
+    border-bottom: 1px solid #ddd;
+    filter: alpha(opacity=92);
+    -moz-opacity: 0.92;
+    opacity: 0.92;
+    display: none;
+    border-bottom-color: #003300;
+    border-bottom-width: 2px;
+    z-index: 1000;
+    font-family: 'Segoe UI';
+}

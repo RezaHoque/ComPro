@@ -6,114 +6,100 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<div class="alert alert-success alert-dismissible fade hide" role="alert" id="Success">
-      Your Profile is modified .<strong>Thank you !</strong>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-<div class="alert alert alert-danger alert-dismissible fade hide" role="alert" id="Fail">
-    <strong>Sorry !</strong>   Your Profile is not modified. Try Again  .
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-@*@using (Html.BeginForm("MyPage", "UserProfile", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()*@
-<form id="contactForm1" action="/UserProfile/MyPage" method="post">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Name, new { id = "Title", htmlAttributes = new { @class = "form-control", placeholder = "Give it an attractive title" } })
+<div id="common-message" style="display: none;"></div>
+    <form id="contactForm1" action="/UserProfile/MyPage" method="post">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Name, new { id = "Title", htmlAttributes = new { @class = "form-control", placeholder = "Give it an attractive title" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Address, new { id = "Description", rows = "5", cols = "80", placeholder = " Write few words about it", htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PostCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PostCode, new { id = "Place", htmlAttributes = new { @class = "form-control", placeholder = "Where the event will take place" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.City, new { id = "Place", htmlAttributes = new { @class = "form-control", placeholder = "Where the event will take place" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Phone, new { id = "Place", htmlAttributes = new { @class = "form-control", placeholder = "Where the event will take place" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-10">
+                        @*@Html.EditorFor(model => model.Date, new { id = "Date", htmlAttributes = new { @class = "form-control" } })*@
+                        <input type="text" id="datetimepicker" value="@Model.BirthDate" class="form-control" name="Date">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CurrentJobTitle, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CurrentJobTitle, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CompanyName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CompanyName, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Skills, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Skills, new { id = "Description", rows = "5", cols = "80", placeholder = " Write few words about it", htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+
+
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="button" value="Save" class="btn btn-success" id="EditProfile" />
+                    </div>
                 </div>
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Address, new { id = "Description", rows = "5", cols = "80", placeholder = " Write few words about it", htmlAttributes = new { @class = "form-control" } })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.PostCode, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.PostCode, new { id = "Place", htmlAttributes = new { @class = "form-control", placeholder = "Where the event will take place" } })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.City, new { id = "Place", htmlAttributes = new { @class = "form-control", placeholder = "Where the event will take place" } })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Phone, new { id = "Place", htmlAttributes = new { @class = "form-control", placeholder = "Where the event will take place" } })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-10">
-                    @*@Html.EditorFor(model => model.Date, new { id = "Date", htmlAttributes = new { @class = "form-control" } })*@
-                    <input type="text" id="datetimepicker" value="@Model.BirthDate" class="form-control" name="Date">
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.CurrentJobTitle, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CurrentJobTitle, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.CompanyName, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CompanyName, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Skills, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Skills, new { id = "Description", rows = "5", cols = "80", placeholder = " Write few words about it", htmlAttributes = new { @class = "form-control" } })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-            </div>
-
-
-
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="button" value="Save" class="btn btn-success" id="EditProfile" />
+            <div class="col-md-4">
+                <img src="@Model.Photo" class="img-thumbnail" />
+                <div class="form-group">
+                    <label class="control-label">Your hero image</label>
+                    <div class="col-md-10">
+                        <input type="file" id="Photo" name="fileUpload1" />
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <img src="@Model.Photo" class="img-thumbnail"/>
-            <div class="form-group">
-                <label class="control-label">Your hero image</label>
-                <div class="col-md-10">
-                    <input type="file" id="Photo" name="fileUpload1" />
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    @*}*@
+
+        @*}*@
 
     </form>
 
@@ -132,49 +118,54 @@
 
         $("#EditProfile").click(function () {
 
-            
+
             var frm = $('#contactForm1');
-                 $.ajax({
-                    type: frm.attr('method'),
-                    url: frm.attr('action'),
-                    data: frm.serialize(),
-                    success: function (data) {
-                         var data = new FormData();
-                        var files = $("#Photo").get(0).files;
-                            if (files.length > 0) {
-                                data.append("MyImages", files[0]);
-                            }
+            $.ajax({
+                type: frm.attr('method'),
+                url: frm.attr('action'),
+                data: frm.serialize(),
+                success: function (data) {
+                    var data = new FormData();
+                    var files = $("#Photo").get(0).files;
+                    if (files.length > 0) {
+                        data.append("MyImages", files[0]);
+                    }
 
-                            $.ajax({
-                                url: "/UserProfile/UploadFile",
-                                type: "POST",
-                                processData: false,
-                                contentType: false,
-                                data: data,
-                                success: function (response) {
+                    $.ajax({
+                        url: "/UserProfile/UploadFile",
+                        type: "POST",
+                        processData: false,
+                        contentType: false,
+                        data: data,
+                        success: function (response) {
 
-                                    $("#Success").removeClass("hide");
-                                    $("#Success").addClass("show");
-                                    
-                                },
-                                error: function (er) {
-                                    $("#Fail").removeClass("hide");
-                                    $("#Fail").addClass("show");
-                                }
+                            //$("#Success").removeClass("hide");
+                            //$("#Success").addClass("show");
+                            $('#common-message').html("Your Profile is modified .<strong> Thank you !</strong>");
+                            $('#common-message').delay(400).slideDown(400).delay(4000).slideUp(400);
 
-                            });
-                       
+                        },
+                        error: function (er) {
+                            //$("#Fail").removeClass("hide");
+                            //$("#Fail").addClass("show");
+                            $('#common-message').html("<strong>Sorry !</strong> Something went wrong. Please try again later.");
+                            $('#common-message').delay(400).slideDown(400).delay(4000).slideUp(400);
 
-                        
-                    },
-                    error: function (data) {
-                        $("#Fail").removeClass("hide");
-                        $("#Fail").addClass("show");
-                    },
-                });
-           
+                        }
+
+                    });
+
+
+
+                },
+                error: function (data) {
+                    $('#common-message').html("<strong>Sorry !</strong> Something went wrong. Please try again later.");
+                    $('#common-message').delay(400).slideDown(400).delay(4000).slideUp(400);
+                },
+            });
+
         });
-       
+
 
     </script>
 
