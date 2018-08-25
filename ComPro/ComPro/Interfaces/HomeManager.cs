@@ -51,30 +51,35 @@ namespace ComPro.Interfaces
             }
         }
 
-        public IEnumerable<ChatModel> LatestNotice(int length)
+        public IEnumerable<NoticeBoard> LatestNotice(int length)
         {
            // ApplicationDbContext _data = new ApplicationDbContext();
-            List<ChatModel> LatestNotice = new List<ChatModel>();
+           // List<ChatModel> LatestNotice = new List<ChatModel>();
             try
             {
 
+                return _data.Notice.Where(x => x.IsApproved).OrderByDescending(x => x.SubmitDate).Take(length);
+                //LatestNotice = _data.Notice.Where(x => x.IsApproved == true).OrderByDescending(i => i.SubmitDate)
+                //                              .Take(length).AsEnumerable().Select(p => new NoticeBoard
+                //                              {
+                //                                  Id = p.Id,
+                //                                  Description = p.Description,
+                //                                  Title = p.Title,
+                //                                  Creator = p.Creator
+                //                              }).ToList();
 
-                LatestNotice = _data.Notice.Where(x => x.IsApproved == true).OrderByDescending(i => i.SubmitDate)
-                                              .Take(length).AsEnumerable().Select(p => new ChatModel
-                                              {
-                                                  PartnerName = p.Title,
-                                                  PartnerId = p.Id.ToString()
-                                              }).ToList();
 
 
-
-                return LatestNotice;
+                //return LatestNotice;
             }
 
 
-            catch
+            catch(Exception ex)
             {
-                return LatestNotice;
+                //return LatestNotice;
+
+                //log the exception.
+                return new List<NoticeBoard>();
             }
         }
 

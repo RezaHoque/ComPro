@@ -1,19 +1,20 @@
-﻿@model IEnumerable<ComPro.Models.ChatModel>
+﻿@using ComPro.Helpers
+@model IEnumerable<ComPro.Models.NoticeBoard>
 
-<table class="table">
+@if (Model.Any())
+{
+    
+    <h3>Few latest notices on the board</h3>
+    <hr/>
+    <div class="row">
+    
+        @foreach (var i in Model)
+        {
 
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.ActionLink(item.PartnerName, "Notice", "NoticeBoard", new { id = Int32.Parse(item.PartnerId) }, null)
-
-            </td>
-
-        </tr>
-
-
-    }
-
-</table>
+            <div class="col-sm">
+                <h5><a href="/NoticeBoard/Notice?Id=@i.Id">@i.Title</a> </h5>
+                <i> Posted by: @i.Creator.Email.UserName() </i>
+            </div>
+        }
+    </div>
+}
