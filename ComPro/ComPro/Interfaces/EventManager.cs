@@ -744,7 +744,7 @@ namespace ComPro.Interfaces
 
                 RecieverID = item.MemberID;
                 MessageThreadID = senderID + RecieverID;
-                AulterMessageThreadID = RecieverID + senderID;
+                AulterMessageThreadID = RecieverID +','+ senderID;
 
                 if (_data.SendMessage.Any(x => x.MessageThreadID == AulterMessageThreadID))
                 {

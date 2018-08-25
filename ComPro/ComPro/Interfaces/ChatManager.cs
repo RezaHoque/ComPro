@@ -66,43 +66,6 @@ namespace ComPro.Interfaces
 
 
         }
-        //public IEnumerable<ChatModel> All_reciever()
-        //{
-
-
-        //    try {
-
-        //    List<ChatModel> Reciever = new List<ChatModel>();
-
-
-        //    var AllPartner = _data.SendMessage.Where(x =>( x.MessageThreadID.Contains(Current_User_id)) && (x.SenderID != Current_User_id));
-
-        //        foreach (var item in AllPartner)
-        //        {
-
-        //            Reciever.Add(new ChatModel() { PartnerName = Helpers.UserInformation.UserName(item.SenderID), PartnerId = item.SenderID });
-        //        }
-
-        //     List<MessageRecieveModel> AllPartnerForReciever = _data.RecieveMessage.Where(x => (x.MessageThreadID.Contains(Current_User_id)) && (x.RecieverID != Current_User_id)).ToList();
-
-        //        foreach (var item in AllPartnerForReciever)
-        //        {
-        //            Reciever.Add(new ChatModel() { PartnerName = Helpers.UserInformation.UserName(item.RecieverID), PartnerId = item.RecieverID });
-        //        }
-
-
-
-        //    return Reciever.DistinctBy(x => x.PartnerName).ToList();
-
-        //    }
-
-        //catch
-        //    {
-        //        return null;
-        //    }
-
-
-        //}
 
         public IEnumerable<ChatModel> Allmember()
         {
@@ -181,13 +144,9 @@ namespace ComPro.Interfaces
 
                 else
                 {
-                     MessageThreadID = senderID+ RecieverID;
+                     MessageThreadID = senderID+','+RecieverID;
                 }
                 
-
-               
-
-
 
 
                 MessageSendingModel sendmessage = new MessageSendingModel();

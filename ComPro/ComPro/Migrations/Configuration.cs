@@ -30,11 +30,12 @@ namespace ComPro.Migrations
             //    );
             //  
 
-            SeedUser(context);
-            SeedRole(context);
-            SeedUserRole(context);
-            SeedNotice(context);
-            SeedEvents(context);
+            //SeedUser(context);
+            //SeedRole(context);
+           // SeedUserRole(context);
+            //SeedNotice(context);
+            //SeedEvents(context);
+            //SeedCurrentStatus(context);
             //SeedImages(context);
 
 
@@ -252,6 +253,34 @@ namespace ComPro.Migrations
 
                 context.SaveChanges();
 
+            }
+        }
+
+        private void SeedCurrentStatus(ApplicationDbContext context)
+        {
+            if (!context.CurrentStatus.Any(x => x.Status == "Employeed"))
+            {
+                var status = new Models.Current_Status_Model
+                {
+                    Status = "Employeed"
+                 };
+            }
+
+
+            if (!context.CurrentStatus.Any(x => x.Status == "Job Seeker"))
+            {
+                var status = new Models.Current_Status_Model
+                {
+                    Status = "Job Seeker"
+                };
+            }
+
+            if (!context.CurrentStatus.Any(x => x.Status == "Student"))
+            {
+                var status = new Models.Current_Status_Model
+                {
+                    Status = "Student"
+                };
             }
         }
     }

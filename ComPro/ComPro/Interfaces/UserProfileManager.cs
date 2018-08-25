@@ -363,8 +363,7 @@ namespace ComPro.Interfaces
 
                 obj.ToEmail = UserInfo.Email;
                 obj.EmailSubject = Helpers.Constants.Emailsubject;
-                //string text = http://localhost:59835/Test/CheckLink?email=pori468@yahoo.com;
-
+                
                 obj.EMailBody = Helpers.Constants.Emailbody + UserInfo.Email;
 
 
