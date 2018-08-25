@@ -23,19 +23,20 @@ namespace ComPro.Controllers
         private ApplicationUserManager _userManager;
 
         private IUserProfile _UserAccountProfile;
-        private IUserProfile _UserProfile;
+        private readonly IUserProfile _UserProfile;
 
         public AccountController()
         {
             _UserProfile = new UserProfileManager();
         }
-        
+
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
             _UserAccountProfile = new UserProfileManager(userManager);
+           // _UserProfile = userProfile;
 
         }
 
@@ -199,7 +200,7 @@ namespace ComPro.Controllers
 
                     _UserProfile.AddationalInfo(model);
                     _UserProfile.SetUserRole(model.Email);
-                    return RedirectToAction("New_Registration");
+                    return RedirectToAction("New_Registration", new { Id=user.Id});
 
                 }
                 AddErrors(result);
@@ -210,11 +211,27 @@ namespace ComPro.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult New_Registration()
+        public ActionResult New_Registration(string id)
         {
-            TempData["NewLogin"] = Helpers.Constants.NewRegistrationMessage.ToString();
+            if (!string.IsNullOrEmpty(id))
+            {
+                var userData = _UserProfile.UserDetail(id);
+                if (userData != null)
+                {
+                    if (userData.ApprovalDate == null)
+                    {
+                        TempData["NewLogin"] = Helpers.Constants.NewRegistrationMessage.ToString();
 
-            return View();
+                        return View(userData);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login");
+                    }
+                }
+            }
+            return RedirectToAction("Login");
+            
         }
 
         //

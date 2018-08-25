@@ -33,8 +33,8 @@ namespace ComPro.Migrations
             SeedUser(context);
             SeedRole(context);
             SeedUserRole(context);
-            SeedNotice(context);
-            SeedEvents(context);
+            //SeedNotice(context);
+           // SeedEvents(context);
             //SeedImages(context);
 
 
@@ -150,7 +150,7 @@ namespace ComPro.Migrations
             var manager = new UserManager<ApplicationUser>(store);
 
             var user = context.
-                Users.Where(x => x.Email == "pori468@gmail.com").FirstOrDefault();
+                Users.Where(x => x.Email == "reza.hoque@outlook.com").FirstOrDefault();
 
             manager.AddToRole(user.Id, "Administrator");
         }
@@ -184,26 +184,26 @@ namespace ComPro.Migrations
         private void SeedUser(ApplicationDbContext context)
         {
             var PasswordHash = new PasswordHasher();
-            if (!context.Users.Any(u => u.UserName == "reza"))
+            if (!context.Users.Any(u => u.UserName == "reza.hoque@outlook.com"))
             {
                 var user1 = new ApplicationUser
                 {
-                    UserName = "reza",
+                    UserName = "reza.hoque@outlook.com",
                     Email = "reza.hoque@outlook.com",
                     PasswordHash = PasswordHash.HashPassword("123456")
                 };
                 context.Users.Add(user1);
             }
-            if (!context.Users.Any(u => u.UserName == "rashid"))
-            {
-                var user2 = new ApplicationUser
-                {
-                    UserName = "rashid",
-                    Email = "rashid142@gmail.com",
-                    PasswordHash = PasswordHash.HashPassword("123456")
-                };
-                context.Users.Add(user2);
-            }
+            //if (!context.Users.Any(u => u.UserName == "rashid"))
+            //{
+            //    var user2 = new ApplicationUser
+            //    {
+            //        UserName = "rashid",
+            //        Email = "rashid142@gmail.com",
+            //        PasswordHash = PasswordHash.HashPassword("123456")
+            //    };
+            //    context.Users.Add(user2);
+            //}
 
             context.SaveChanges();
 
