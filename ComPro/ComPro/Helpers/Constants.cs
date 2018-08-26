@@ -22,8 +22,9 @@ namespace ComPro.Helpers
         public const string Verified = "your email is successfully verified. Please Log in ";
         public const string NotVerified = "your email is Not verified. Please please verify your email to login ";
 
-        public const string  Emailsubject = "Approval Of Your Account In ComPro ";
-        public const string  Emailbody = "Please Click this link to confirm your email address:   https://localhost:44307/UserProfile/CheckLink?email=";
+        public const string Welcomesubject = "Welcome In BPID ";
+        public const string  Emailsubject = "Approval Of Your Account In BPID ";
+        public const string Email_Verification_Link = "https://compro20180825124442.azurewebsites.net/UserProfile/CheckLink?email=";
         public const string Send = "Email Sent Successfully.";
         public const string Fail = "Problem while sending email, Please check details.";
         public const string SmtpServer = "smtp.gmail.com" ;

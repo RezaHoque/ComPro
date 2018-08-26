@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 using static ComPro.Models.Enums;
 
 namespace ComPro.Interfaces
@@ -44,7 +45,7 @@ namespace ComPro.Interfaces
                 UserInformation.Photo = SetProfilePicture(model.Gender);
 
                 UserInformation.BirthDate = null;
-                var user = Data.Users.FirstOrDefault(x=>x.Email== model.Email);
+                var user = Data.Users.FirstOrDefault(x => x.Email == model.Email);
                 UserInformation.UserId = user.Id;
 
 
@@ -53,7 +54,7 @@ namespace ComPro.Interfaces
                 UserInformation.Skills = "Not Specified";
 
                 UserInformation.Email = model.Email;
-               
+
 
 
 
@@ -64,7 +65,14 @@ namespace ComPro.Interfaces
 
                 Data.SaveChanges();
 
-                
+
+                obj.ToEmail = model.Email;
+                obj.EmailSubject = Helpers.Constants.Welcomesubject;
+                obj.EMailBody = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/Email_Templets/") + "WelcomeEmail" + ".cshtml").ToString();
+                var result = _utility.SendEmail(obj); 
+
+
+
 
             }
             catch
@@ -359,16 +367,16 @@ namespace ComPro.Interfaces
 
                 Data.SaveChanges();
 
-               /* Email verification is turned off
+
 
                 obj.ToEmail = UserInfo.Email;
                 obj.EmailSubject = Helpers.Constants.Emailsubject;
-                
-                obj.EMailBody = Helpers.Constants.Emailbody + UserInfo.Email;
+                var My_Url = Helpers.Constants.Email_Verification_Link + UserInfo.Email;
+                obj.EMailBody = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/Email_Templets/") + "Email_Confirmation" + ".cshtml").Replace("ConfirmationLink", My_Url).ToString();
 
 
 
-                var result = _utility.SendEmail(obj); */
+                var result = _utility.SendEmail(obj); 
 
                 return true;
 

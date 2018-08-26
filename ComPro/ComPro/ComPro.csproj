@@ -384,6 +384,10 @@
     <Compile Include="Migrations\201808172056007_contributors.Designer.cs">
       <DependentUpon>201808172056007_contributors.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808262018396_Current_status_moved.cs" />
+    <Compile Include="Migrations\201808262018396_Current_status_moved.Designer.cs">
+      <DependentUpon>201808262018396_Current_status_moved.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChatHisytoryModel.cs" />
@@ -617,6 +621,9 @@
     <Content Include="Content\_bootstrap-datetimepicker.less" />
     <Content Include="Content\bootstrap-datetimepicker-build.less" />
     <Content Include="Email_Templets\User_Feedback.cshtml" />
+    <Content Include="Email_Templets\WelcomeEmail.cshtml" />
+    <Content Include="Email_Templets\Email_Confirmation.cshtml" />
+    <None Include="Properties\PublishProfiles\ComPro20180825124442 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\EventScript.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
@@ -842,6 +849,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808172056007_contributors.resx">
       <DependentUpon>201808172056007_contributors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808262018396_Current_status_moved.resx">
+      <DependentUpon>201808262018396_Current_status_moved.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
