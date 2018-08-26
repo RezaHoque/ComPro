@@ -21,7 +21,7 @@ namespace ComPro.Interfaces
         bool DeleteNotice(int id);
 
         bool PostComment(PublicComment comment);
-        ICollection<PublicComment> GetComments(int noticeId);
+        ICollection<CommentViewModel> GetComments(int noticeId);
         bool SaveImage(SiteImage image);
         SiteImage GetNoticeImage(int id,string type);
     }

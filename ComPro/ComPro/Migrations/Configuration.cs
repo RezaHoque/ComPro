@@ -256,32 +256,32 @@ namespace ComPro.Migrations
             }
         }
 
-        private void SeedCurrentStatus(ApplicationDbContext context)
-        {
-            if (!context.CurrentStatus.Any(x => x.Status == "Employeed"))
-            {
-                var status = new Models.Current_Status_Model
-                {
-                    Status = "Employeed"
-                 };
-            }
+        //private void SeedCurrentStatus(ApplicationDbContext context)
+        //{
+        //    if (!context.CurrentStatus.Any(x => x.Status == "Employeed"))
+        //    {
+        //        var status = new Models.Current_Status_Model
+        //        {
+        //            Status = "Employeed"
+        //         };
+        //    }
 
 
-            if (!context.CurrentStatus.Any(x => x.Status == "Job Seeker"))
-            {
-                var status = new Models.Current_Status_Model
-                {
-                    Status = "Job Seeker"
-                };
-            }
+        //    if (!context.CurrentStatus.Any(x => x.Status == "Job Seeker"))
+        //    {
+        //        var status = new Models.Current_Status_Model
+        //        {
+        //            Status = "Job Seeker"
+        //        };
+        //    }
 
-            if (!context.CurrentStatus.Any(x => x.Status == "Student"))
-            {
-                var status = new Models.Current_Status_Model
-                {
-                    Status = "Student"
-                };
-            }
-        }
+        //    if (!context.CurrentStatus.Any(x => x.Status == "Student"))
+        //    {
+        //        var status = new Models.Current_Status_Model
+        //        {
+        //            Status = "Student"
+        //        };
+        //    }
+        //}
     }
 }

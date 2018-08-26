@@ -384,15 +384,12 @@
     <Compile Include="Migrations\201808172056007_contributors.Designer.cs">
       <DependentUpon>201808172056007_contributors.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201808242233014_Current_Status.cs" />
-    <Compile Include="Migrations\201808242233014_Current_Status.Designer.cs">
-      <DependentUpon>201808242233014_Current_Status.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChatHisytoryModel.cs" />
     <Compile Include="Models\ChatModel.cs" />
     <Compile Include="Models\Chat_Data_Pass.cs" />
+    <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\Contac_View_Model.cs" />
     <Compile Include="Models\Current_Status_Model.cs" />
     <Compile Include="Models\Email_Service_Model.cs" />
@@ -845,9 +842,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808172056007_contributors.resx">
       <DependentUpon>201808172056007_contributors.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808242233014_Current_Status.resx">
-      <DependentUpon>201808242233014_Current_Status.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

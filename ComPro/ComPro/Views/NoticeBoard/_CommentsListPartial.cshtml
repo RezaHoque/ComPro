@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ComPro.Models.PublicComment>
+﻿@model List<ComPro.Models.CommentViewModel>
 @using ComPro.Helpers
 
 <div>
@@ -6,13 +6,19 @@
     {
         <div class="row">
             <div class="commentWriter col-2">
-                @UserInformation.UserName(i.CommentUser.UserName)
-
-                <hr />
-                <span class="dt">@i.CommentDateTime.ToShortDateString()</span>
+                <div class="row">
+                    <div class="col">
+                        <img src="@i.CommentUser.Photo" class="img-thumbnail" style="width: 70px;height: 70px"/>
+                    </div>
+                    <div class="col">
+                        <h6> @i.CommentUser.Email.UserName()</h6>
+                        <span class="dt">@i.Comment.CommentDateTime.ToShortDateString()</span>
+                    </div>
+                </div>
+                
             </div>
             <div class="commentDes col-8">
-                @i.CommentText
+                @i.Comment.CommentText
             </div>
 
         </div>

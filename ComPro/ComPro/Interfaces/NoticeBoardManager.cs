@@ -171,10 +171,22 @@ namespace ComPro.Interfaces
 
         }
 
-        public ICollection<PublicComment> GetComments(int noticeId)
+        public ICollection<CommentViewModel> GetComments(int noticeId)
         {
-            var comments = _data.PublicComments.Where(x => x.IsBlocked == false && x.NoticeId == noticeId);
-            return comments.OrderByDescending(x => x.CommentDateTime).ToList();
+            var comments = _data.PublicComments.Where(x => x.IsBlocked == false && x.NoticeId == noticeId).ToList().OrderByDescending(x=>x.CommentDateTime);
+            var commentList = new List<CommentViewModel>();
+            foreach (var pc in comments)
+            {
+                var comment=new CommentViewModel();
+                comment.Comment = pc;
+
+                var userinfo=_data.UserInfo.FirstOrDefault(x => x.UserId == pc.CommentUserId);
+                comment.CommentUser = userinfo;
+
+                commentList.Add(comment);
+            }
+
+            return commentList;
         }
 
         public NoticeBoardViewModel GetEdit(int id)
