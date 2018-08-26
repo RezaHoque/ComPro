@@ -114,7 +114,7 @@ namespace ComPro.Interfaces
                 nvm.Notice.WebLink = noticeDetails.WebLink;
                 nvm.Notice.CreatorId = noticeDetails.CreatorId;
                 */
-                nvm.NoticeImage = _data.SiteImages.FirstOrDefault(x => x.TypeId == noticeDetails.Id);
+                nvm.NoticeImage = _data.SiteImages.FirstOrDefault(x => x.TypeId == noticeDetails.Id && x.Type=="Notice");
 
                
                 return nvm;
