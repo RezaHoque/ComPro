@@ -71,33 +71,7 @@ namespace ComPro.Interfaces
                 throw;
             }
         }
-        //public IEnumerable<NoticeBoard> GetNewNotices()
-        //{
-        //    try
-        //    {
-                
-                 
-                
-        //        IEnumerable<NoticeBoard> Notice; 
-        //        if (HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString()))
-        //        {
-                   
-        //            return _data.Notice.Where(x => x.IsApproved == false);
-        //        }
-        //        else
-        //         Notice = _data.Notice.Where(x=>x.IsApproved==true);
-        //        return Notice.OrderByDescending(x=>x.SubmitDate);
-
-        //    }
-
-        //    catch
-        //    {
-        //        throw;
-                
-                
-
-        //    }
-        //}
+       
 
         public NoticeBoardViewModel GetDetails(int id)
         {
@@ -106,14 +80,7 @@ namespace ComPro.Interfaces
             {
                 var nvm = new NoticeBoardViewModel();
                 nvm.Notice = noticeDetails;
-                /*
-                nvm.Notice.Title = noticeDetails.Title;
-                nvm.Notice.Description = noticeDetails.Description;
-                nvm.Notice.Id = noticeDetails.Id;
-                nvm.Notice.SubmitDate = noticeDetails.SubmitDate;
-                nvm.Notice.WebLink = noticeDetails.WebLink;
-                nvm.Notice.CreatorId = noticeDetails.CreatorId;
-                */
+               
                 nvm.NoticeImage = _data.SiteImages.FirstOrDefault(x => x.TypeId == noticeDetails.Id && x.Type=="Notice");
 
                
