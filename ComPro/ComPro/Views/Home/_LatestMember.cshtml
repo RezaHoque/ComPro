@@ -11,9 +11,10 @@
             <img src="@item.Photo" class="img-thumbnail" style="width:80px;height:80px;" />
         </div>
         <div class="col-sm">
-            <a href="#" onclick="Latest_Member_Details(@item.UserId)">@item.Name</a> , <i>@item.CurrentJobTitle</i> just joined.
+            <a href="#" onclick="Latest_Member_Details('@item.UserId');">@item.Name</a> , <i>@item.CurrentJobTitle</i> just joined.
+           
         </div>
-
+      
 
     }
 </div>
@@ -22,21 +23,36 @@
 <script>
 
     function Latest_Member_Details(id) {
-
-
-        var url = "/UserProfile/Details";
+    
+       
+        var url = "/UserProfile/ChangeId";
 
         $.ajax({
 
             url: url,
             data: { id: id },
 
-            success: function (data) {
-                $('#Latest_Detailscontainer').html(data);
-                $('#MemDetails').modal();
+            success: function (Id) {
+
+
+                var url = "/UserProfile/Details";
+
+                $.ajax({
+
+                    url: url,
+                    data: { id: Id },
+
+                    success: function (data) {
+                        $('#Latest_Detailscontainer').html(data);
+                        $('#MemDetails').modal();
+                    }
+
+                });
             }
 
         });
+
+       
 
     }
 </script>

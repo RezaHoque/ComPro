@@ -10,44 +10,77 @@
 <p>
     @if (ViewBag.search != null)
     {@ViewBag.search;
-    }
+}
 </p>
 
 <table class="table">
-   
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
 
 
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
 
 
-            @if (item.ResultCatagory == "User Profile")
-            {
-        @Html.ActionLink(item.ResultName, "Details", "UserProfile", new { id = item.ResultId }, null)
-
-}
-            @if (item.ResultCatagory == "Notice")
-            {
-        @Html.ActionLink(item.ResultName, "Notice", "NoticeBoard", new { id = item.ResultId }, null)
-
-}
-
-            @if (item.ResultCatagory == "Event")
-            {
-        @Html.ActionLink(item.ResultName, "EventDetails", "Event", new { id = item.ResultId }, null)
-
-}
 
 
-            <p> <strong>Matched :</strong>@Html.DisplayFor(modelItem => item.MatchedText)</p> 
-            <p> <strong>Description :</strong>@Html.DisplayFor(modelItem => item.Description) </p>
+                @if (item.ResultCatagory == "User Profile")
+                {
+
+                    <a href="#" onclick="Member_Details('@item.ResultId');">@item.ResultName</a>
+
+                }
+                @if (item.ResultCatagory == "Notice")
+                {
+                    @Html.ActionLink(item.ResultName, "Notice", "NoticeBoard", new { id = item.ResultId }, null)
+
+                }
+
+                @if (item.ResultCatagory == "Event")
+                {
+                    @Html.ActionLink(item.ResultName, "EventDetails", "Event", new { id = item.ResultId }, null)
+
+                }
 
 
-        </td>
-       
-    </tr>
-}
+                <p> <strong>Matched :</strong>@Html.DisplayFor(modelItem => item.MatchedText)</p>
+                <p> <strong>Description :</strong>@Html.DisplayFor(modelItem => item.Description) </p>
+
+
+            </td>
+
+        </tr>
+    }
 
 </table>
+
+
+<script>
+
+    function Member_Details(id) {
+
+
+        
+                var url = "/UserProfile/Details";
+
+                $.ajax({
+
+                    url: url,
+                    data: { id: id },
+
+                    success: function (data) {
+                        $('#Member_Detailscontainer').html(data);
+                        $('#MemDetails').modal();
+                    }
+
+                });
+    }
+
+       
+
+
+
+    
+</script>
+<div id="Member_Detailscontainer">
+</div>
