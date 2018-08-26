@@ -10,11 +10,19 @@
     
         @foreach (var i in Model)
         {
-
-            <div class="col-sm">
-                <h5><a href="/NoticeBoard/Notice?Id=@i.Id">@i.Title</a> </h5>
-                <i> Posted by: @i.Creator.Email.UserName() </i>
-            </div>
+            <div class="card-deck">
+                <div class="card bg-light text-white text-center p-3">
+                    <blockquote class="blockquote mb-0">
+                        <p><a href="/NoticeBoard/Notice?Id=@i.Id" style="color: darkgreen">@i.Title</a></p>
+                        <footer class="blockquote-footer" style="color: brown">
+                            <small>
+                                Posted by:<cite title="Source Title">@i.Creator.Email.UserName()</cite>
+                            </small>
+                        </footer>
+                    </blockquote>
+                </div>
+             </div>
+           
         }
     </div>
 }

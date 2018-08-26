@@ -88,7 +88,7 @@ namespace ComPro.Controllers
                 {
                     var image = new SiteImage
                     {
-                        ImagePath = "/Content/images/Event/DefaultImage2.jpg",
+                        ImagePath = "/Content/images/Event/defaultNotice.png",
                         Type = "Notice",
                         TypeId = notice.Id,
                         UploadDate = DateTime.Now,
