@@ -13,7 +13,7 @@
         <div class="col-sm">
             <a href="#" data-toggle="popover" data-placement="top" title="@item.Name" data-content="@item.CurrentJobTitle at @item.CompanyName">@item.Name</a> , <i>@item.CurrentJobTitle</i> just joined.
         </div>
-
+      
 
     }
 </div>
@@ -22,21 +22,36 @@
 <script>
 
     function Latest_Member_Details(id) {
-
-
-        var url = "/UserProfile/Details";
+    
+       
+        var url = "/UserProfile/ChangeId";
 
         $.ajax({
 
             url: url,
             data: { id: id },
 
-            success: function (data) {
-                $('#Latest_Detailscontainer').html(data);
-                $('#MemDetails').modal();
+            success: function (Id) {
+
+
+                var url = "/UserProfile/Details";
+
+                $.ajax({
+
+                    url: url,
+                    data: { id: Id },
+
+                    success: function (data) {
+                        $('#Latest_Detailscontainer').html(data);
+                        $('#MemDetails').modal();
+                    }
+
+                });
             }
 
         });
+
+       
 
     }
 </script>
