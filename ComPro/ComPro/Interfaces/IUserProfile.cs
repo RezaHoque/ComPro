@@ -36,6 +36,8 @@ namespace ComPro.Interfaces
         void ForgotPassword(string userId, string action, string link);
 
         bool Accounttype();
-        string GetCode(string email); 
+        string GetCode(string email);
+
+       
     }
 }
