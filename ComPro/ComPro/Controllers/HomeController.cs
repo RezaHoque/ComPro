@@ -102,5 +102,10 @@ namespace ComPro.Controllers
             var model = _Home.GetContributers();
             return View(model);
         }
+
+        public ActionResult Privacy()
+        {
+            return View();
+        }
     }
 }
