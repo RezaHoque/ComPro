@@ -623,6 +623,8 @@
     <Content Include="Email_Templets\User_Feedback.cshtml" />
     <Content Include="Email_Templets\WelcomeEmail.cshtml" />
     <Content Include="Email_Templets\Email_Confirmation.cshtml" />
+    <Content Include="PrivateSettings.config" />
+    <Content Include="ConnectionStrings.config" />
     <None Include="Properties\PublishProfiles\ComPro20180825124442 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\EventScript.js" />

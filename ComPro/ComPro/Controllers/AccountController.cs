@@ -167,6 +167,10 @@ namespace ComPro.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("MyPage", "UserProfile");
+            }
             return View();
         }
 

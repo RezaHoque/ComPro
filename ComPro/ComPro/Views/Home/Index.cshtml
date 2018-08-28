@@ -25,9 +25,13 @@
                 </div>
             </div>
         }
-        <div style="margin-left:auto;margin-right:auto;text-align: center;">
-            <h4>Be a part of the professional network. <a href="/Account/Register" class="btn btn-success"> Register here</a></h4>
-        </div>
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <div style="margin-left:auto;margin-right:auto;text-align: center;">
+                <h4>Be a part of the professional network. <a href="/Account/Register" class="btn btn-success"> Register here</a></h4>
+            </div>
+        }
+        
     </div>
 </div>
 
