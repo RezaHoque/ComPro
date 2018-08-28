@@ -384,7 +384,7 @@ namespace ComPro.Interfaces
                 obj.EmailSubject = Helpers.Constants.Emailsubject;
                 var My_Url = Helpers.Constants.Email_Verification_Link + UserInfo.Email;
                 obj.EMailBody = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/Email_Templets/") + "Email_Confirmation" + ".cshtml").Replace("ConfirmationLink", My_Url).ToString();
-
+                var result = _utility.SendEmail(obj);
 
 
                 return true;
