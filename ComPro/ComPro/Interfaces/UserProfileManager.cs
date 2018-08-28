@@ -66,11 +66,12 @@ namespace ComPro.Interfaces
 
                 Data.SaveChanges();
 
+                // Temporarily : User will not get any email after registration 
 
-                obj.ToEmail = model.Email;
-                obj.EmailSubject = Helpers.Constants.Welcomesubject;
-                obj.EMailBody = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/Email_Templets/") + "WelcomeEmail" + ".cshtml").ToString();
-                var result = _utility.SendEmail(obj);
+                //obj.ToEmail = model.Email;
+                //obj.EmailSubject = Helpers.Constants.Welcomesubject;
+                //obj.EMailBody = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/Email_Templets/") + "WelcomeEmail" + ".cshtml").ToString();
+                //var result = _utility.SendEmail(obj);
 
                 obj.ToEmail = System.Configuration.ConfigurationManager.AppSettings["Admin"];
                 obj.EmailSubject = Helpers.Constants.NewUser;
@@ -307,6 +308,8 @@ namespace ComPro.Interfaces
             
         }
 
+
+
         public List<User_Approval_Model> NewUserforApproval()
         {
             try
@@ -384,8 +387,6 @@ namespace ComPro.Interfaces
 
 
 
-                var result = _utility.SendEmail(obj); 
-
                 return true;
 
             }
@@ -393,7 +394,7 @@ namespace ComPro.Interfaces
             catch
             {
                 return false;
-                //throw;
+                
 
             }
 
