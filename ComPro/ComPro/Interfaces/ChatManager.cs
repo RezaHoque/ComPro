@@ -222,7 +222,15 @@ namespace ComPro.Interfaces
 
                 foreach (var reciever in Names)
                 {
-                    ChatThread = ChatThread +","+ reciever;
+                   // ChatThread = ChatThread +","+ reciever;
+                   if(ChatThread==null)
+                        {
+                            ChatThread = reciever;
+                        }
+                    else
+                        {
+                        ChatThread = ChatThread + "," + reciever;
+                    }
                 }
 
 

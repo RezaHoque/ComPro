@@ -66,9 +66,9 @@ namespace ComPro.Controllers
         public ActionResult Approve(int id)
         {
 
-            //bool result = _userProfile.ApproveNewUser(id);
-            //return Content(result.ToString());
-            return Content(false.ToString());
+            bool result = _userProfile.ApproveNewUser(id);
+            return Content(result.ToString());
+           
         }
 
 
@@ -189,6 +189,8 @@ namespace ComPro.Controllers
 
 
         }
+
+
         [AllowAnonymous]
         public JsonResult UserList()
         {

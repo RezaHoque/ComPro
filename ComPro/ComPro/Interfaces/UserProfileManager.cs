@@ -61,17 +61,22 @@ namespace ComPro.Interfaces
                 // Note: _data cant access data from database
                 //_data.UserInfo.Add(UserInformation);
                 //_data.SaveChanges();
+
                 Data.UserInfo.Add(UserInformation);
 
                 Data.SaveChanges();
 
+                // Temporarily : User will not get any email after registration 
 
-                obj.ToEmail = model.Email;
-                obj.EmailSubject = Helpers.Constants.Welcomesubject;
-                obj.EMailBody = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/Email_Templets/") + "WelcomeEmail" + ".cshtml").ToString();
-                var result = _utility.SendEmail(obj); 
+                //obj.ToEmail = model.Email;
+                //obj.EmailSubject = Helpers.Constants.Welcomesubject;
+                //obj.EMailBody = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/Email_Templets/") + "WelcomeEmail" + ".cshtml").ToString();
+                //var result = _utility.SendEmail(obj);
 
-
+                obj.ToEmail = System.Configuration.ConfigurationManager.AppSettings["Admin"];
+                obj.EmailSubject = Helpers.Constants.NewUser;
+                obj.EMailBody = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/Email_Templets/") + "NewUserNotification" + ".cshtml").Replace("UserName", model.Name).Replace("UserEmail", model.Email).ToString();
+                var result2 = _utility.SendEmail(obj);
 
 
             }
@@ -82,6 +87,8 @@ namespace ComPro.Interfaces
 
 
         }
+
+      
 
         public string CheckExternalUser(string providerkey)
         {
@@ -151,6 +158,7 @@ namespace ComPro.Interfaces
                 string Current_User_id = HttpContext.Current.User.Identity.GetUserId();
                 var user2 = _data.Users.FirstOrDefault(x => x.Id == Current_User_id);
                 return Data.UserInfo.FirstOrDefault(x => x.Email == user2.Email);
+                
             }
 
             catch
@@ -186,17 +194,18 @@ namespace ComPro.Interfaces
                 User.CurrentJobTitle = info.CurrentJobTitle;
                 User.CompanyName = info.CompanyName;
                 User.Skills = info.Skills;
-                User.Email = info.Email;
-            
-                //info.Gender = User.Gender;
-                //Data.Entry(info).State = EntityState.Modified;
+
+               // User.Email = info.Email;
+              //info.Gender = User.Gender;
+
+                Data.Entry(User).State = EntityState.Modified;
                 Data.SaveChanges();
                 return true;
             }
 
             catch
             {
-                return false;
+                 return false;
             }
         }
 
@@ -299,6 +308,8 @@ namespace ComPro.Interfaces
             
         }
 
+
+
         public List<User_Approval_Model> NewUserforApproval()
         {
             try
@@ -376,8 +387,6 @@ namespace ComPro.Interfaces
 
 
 
-                var result = _utility.SendEmail(obj); 
-
                 return true;
 
             }
@@ -385,7 +394,7 @@ namespace ComPro.Interfaces
             catch
             {
                 return false;
-                //throw;
+                
 
             }
 
