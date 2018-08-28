@@ -17,6 +17,7 @@ namespace ComPro.Controllers
     {
         private readonly IUserProfile _userProfile;
         private readonly INoticeBoard _noticeBoardManager = new NoticeBoardManager();
+        readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public UserProfileController(IUserProfile UserProfileManager)
         {
             _userProfile = UserProfileManager;
@@ -91,19 +92,31 @@ namespace ComPro.Controllers
             //    if (file != null && file.ContentLength > 0)
             //    {
             //        var fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
-                    
+
             //        var path = Path.Combine(Server.MapPath("~/Content/images/Profile/"), fileName);
             //        file.SaveAs(path);
-                   
+
             //        info.Photo = "/Content/images/Profile/" + fileName;
             //    }
             //}
-            if (!string.IsNullOrEmpty(frm["Date"]))
+
+            try
             {
-               
-                info.BirthDate = DateTime.Parse(frm["Date"]);
+                if (!string.IsNullOrEmpty(frm["Date"]))
+                {
+
+                    info.BirthDate = DateTime.Parse(frm["Date"]);
+                }
+
+                var result = _userProfile.PostEditUserProfile(info);
+                
+
             }
-            var result = _userProfile.PostEditUserProfile(info);
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
+
             return View(_userProfile.EditUserProfile());
         }
 

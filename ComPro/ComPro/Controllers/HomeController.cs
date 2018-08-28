@@ -12,6 +12,7 @@ namespace ComPro.Controllers
     public class HomeController : Controller
     {
         private readonly IUserProfile _userProfile;
+        readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public HomeController(IUserProfile userProfile)
         {
             _userProfile = userProfile;
@@ -49,8 +50,7 @@ namespace ComPro.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
+            
             return View();
         }
 
