@@ -84,22 +84,6 @@ namespace ComPro.Controllers
         [HttpPost]
         public ActionResult MyPage(UserInfo info, FormCollection frm)
         {
-
-            //if (Request.Files.Count > 0)
-            //{
-            //    var file = Request.Files[0];
-
-            //    if (file != null && file.ContentLength > 0)
-            //    {
-            //        var fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
-
-            //        var path = Path.Combine(Server.MapPath("~/Content/images/Profile/"), fileName);
-            //        file.SaveAs(path);
-
-            //        info.Photo = "/Content/images/Profile/" + fileName;
-            //    }
-            //}
-
             try
             {
                 if (!string.IsNullOrEmpty(frm["Date"]))
@@ -115,6 +99,13 @@ namespace ComPro.Controllers
             catch (Exception ex)
             {
                 logger.Error(ex);
+                Email_Service_Model email = new Email_Service_Model();
+                email.ToEmail = System.Configuration.ConfigurationManager.AppSettings["BccEmail"];
+                email.EmailSubject = $"Failed to save my page data. {info.UserId}";
+                email.EMailBody = $"Name: {info.Name}. Id:{info.UserId}. Exception: {ex.ToString()}";
+
+                var emailmanager = new UtilityManager();
+                emailmanager.SendEmail(email);
             }
 
             return View(_userProfile.EditUserProfile());

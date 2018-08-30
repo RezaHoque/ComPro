@@ -18,6 +18,7 @@ namespace ComPro.Controllers
         ApplicationDbContext _data = new ApplicationDbContext();
         private readonly INoticeBoard _noticeBoardManager;
         private ApplicationUserManager _userManager;
+        readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public NoticeBoardController(INoticeBoard noticeBoardManager, ApplicationUserManager userManager)
         {
             _noticeBoardManager = noticeBoardManager;
@@ -59,47 +60,61 @@ namespace ComPro.Controllers
         [HttpPost]
         public ActionResult Create(NoticeBoard model)
         {
-            model.CreatorId = User.Identity.GetUserId();
-           
-            var notice = _noticeBoardManager.PostNotices(model);
-
-            if (Request.Files.Count > 0)
+            try
             {
-                var file = Request.Files[0];
+                model.CreatorId = User.Identity.GetUserId();
 
-                if (file != null && file.ContentLength > 0)
+                var notice = _noticeBoardManager.PostNotices(model);
+
+                if (Request.Files.Count > 0)
                 {
-                    var fileName = Guid.NewGuid()+"_"+Path.GetFileName(file.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Content/images/"), fileName);
-                    file.SaveAs(path);
-                    var image = new SiteImage
+                    var file = Request.Files[0];
+
+                    if (file != null && file.ContentLength > 0)
                     {
-                        ImagePath = "/Content/images/" + fileName,
-                        Type = "Notice",
-                        TypeId = notice.Id,
-                        UploadDate = DateTime.Now,
-                        UploaderId = notice.CreatorId
+                        var fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
+                        var path = Path.Combine(Server.MapPath("~/Content/images/"), fileName);
+                        file.SaveAs(path);
+                        var image = new SiteImage
+                        {
+                            ImagePath = "/Content/images/" + fileName,
+                            Type = "Notice",
+                            TypeId = notice.Id,
+                            UploadDate = DateTime.Now,
+                            UploaderId = notice.CreatorId
 
-                    };
-                    _noticeBoardManager.SaveImage(image);
-                }
+                        };
+                        _noticeBoardManager.SaveImage(image);
+                    }
 
-                else
-                {
-                    var image = new SiteImage
+                    else
                     {
-                        ImagePath = "/Content/images/Event/defaultNotice.png",
-                        Type = "Notice",
-                        TypeId = notice.Id,
-                        UploadDate = DateTime.Now,
-                        UploaderId = notice.CreatorId
+                        var image = new SiteImage
+                        {
+                            ImagePath = "/Content/images/Event/defaultNotice.png",
+                            Type = "Notice",
+                            TypeId = notice.Id,
+                            UploadDate = DateTime.Now,
+                            UploaderId = notice.CreatorId
 
-                    };
-                    _noticeBoardManager.SaveImage(image);
+                        };
+                        _noticeBoardManager.SaveImage(image);
+
+                    }
+
 
                 }
-                
+            }
+            catch (Exception ex)
+            {
+                logger.Error($"Error creating notice. {ex}");
+                Email_Service_Model email = new Email_Service_Model();
+                email.ToEmail = System.Configuration.ConfigurationManager.AppSettings["BccEmail"];
+                email.EmailSubject = $"Failed to create notice. User- {model.Creator.UserName}";
+                email.EMailBody = $"Description: {model.Description}. Title: {model.Title}. Exception: {ex.ToString()}";
 
+                var emailmanager = new UtilityManager();
+                emailmanager.SendEmail(email);
             }
 
 

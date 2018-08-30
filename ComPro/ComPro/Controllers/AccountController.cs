@@ -24,6 +24,7 @@ namespace ComPro.Controllers
 
         private IUserProfile _UserAccountProfile;
         private readonly IUserProfile _UserProfile;
+        readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public AccountController()
         {
@@ -203,9 +204,19 @@ namespace ComPro.Controllers
 
                     _UserProfile.AddationalInfo(model);
                     _UserProfile.SetUserRole(model.Email);
+
+                    Email_Service_Model email=new Email_Service_Model();
+                    email.ToEmail= System.Configuration.ConfigurationManager.AppSettings["BccEmail"];
+                    email.EmailSubject = $"{model.Name} signed up.";
+                    email.EMailBody = $"Name: {model.Name}. Email:{model.Email}";
+                    
+                    var emailmanager=new UtilityManager();
+                    emailmanager.SendEmail(email);
+
                     return RedirectToAction("New_Registration", new { Id=user.Id});
 
                 }
+                logger.Error($"Error signing up. {model.Email}");
                 AddErrors(result);
             }
 
