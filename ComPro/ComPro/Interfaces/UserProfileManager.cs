@@ -73,10 +73,10 @@ namespace ComPro.Interfaces
                 //obj.EMailBody = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/Email_Templets/") + "WelcomeEmail" + ".cshtml").ToString();
                 //var result = _utility.SendEmail(obj);
 
-                obj.ToEmail = System.Configuration.ConfigurationManager.AppSettings["Admin"];
-                obj.EmailSubject = Helpers.Constants.NewUser;
-                obj.EMailBody = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/Email_Templets/") + "NewUserNotification" + ".cshtml").Replace("UserName", model.Name).Replace("UserEmail", model.Email).ToString();
-                var result2 = _utility.SendEmail(obj);
+                //obj.ToEmail = System.Configuration.ConfigurationManager.AppSettings["Admin"];
+                //obj.EmailSubject = Helpers.Constants.NewUser;
+                //obj.EMailBody = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/Email_Templets/") + "NewUserNotification" + ".cshtml").Replace("UserName", model.Name).Replace("UserEmail", model.Email).ToString();
+                //var result2 = _utility.SendEmail(obj);
 
 
             }
