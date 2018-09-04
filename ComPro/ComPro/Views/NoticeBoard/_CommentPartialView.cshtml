@@ -3,43 +3,55 @@
     $(document).ready(function () {
         $("#commentsListBox").load("/NoticeBoard/GetComments?noticeId=" + noticeId);
     });
-     $("#saveComment").click(function () {
-         var txt = $("#commentText").val();
+    $("#saveComment").click(function () {
+        var txt = $("#commentText").val();
          
 
-            if (txt !== "") {
-                var url = "/NoticeBoard/PostComment";
-                $.ajax({
+        if (txt !== "") {
+            var url = "/NoticeBoard/PostComment";
+            $.ajax({
                     method: "POST",
                     url: url,
                     data: { CommentText: txt, NoticeId: noticeId }
                 })
-                    .done(function (msg) {
-                        $("#commentText").val("");
-                        $("#commentSuccess").removeClass("hide");
-                        $("#commentSuccess").addClass("show");
+                .done(function (msg) {
+                    $("#commentText").val("");
+                    $("#commentSuccess").removeClass("hide");
+                    $("#commentSuccess").addClass("show");
 
-                        $("#commentsListBox").load("/NoticeBoard/GetComments?noticeId=" + noticeId);
-                    });
-            }
-        });
+                    $("#commentsListBox").load("/NoticeBoard/GetComments?noticeId=" + noticeId);
+                });
+        }
+    });
 </script>
-<div class="card" style="width: 60%;margin:20px;">
-    <div class="card-body">
-        <h5 class="card-title">Comment</h5>
 
-        <p class="card-text">
-            <textarea class="form-control" id="commentText" rows="3"></textarea>
-        </p>
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="card" style="width: 60%;margin:20px;">
+        <div class="card-body">
+            <h5 class="card-title">Comment</h5>
+
+            <p class="card-text">
+                <textarea class="form-control" id="commentText" rows="3"></textarea>
+            </p>
        
-        <a href="#" class="card-link btn btn-primary" name="saveComment" id="saveComment">Post</a>
+            <a href="#" class="card-link btn btn-primary" name="saveComment" id="saveComment">Post</a>
         
+        </div>
     </div>
-</div>
-<div class="alert alert-info alert-dismissible fade hide" role="alert" id="commentSuccess">
-    <strong>Thanks !</strong>  for writing a comment .
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
+    <div class="alert alert-info alert-dismissible fade hide" role="alert" id="commentSuccess">
+        <strong>Thanks !</strong>  for writing a comment .
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+else
+{
+    <div style="padding: 10px;">
+        <h6>Please <a href="/Account/Login"> login </a> to write comment</h6>
+    </div>
+    
+}
+
 <div id="commentsListBox"></div>

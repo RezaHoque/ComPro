@@ -12,7 +12,7 @@ using System.IO;
 
 namespace ComPro.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class NoticeBoardController : Controller
     {
         ApplicationDbContext _data = new ApplicationDbContext();
@@ -51,6 +51,7 @@ namespace ComPro.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Create()
         {
 
@@ -58,6 +59,7 @@ namespace ComPro.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Create(NoticeBoard model)
         {
             try
@@ -123,13 +125,13 @@ namespace ComPro.Controllers
 
             return RedirectToAction("Index");
         }
-        [Authorize]
+        //[Authorize]
         public ActionResult Notice(int? id)
         {
             ViewBag.NoticeId = id;
             return View(_noticeBoardManager.GetDetails(id.Value));
         }
-
+        [Authorize]
         public ActionResult ApproveNotice(int id)
         {
             if (User.IsInRole(UserRole.Administrator.ToString()))
@@ -150,6 +152,7 @@ namespace ComPro.Controllers
         //        return RedirectToAction("Index");
         //}
         [HttpPost]
+        [Authorize]
         public ActionResult PostComment(PublicComment model)
         {
 
@@ -164,19 +167,20 @@ namespace ComPro.Controllers
             }
             return Content(Boolean.FalseString);
         }
-        [Authorize]
+       // [Authorize]
         public ActionResult PostComment()
         {
            
             return PartialView("_CommentPartialView");
         }
-        [Authorize]
+       // [Authorize]
         public ActionResult GetComments(int noticeId)
         {
             var result = _noticeBoardManager.GetComments(noticeId);
             return PartialView("_commentsListPartial", result);
         }
 
+        [Authorize]
         public ActionResult Edit(int ? id)
         {
             if (id == null)
@@ -190,6 +194,7 @@ namespace ComPro.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit(NoticeBoardViewModel Model)
 
         {
@@ -230,6 +235,7 @@ namespace ComPro.Controllers
         }
 
         // GET: Notice/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
