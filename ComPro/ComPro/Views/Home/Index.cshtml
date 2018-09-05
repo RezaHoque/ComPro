@@ -5,7 +5,9 @@
 <script>
     $(document).ready(function () {
 
-        $("#MemberName").load("/Home/LatestMember");
+        $("#MemberName").load("/Home/LatestMember", function() {
+            $("#memberLoader").hide();
+        });
         $("#EventName").load("/Home/LatestEvent");
         $("#NoticeName").load("/Home/LatestNotice");
 
@@ -37,7 +39,14 @@
 
 
 <div class="row">
-    <div id="MemberName"></div>
+    
+    <div id="MemberName">
+        <div class="lds-ellipsis" id="memberLoader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div></div>
+    </div>
 </div>
 <div class="row" style="padding-top: 30px; padding-bottom: 10px;">
     <div id="NoticeName"></div>
