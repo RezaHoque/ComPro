@@ -83,7 +83,7 @@ namespace ComPro
             appId: "152385738779508",
             appSecret: "2cf4ce7deab78c9d6b697dd915692f65");
 
-
+            //https://console.developers.google.com/apis/credentials?project=hidden-casing-176913
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
                 ClientId = "389037703485-8ojb382nm10uc8e6t7nkrgh7culsc6gk.apps.googleusercontent.com",
