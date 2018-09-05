@@ -19,59 +19,49 @@
 <body>
     <div class="navbar navbar-expand-lg navbar-light bg-light justify-content-between" style="margin-bottom:5px;">
         <div class="container">
-            <a href="/" class="navbar-brand"><i class="fas fa-users fa-2x" data-fa-transform="grow-6"></i></a>
-
-
-           
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"><a href="/NoticeBoard/Index" class="nav-link"><i class="fa fa-newspaper"></i> Notice Board</a></li>
-                    <li class="nav-item"><a href="/UserProfile/Index" class="nav-link"><i class="fa fa-user-circle"></i> Members</a></li>
-                    <li class="nav-item"><a href="/Event/Index" class="nav-link"><i class="fa fa-calendar-alt"></i> Events</a></li>
-                    <li class="nav-item "><a href="/Chat/ShowChat" class="nav-link "><i class="fas fa-envelope-open"></i> Messages</a></li>
-                    
-
-
-                </ul>
-
-            </div>
-            <div>
-                @Html.Partial("_LoginPartial")
-            </div>
-
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContentTop">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a href="/" class="navbar-brand"><i class="fas fa-users fa-2x" data-fa-transform="grow-6"></i></a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContentTop">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"><a href="/NoticeBoard/Index" class="nav-link"><i class="fa fa-newspaper"></i> Notice Board</a></li>
+                        <li class="nav-item"><a href="/UserProfile/Index" class="nav-link"><i class="fa fa-user-circle"></i> Members</a></li>
+                        <li class="nav-item"><a href="/Event/Index" class="nav-link"><i class="fa fa-calendar-alt"></i> Events</a></li>
+                        <li class="nav-item "><a href="/Chat/ShowChat" class="nav-link "><i class="fas fa-envelope-open"></i> Messages</a></li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-
-        <footer style="margin-top:50px !important;">
-            <nav class="navbar fixed-bottom navbar-expand navbar-light bg-light">
-                <div class="navbar-text m-auto">
-                    Made with <i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>️ by the Community Geniuses
-                    <a href="https://github.com/RezaHoque/compro" target="_blank"> <i class="fab fa-github"></i></a>
-                
-                   
+<div class="container body-content">
+    @RenderBody()
+    <nav class="navbar fixed-bottom navbar-light bg-light navbar-expand-lg">
+        
+            <div class="container align-items-center justify-content-center">
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContentBottom">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                 Made with <i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>️ by the Community Geniuses
+                <a href="https://github.com/RezaHoque/compro" target="_blank" class="navbar-brand"> <i class="fab fa-github"></i></a>
                
-                    
+                <div class="collapse navbar-collapse" id="navbarSupportedContentBottom">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"> <a href="/Home/Contact" class="nav-link "><i class="fas fa-file-alt" style="color: green;"></i> Contact</a></li>
+                        <li class="nav-item"> <a href="/Home/Privacy" class="nav-link "><i class="fas fa-user-secret" style="color: green;"></i> Privacy</a></li>
+                        <li class="nav-item"><a href="/Home/About" class="nav-link "><i class="far fa-user" style="color: green;"></i> About</a></li>
+                        <li class="nav-item"> <a href="/Home/Contributer" class="nav-link "><i class="fas fa-file-code" style="color: green;"></i> Contributers</a></li>
+                        <li class="nav-item "> <a href="#" class="nav-link "><i class="fas fa-bolt" style="color: green;"></i> Feature pipeline</a></li>
+                    </ul>
                 </div>
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">  <a href="/Home/Contact" class="nav-link "><i class="fas fa-file-alt" style="color: green;"></i> Contact</a></li>
-                    <li class="nav-item">  <a href="/Home/Privacy" class="nav-link "><i class="fas fa-user-secret" style="color: green;"></i> Privacy</a></li>
-                    <li class="nav-item"><a href="/Home/About" class="nav-link "><i class="far fa-user" style="color: green;"></i> About</a></li>
-                    <li class="nav-item">  <a href="/Home/Contributer" class="nav-link "><i class="fas fa-file-code" style="color: green;"></i> Contributers</a></li>
-                    <li class="nav-item "> <a href="#" class="nav-link "><i class="fas fa-bolt" style="color: green;"></i> Feature pipeline</a></li>
-                    
-
-
-                </ul>
-              
-            </nav>
-        </footer>
-    </div>
+            </div>
+            
     
+    </nav>
+</div>
 
-
-  
-    @RenderSection("scripts", required: false)
+@RenderSection("scripts", required: false)
 </body>
 </html>
