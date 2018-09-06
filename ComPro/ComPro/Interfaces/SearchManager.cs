@@ -118,7 +118,7 @@ namespace ComPro.Interfaces
                     }
 
 
-                    
+                   
                     foreach (var y in Notices)
                     {
                         ResultStirng = null;
@@ -197,18 +197,18 @@ namespace ComPro.Interfaces
 
                     }
 
-
-                    foreach (var y in Event)
+                   
+                    foreach (var z in Event)
                     {
                         ResultStirng = null;
                         int Ranking = (int)Searching.Priority0;
                         Found = false;
 
-                        string[] SingleSentence = y.EventTitel.Split('!', '.', '?');
+                        string[] SingleSentence = z.EventTitel.Split('!', '.', '?');
 
                         if (SingleSentence.Length != 0)
                         {
-                            SingleSentence[0] = y.EventTitel;
+                            SingleSentence[0] = z.EventTitel;
                         }
                         else
                         {
@@ -229,7 +229,7 @@ namespace ComPro.Interfaces
                         }
 
                        
-                        SingleSentence = y.Description.Split('!', '.', '?');
+                        SingleSentence = z.Description.Split('!', '.', '?');
                         SingleSentence = SingleSentence.Take(SingleSentence.Count() - 1).ToArray();
 
                         foreach (var sentence in SingleSentence)
@@ -256,9 +256,9 @@ namespace ComPro.Interfaces
                             SearchResult.Add(new SearchViewModel()
                             {
                                
-                                ResultId = y.Id,
-                                ResultName = y.EventTitel,
-                                Description=y.Description,
+                                ResultId = z.Id,
+                                ResultName = z.EventTitel,
+                                Description= z.Description,
                                 ResultCatagory = Helpers.Constants.Event.ToString(),
                                 MatchedText = ResultStirng,
                                 Priority = Ranking,
