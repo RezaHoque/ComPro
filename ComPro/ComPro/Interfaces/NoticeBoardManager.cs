@@ -111,15 +111,17 @@ namespace ComPro.Interfaces
             }
         }
 
-        public void ApproveNotice(int id)
-        {
-            var notice = _data.Notice.FirstOrDefault(x => x.Id == id);
-            notice.IsApproved = true;
+        // Currently Admin is free to approve new notice but we will impliment it very soon.
 
-            _data.Entry(notice).State = EntityState.Modified;
-            _data.SaveChanges();
+        //public void ApproveNotice(int id)
+        //{
+        //    var notice = _data.Notice.FirstOrDefault(x => x.Id == id);
+        //    notice.IsApproved = true;
 
-        }
+        //    _data.Entry(notice).State = EntityState.Modified;
+        //    _data.SaveChanges();
+
+        //}
 
         public bool PostComment(PublicComment comment)
         {
@@ -193,10 +195,21 @@ namespace ComPro.Interfaces
                     notice.WebLink = model.Notice.WebLink;
                     //notice.ActionDate = model.ActionDate;
 
-                    _data.Entry(notice).State = EntityState.Modified;
+                    if (notice.PinUp == false && model.Notice.PinUp== true)
+                    {
+                        var PreviousPinUpNotice = _data.Notice.FirstOrDefault(x => (x.PinUp == true));
+                        if (PreviousPinUpNotice!=null)
+                        {
+                        PreviousPinUpNotice.PinUp = false;
+                        _data.Entry(PreviousPinUpNotice).State = EntityState.Modified;
+                        }
+                       
+                    }
+                    notice.PinUp = model.Notice.PinUp;
 
                     
 
+                    _data.Entry(notice).State = EntityState.Modified;
                     _data.SaveChanges();
                     return Helpers.Constants.PostEdit;
                 }

@@ -22,10 +22,12 @@ namespace ComPro.Models
         public string WebLink { get; set; }
 
         public bool IsApproved { get; set; }
+        public bool PinUp { get; set; }
 
 
         public DateTime ActionDate { get; set; }
         public DateTime SubmitDate { get; set; }
+        
 
         public string CreatorId { get; set; }
         public virtual ApplicationUser Creator { get; set; }

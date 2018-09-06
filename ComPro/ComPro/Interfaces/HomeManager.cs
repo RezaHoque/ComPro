@@ -53,33 +53,37 @@ namespace ComPro.Interfaces
 
         public IEnumerable<NoticeBoard> LatestNotice(int length)
         {
-           // ApplicationDbContext _data = new ApplicationDbContext();
-           // List<ChatModel> LatestNotice = new List<ChatModel>();
+            // ApplicationDbContext _data = new ApplicationDbContext();
+            // List<ChatModel> LatestNotice = new List<ChatModel>();
+            List<NoticeBoard> LatestNotice = new List<NoticeBoard>();
+
             try
             {
 
-                return _data.Notice.Where(x => x.IsApproved).OrderByDescending(x => x.SubmitDate).Take(length);
-                //LatestNotice = _data.Notice.Where(x => x.IsApproved == true).OrderByDescending(i => i.SubmitDate)
-                //                              .Take(length).AsEnumerable().Select(p => new NoticeBoard
-                //                              {
-                //                                  Id = p.Id,
-                //                                  Description = p.Description,
-                //                                  Title = p.Title,
-                //                                  Creator = p.Creator
-                //                              }).ToList();
+                var PinUpNotice = _data.Notice.FirstOrDefault(x => x.IsApproved == true && x.PinUp==true);
 
+                if(PinUpNotice==null)
+                {
+                    length = length + 1;
+                }
+                else
+                {
+                    LatestNotice.Add(PinUpNotice);
+                }
+                var NewNotice = _data.Notice.Where(x => x.IsApproved).OrderByDescending(x => x.SubmitDate).Take(length);
 
+                LatestNotice.AddRange(NewNotice);
 
-                //return LatestNotice;
+                return LatestNotice.OrderByDescending(x=>x.PinUp);
             }
 
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //return LatestNotice;
 
                 //log the exception.
-                return new List<NoticeBoard>();
+                return LatestNotice;
             }
         }
 

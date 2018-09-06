@@ -41,7 +41,7 @@ namespace ComPro.Controllers
                 });
             }
 
-            return View(noticeVMList);
+            return View(noticeVMList.OrderByDescending(x => x.Notice.PinUp));
         }
 
         public ActionResult MyNotice()
@@ -131,18 +131,19 @@ namespace ComPro.Controllers
             ViewBag.NoticeId = id;
             return View(_noticeBoardManager.GetDetails(id.Value));
         }
-        [Authorize]
-        public ActionResult ApproveNotice(int id)
-        {
-            if (User.IsInRole(UserRole.Administrator.ToString()))
-            {
-                _noticeBoardManager.ApproveNotice(id);
-                return RedirectToAction("NewNotice");
-            }
-            else
-                return RedirectToAction("Index");
 
-        }
+        //[Authorize]
+        //public ActionResult ApproveNotice(int id)
+        //{
+        //    if (User.IsInRole(UserRole.Administrator.ToString()))
+        //    {
+        //        _noticeBoardManager.ApproveNotice(id);
+        //        return RedirectToAction("NewNotice");
+        //    }
+        //    else
+        //        return RedirectToAction("Index");
+
+        //}
 
         //public ActionResult NewNotice()
         //{
