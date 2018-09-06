@@ -29,17 +29,18 @@ namespace ComPro.Interfaces
             
 
             string ResultStirng  ;
-            bool Found = false; ;
+            bool Found = false; 
 
 
             foreach(var SearchText in splitted)
             {
-                 if(SearchText!="")
+                 if(SearchText!="" && SearchText.Length>2)
                 {
+                   
 
                     foreach (var x in User)
                     {
-
+                        Found = false;
                         ResultStirng = null;
                         int Ranking = (int)Searching.Priority0;
 
@@ -186,7 +187,9 @@ namespace ComPro.Interfaces
                                     Priority = Ranking,
                                     SearchText= Search_Text,
                                 });
-                            
+
+                            Found = false;
+                            Ranking = (int)Searching.Priority0;
 
                         }
 
@@ -262,7 +265,8 @@ namespace ComPro.Interfaces
                                 SearchText = Search_Text,
                             });
 
-
+                            Found = false;
+                            Ranking = (int)Searching.Priority0;
                         }
 
 
