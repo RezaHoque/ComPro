@@ -7,19 +7,19 @@ namespace ComPro.Migrations
     {
         public override void Up()
         {
-            DropTable("dbo.Current_Status_Model");
+            //DropTable("dbo.Current_Status_Model");
         }
         
         public override void Down()
         {
-            CreateTable(
-                "dbo.Current_Status_Model",
-                c => new
-                    {
-                        StatusId = c.Int(nullable: false, identity: true),
-                        Status = c.String(),
-                    })
-                .PrimaryKey(t => t.StatusId);
+            //CreateTable(
+            //    "dbo.Current_Status_Model",
+            //    c => new
+            //        {
+            //            StatusId = c.Int(nullable: false, identity: true),
+            //            Status = c.String(),
+            //        })
+            //    .PrimaryKey(t => t.StatusId);
             
         }
     }
