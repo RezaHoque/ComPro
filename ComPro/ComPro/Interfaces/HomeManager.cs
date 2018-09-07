@@ -70,7 +70,7 @@ namespace ComPro.Interfaces
                 {
                     LatestNotice.Add(PinUpNotice);
                 }
-                var NewNotice = _data.Notice.Where(x => x.IsApproved).OrderByDescending(x => x.SubmitDate).Take(length);
+                var NewNotice = _data.Notice.Where(x => x.IsApproved && x.PinUp==false).OrderByDescending(x => x.SubmitDate).Take(length);
 
                 LatestNotice.AddRange(NewNotice);
 

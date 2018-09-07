@@ -99,6 +99,18 @@ namespace ComPro.Interfaces
                 model.CreatorId = model.CreatorId;
                 model.ActionDate = DateTime.Now;
 
+                if (model.PinUp)
+                {
+                    var PreviousPinUpNotice = _data.Notice.FirstOrDefault(x => (x.PinUp == true));
+                    if (PreviousPinUpNotice != null)
+                    {
+                        PreviousPinUpNotice.PinUp = false;
+                        _data.Entry(PreviousPinUpNotice).State = EntityState.Modified;
+                    }
+
+                }
+               
+
                 _data.Notice.Add(model);
                 _data.SaveChanges();
 

@@ -41,7 +41,7 @@
         </div>
 
         @if (User.IsInRole("Administrator"))
-         {<p>@User.IsInRole("Administrator")</p>
+         {
             <div class="form-group">
                 @Html.LabelFor(model => model.PinUp, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
