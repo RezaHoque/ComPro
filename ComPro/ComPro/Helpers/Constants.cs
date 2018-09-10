@@ -25,7 +25,7 @@ namespace ComPro.Helpers
         public const string Welcomesubject = "Welcome In BPID ";
         public const string NewUser = "New User Registration ";
         public const string  Emailsubject = "Approval Of Your Account In BPID ";
-        public const string Email_Verification_Link = "https://compro20180825124442.azurewebsites.net/UserProfile/CheckLink?email=";
+        public const string Email_Verification_Link = "https://bpid.dk/UserProfile/CheckLink?email=";
         public const string Send = "Email Sent Successfully.";
         public const string Fail = "Problem while sending email, Please check details.";
         public const string SmtpServer = "smtp.gmail.com" ;
