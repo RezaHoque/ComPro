@@ -107,5 +107,9 @@ namespace ComPro.Controllers
         {
             return View();
         }
+        public ActionResult Feature()
+        {
+            return View();
+        }
     }
 }
