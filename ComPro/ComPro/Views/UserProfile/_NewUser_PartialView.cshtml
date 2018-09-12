@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ComPro.Models.User_Approval_Model>
 <div id="Approval_Message"></div>
 
-
+<h2 class="text-success"> @Model.Count() Members </h2><br />
 <table class="table">
 
     @foreach (var item in Model)
@@ -66,7 +66,7 @@
 
             if (msg == "True") {
                 $("#MemberList").load("/UserProfile/NewUser");
-                
+
                 $('#Approval_Message').html('<div class="alert alert-success alert-dismissible " role="alert">\
                     <strong> Thanks!</strong> New Member Is Successfully Approved.<button type = "button"  \
                     class= "close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>\
@@ -78,7 +78,7 @@
                     <strong> Sorry!</strong> Invalid Attempt.Please Try Again.<button type = "button" \
                     class= "close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button></div>');
 
-                
+
 
             }
 

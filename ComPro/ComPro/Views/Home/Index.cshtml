@@ -15,25 +15,37 @@
 </script>
 <div class="row justify-content-md-center" style="margin-bottom:100px;">
     <div class="col-md-12">
-        @using (Html.BeginForm("Index", "Search", FormMethod.Get))
+        @* @using (Html.BeginForm("Index", "Search", FormMethod.Get))
         {
 
             <div style="margin-left:auto;margin-right:auto;margin-top:10px; text-align: center;background-color: #f8f9fa !important" class="jumbotron">
                 <div id="fakeBox">
-                    <input type="text" name="Search" id="searchText" placeholder="Write at least 3 charecter" class="fakeInput" />
+                    <input type="text" name="Search" id="searchText" placeholder="Search for Members, their Posts and Events" class="fakeInput" />
                 </div>
                 <div style="padding-top: 10px;">
                     <input type="submit" class="btn btn-primary btn-custom " id="StartSearch" name="submit" value="Search" />
                 </div>
             </div>
-        }
+        }*@
+
+       
+
+            <div style="margin-left:auto;margin-right:auto;margin-top:10px; text-align: center;background-color: #f8f9fa !important" class="jumbotron">
+                <div id="fakeBox">
+                    <input type="text" name="Search" id="searchText" placeholder="Search for Members, their Posts and Events" class="fakeInput" />
+                </div>
+                <div style="padding-top: 10px;">
+                    <input type="button" class="btn btn-primary btn-custom " id="StartSearch" name="submit" value="Search" />
+                </div>
+            </div>
+      
         @if (!User.Identity.IsAuthenticated)
         {
             <div style="margin-left:auto;margin-right:auto;text-align: center;">
                 <h4>Be a part of the professional network. <a href="/Account/Register" class="btn btn-success"> Register here</a></h4>
             </div>
         }
-        
+
     </div>
 </div>
 
@@ -53,15 +65,14 @@
 </div>
 
 <script>
-    //$("#searchText").keyup(function () {
-    //    if ($('#searchText').val().length > 4) {
-    //        $('#StartSearch').show();
-    //    }
-    //    else {
-    //        $('#StartSearch').hide();
-    //    }
+    $(document).ready(function () {
+        $("#StartSearch").click(function () {
 
-    //});
+            var SearchText = $("#searchText").val();
+            var url = " https://localhost:44307/Search?Search=" + SearchText;
+            window.location.replace(url);
+        });
+    });
 
 
 </script>

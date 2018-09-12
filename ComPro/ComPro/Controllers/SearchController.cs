@@ -18,16 +18,16 @@ namespace ComPro.Controllers
 
 
         // GET: Search
-        public ActionResult Index(string Search)
+        public ActionResult Index(string Text)
         {
            
-            if (Search == null)
+            if (Text == null)
                 ViewBag.search = Helpers.Constants.EmptyText;
 
             else
             {
-             ViewBag.SearchData = Search;
-            return View(_searchManager.SearchData(Search));
+             ViewBag.SearchData = Text;
+            return View(_searchManager.SearchData(Text));
             }
                 
 
