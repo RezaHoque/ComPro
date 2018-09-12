@@ -36,7 +36,7 @@ namespace ComPro.Controllers
         public ActionResult LatestNotice()
         {
 
-            return PartialView("_LatestNoticePartialView", _Home.LatestNotice(3));
+            return PartialView("_LatestNoticePartialView", _Home.LatestNotice(2));
         }
 
         public ActionResult LatestEvent()

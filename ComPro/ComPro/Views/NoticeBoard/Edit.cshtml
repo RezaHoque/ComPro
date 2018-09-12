@@ -39,26 +39,36 @@
             @Html.ValidationMessageFor(model => model.Notice.WebLink, "", new { @class = "text-danger" })
         </div>
     </div>
-
-    @if (Model.NoticeImage != null)
+    @if (User.IsInRole("Administrator"))
     {
-        <img class="card-img-top" src="@Model.NoticeImage.ImagePath" alt="@Model" style="height:150px;width:150px">
-
+        <div class="form-group">
+            @Html.LabelFor(model => model.Notice.PinUp, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Notice.PinUp)
+                @Html.ValidationMessageFor(model => model.Notice.PinUp, "", new { @class = "text-danger" })
+            </div>
+        </div>
     }
 
-    <div class="form-group">
-        <label class="control-label col-md-2">Change image</label>
-        <div class="col-md-10">
-            <input type="file" id="fileUpload1" name="fileUpload1" />
-        </div>
-    </div>
+        @if (Model.NoticeImage != null)
+        {
+            <img class="card-img-top" src="@Model.NoticeImage.ImagePath" alt="@Model" style="height:150px;width:150px">
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-primary" />
+        }
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Change image</label>
+            <div class="col-md-10">
+                <input type="file" id="fileUpload1" name="fileUpload1" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
         </div>
     </div>
-</div>
 }
 
 <script>

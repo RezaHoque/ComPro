@@ -14,7 +14,7 @@ namespace ComPro.Interfaces
         //IEnumerable<NoticeBoard> GetNewNotices();
         NoticeBoard PostNotices(NoticeBoard model);
         NoticeBoardViewModel GetDetails(int id);
-        void ApproveNotice(int id);
+      //  void ApproveNotice(int id);
 
         NoticeBoardViewModel GetEdit(int id);
         string PostEdit(NoticeBoardViewModel model);
