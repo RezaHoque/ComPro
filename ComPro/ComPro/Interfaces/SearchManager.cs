@@ -18,9 +18,11 @@ namespace ComPro.Interfaces
         public IEnumerable<SearchViewModel> SearchData(string Search_Text)
         {
 
-            var fixedInput = Regex.Replace(Search_Text, "[^a-zA-Z0-9% ._]", string.Empty);
+           
+           // var fixedInput = Regex.Replace(Search_Text, "[^a-zA-Z0-9% ._]", string.Empty);
 
-            var splitted = fixedInput.Split(' ');
+            //var splitted = fixedInput.Split(' ');
+            var splitted = Search_Text.Split('-');
 
             IEnumerable<UserInfo> User = _userProfile.AllUser();
             IEnumerable<NoticeBoard> Notices = _noticeBoardManager.GetApprovedNotices();

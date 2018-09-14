@@ -13,6 +13,7 @@
 
     });
 </script>
+<div id="common-message" style="display: none;"></div>
 <div class="row justify-content-md-center" style="margin-bottom:100px;">
     <div class="col-md-12">
         @* @using (Html.BeginForm("Index", "Search", FormMethod.Get))
@@ -72,9 +73,16 @@
     $(document).ready(function () {
         $("#StartSearch").click(function () {
 
-            var SearchText = $("#searchText").val();
-            var url = " https://localhost:44307/Search?Search=" + SearchText;
-            window.location.replace(url);
+            var SearchText = $("#searchText").val().trim();
+            if (SearchText !== "") {
+                var url = "/search?text=" + SearchText.replace(/\s/g, "-");
+                window.location.href = url;
+            }
+            if (!SearchText) {
+                $('#common-message').html('<div class="alert alert-success"><strong> Ooppsss !</strong> Empty search text.</div>');
+                $('#common-message').delay(400).slideDown(400).delay(4000).slideUp(400);
+            }
+            
         });
     });
 
