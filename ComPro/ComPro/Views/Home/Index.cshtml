@@ -1,11 +1,12 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Home";
 }
 
 <script>
     $(document).ready(function () {
 
-        $("#MemberName").load("/Home/LatestMember", function() {
+        $("#MemberName").load("/Home/LatestMember", function () {
             $("#memberLoader").hide();
         });
         $("#EventName").load("/Home/LatestEvent");
@@ -13,23 +14,22 @@
 
     });
 </script>
-<div id="common-message" style="display: none;"></div>
 <div class="row justify-content-md-center" style="margin-bottom:100px;">
     <div class="col-md-12">
         @* @using (Html.BeginForm("Index", "Search", FormMethod.Get))
-        {
+            {
 
-            <div style="margin-left:auto;margin-right:auto;margin-top:10px; text-align: center;background-color: #f8f9fa !important" class="jumbotron">
-                <div id="fakeBox">
-                    <input type="text" name="Search" id="searchText" placeholder="Search for Members, their Posts and Events" class="fakeInput" />
+                <div style="margin-left:auto;margin-right:auto;margin-top:10px; text-align: center;background-color: #f8f9fa !important" class="jumbotron">
+                    <div id="fakeBox">
+                        <input type="text" name="Search" id="searchText" placeholder="Search for Members, their Posts and Events" class="fakeInput" />
+                    </div>
+                    <div style="padding-top: 10px;">
+                        <input type="submit" class="btn btn-primary btn-custom " id="StartSearch" name="submit" value="Search" />
+                    </div>
                 </div>
-                <div style="padding-top: 10px;">
-                    <input type="submit" class="btn btn-primary btn-custom " id="StartSearch" name="submit" value="Search" />
-                </div>
-            </div>
-        }*@
+            }*@
 
-       
+
 
         <div style="margin-left:auto;margin-right:auto;margin-top:10px; text-align: center;background-color: #f8f9fa !important" class="jumbotron">
             <div id="fakeBox">
@@ -38,12 +38,8 @@
             <div style="padding-top: 10px;">
                 <input type="button" class="btn btn-primary btn-custom " id="StartSearch" name="submit" value="Search" />
             </div>
-            <div style="padding: 10px; font-size: large;font-style: italic">
-                Perticipate in the BPID career survey <a href="/Home/Survey">here.</a>
-            </div>
         </div>
-        
-      
+
         @if (!User.Identity.IsAuthenticated)
         {
             <div style="margin-left:auto;margin-right:auto;text-align: center;">
@@ -56,13 +52,14 @@
 
 
 <div class="row">
-    
+
     <div id="MemberName">
         <div class="lds-ellipsis" id="memberLoader">
             <div></div>
             <div></div>
             <div></div>
-            <div></div></div>
+            <div></div>
+        </div>
     </div>
 </div>
 <div class="row" style="padding-top: 30px; padding-bottom: 10px;">
@@ -73,16 +70,10 @@
     $(document).ready(function () {
         $("#StartSearch").click(function () {
 
-            var SearchText = $("#searchText").val().trim();
-            if (SearchText !== "") {
-                var url = "/search?text=" + SearchText.replace(/\s/g, "-");
-                window.location.href = url;
-            }
-            if (!SearchText) {
-                $('#common-message').html('<div class="alert alert-success"><strong> Ooppsss !</strong> Empty search text.</div>');
-                $('#common-message').delay(400).slideDown(400).delay(4000).slideUp(400);
-            }
-            
+            var SearchText = $("#searchText").val();
+            // alert(str.split(' ').join('-'));
+            var url = "https://bpid.dk/Search?Text=" + SearchText;
+            window.location.replace(url);
         });
     });
 
