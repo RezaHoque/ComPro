@@ -111,5 +111,9 @@ namespace ComPro.Controllers
         {
             return View();
         }
+        public ActionResult Survey()
+        {
+            return View();
+        }
     }
 }

@@ -754,6 +754,7 @@
     <Content Include="Views\Account\New_Registration.cshtml" />
     <Content Include="Views\Home\Privacy.cshtml" />
     <Content Include="Views\Home\Feature.cshtml" />
+    <Content Include="Views\Home\Survey.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
