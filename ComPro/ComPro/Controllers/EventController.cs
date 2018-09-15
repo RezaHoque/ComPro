@@ -205,13 +205,17 @@ namespace ComPro.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(EventModel eventModel)
+        public ActionResult Edit(EventModel eventModel,string Date, string End )
 
         {
             if (ModelState.IsValid)
             {
+                eventModel.Date = DateTime.ParseExact(Date, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture); // String to datetime
+                eventModel.End = DateTime.ParseExact(End, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture); // String to datetime
+
                 var x = _eventManager.PostEdit(eventModel).ToString();
                 return Content(x.ToString());
+                
             }
             return View(eventModel);
         }

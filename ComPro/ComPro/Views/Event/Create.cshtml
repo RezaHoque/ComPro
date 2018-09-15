@@ -97,14 +97,14 @@
                 <label class="control-label col-md-5">End date</label>
                 <div class="col-md-5">
                     @*@Html.EditorFor(model => model.Date, new { id = "Date", htmlAttributes = new { @class = "form-control" } })*@
-                    <input type="text" id="endDatetimepicker" class="form-control" name="End" style="width:200px;">
+                    <input type="text" id="endDatetimepicker" class="form-control" name="End" style="width:200px;" required>
                 </div>
             </div>
             <div class="col col-md-4">
                 <label class="control-label col-md-5">End time</label>
                 <div class="col-md-5">
                     @*@Html.EditorFor(model => model.Date, new { id = "Date", htmlAttributes = new { @class = "form-control" } })*@
-                    <select id="startTime" class="form-control" name="endTime">
+                    <select id="startTime" class="form-control" name="endTime" required>
                         <option selected>Choose...</option>
                         <option>08:00</option>
                         <option>08:30</option>
