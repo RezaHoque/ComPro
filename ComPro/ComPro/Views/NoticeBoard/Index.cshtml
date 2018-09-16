@@ -9,10 +9,6 @@
     <a href="/Noticeboard/Create" class="card-link btn btn-primary" name="Create" id="Create"><i class="fa fa-newspaper"></i> Post to Notice board</a>
 </div>
 
-@*@if (User.IsInRole("Administrator"))
-{
-    @Html.ActionLink("New Notice", "NewNotice")
-}*@
 
 <p>
     @if (ViewBag.NoticeEdit != null)
