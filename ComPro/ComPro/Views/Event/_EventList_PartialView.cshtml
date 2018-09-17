@@ -62,29 +62,33 @@
                     }
 
 
-                    <div class="card-footer bg-white border-primary text-center">
-                        @if (!(User.Identity.GetUserId() == item.CreatorID) && !(User.IsInRole("Administrator")))
-                        {
-                            if (string.IsNullOrEmpty(item.Activity))
+                        <div class="card-footer bg-white border-primary text-center">
+                            @if (!(User.Identity.GetUserId() == item.CreatorID) && !(User.IsInRole("Administrator")))
                             {
-                                <a href="#" onClick="MemberResponse('@item.Id','Going')" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Yes</a>
-                                <a href="#" id="maybe" onClick="MemberResponse('@item.Id','MayBe')" class="btn btn-sm btn-primary"><i class="fa fa-exclamation"></i> May Be</a>
-                                <a href="#" id="notgoing" onClick="MemberResponse('@item.Id','NotGoing')" class="btn btn-sm btn-primary"><i class="fa fa-times"></i> No</a>
+                                if (item.EventDate >= DateTime.Now)
+                                {
+
+                                    if (string.IsNullOrEmpty(item.Activity))
+                                    {
+                                        <a href="#" onClick="MemberResponse('@item.Id','Going')" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Yes</a>
+                                        <a href="#" id="maybe" onClick="MemberResponse('@item.Id','MayBe')" class="btn btn-sm btn-primary"><i class="fa fa-exclamation"></i> May Be</a>
+                                        <a href="#" id="notgoing" onClick="MemberResponse('@item.Id','NotGoing')" class="btn btn-sm btn-primary"><i class="fa fa-times"></i> No</a>
+                                    }
+                                    else
+                                    {
+                                        <span class="btn btn-sm btn-dark">@item.Activity</span>
+
+                                    }
+                                }
+
+
                             }
                             else
                             {
-                                <span class="btn btn-sm btn-dark">@item.Activity</span>
-
+                                <a href="#" onClick="EventEdit(@item.Id)" class="btn btn-sm btn-primary">Edit</a>
+                                <a href="#" onClick="EventDelete(@item.Id)" class="btn btn-sm btn-primary">Delete</a>
                             }
-
-
-                        }
-                        else
-                        {
-                            <a href="#" onClick="EventEdit(@item.Id)" class="btn btn-sm btn-primary">Edit</a>
-                            <a href="#" onClick="EventDelete(@item.Id)" class="btn btn-sm btn-primary">Delete</a>
-                        }
-                    </div>
+                        </div>
 
                 </div>
             </div>

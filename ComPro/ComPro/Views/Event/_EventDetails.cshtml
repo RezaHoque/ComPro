@@ -1,4 +1,5 @@
-﻿@model ComPro.Models.DetailViewModel
+﻿
+@model ComPro.Models.DetailViewModel
 @using Microsoft.AspNet.Identity;
 @using ComPro.Models;
 @using ComPro.Helpers;
@@ -21,7 +22,7 @@
                     {
                         <span> Ends: @Model.EndDate.ToString("dd.MMM.yyyy hh:mm")</span>
                     }
-                    
+
                     <br />
                     <i>Owner: @Model.CreatorName</i>
                 </p>
@@ -29,7 +30,7 @@
                     @Model.Description
                 </p>
                 <p>
-                    @if (Model.MembersList.Count() == 0)
+                    @if (Model.MembersList.Where(x => x.PerticipetingType == "Going").Count() == 0)
                     {
                         <div class="alert alert-light" role="alert">
                             <h5>No one responded to this event yet</h5>
@@ -39,17 +40,17 @@
                     {
                         <div class="alert alert-light" role="alert">
                             <h5>These members are going to this event</h5>
-                            @foreach (var m in Model.MembersList.Where(x=>x.PerticipetingType=="Going"))
+                            @foreach (var m in Model.MembersList.Where(x => x.PerticipetingType == "Going"))
                             {
-                            <h6><a href="#"> @m.Member.UserName.UserName()</a></h6>
+                                <h6><a href="#"> @m.Member.UserName.UserName()</a></h6>
                             }
                         </div>
-                      
+
                     }
                 </p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
