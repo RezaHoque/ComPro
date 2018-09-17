@@ -113,15 +113,15 @@ namespace ComPro.Interfaces
         {
             try
             {
-                var _UserInfo = Data.UserInfo;
+                var _UserInfo = Data.UserInfo.Where(x=>x.ApprovalDate!=null);
                 List<UserInfo> _userProfile = new List<UserInfo>();
                 foreach (var x in _UserInfo)
                 {
-                    if ((GetUserRole(x.Email) != UserRole.NewUser.ToString()) && ((GetUserRole(x.Email) != UserRole.Administrator.ToString())))
+                    if (GetUserRoleById(x.UserId) != UserRole.Administrator.ToString())
                     {
                         _userProfile.Add(x);
                     }
-
+                   
                 }
 
                 return _userProfile;
@@ -266,8 +266,7 @@ namespace ComPro.Interfaces
 
         public string GetUserRole(string email)
         {
-
-            try
+           try
             {
                
                 // Note : 'private readonly ApplicationDbContext _data ' cant access data from database !!!!
@@ -284,11 +283,17 @@ namespace ComPro.Interfaces
             {
                return  null;
 
-            }
+            }           
 
+        }
 
+        public string GetUserRoleById(string userid)
+        {
+            var UserRole = Data.UserRole.FirstOrDefault(x => x.UserId == userid);
 
+            var Role = Data.Roles.FirstOrDefault(x => x.Id == UserRole.RoleId);
 
+            return Role.Name;
         }
 
      

@@ -101,22 +101,6 @@ namespace ComPro.Interfaces
                
                     var AllEvent = _data.Event.Where(x => x.EventStatus && x.Date >= DateTime.Now && x.IsApproved);
 
-
-                    //    foreach (var item in AllEvent)
-                    //    {
-                    //        if (DateTime.Now > item.End)
-                    //        {
-                    //            item.EventStatus = false;
-
-                    //        }
-                    //    _data.Entry(item).State = EntityState.Modified;
-
-                    //    }
-
-                    //_data.SaveChanges();
-
-
-
                     if (HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString()))
                     {
 
@@ -148,29 +132,6 @@ namespace ComPro.Interfaces
 
 
                     }
-
-                    
-
-                    //var AllEvent = _data.Event.Where(x => x.EventStatus == true);
-
-                    //foreach (var item in AllEvent)
-                    //{
-                    //    if (DateTime.Now < item.Creation)
-                    //    {
-                    //        item.EventStatus = false;
-
-                    //    }
-                    //}
-                    //_data.SaveChanges();
-
-
-
-                    //LatestEvent = _data.Event.Where(a => a.EventStatus == true && a.IsApproved == true).OrderByDescending(i => i.ApprovalDate)
-                    //                              .Take(length).AsEnumerable().Select(p => new ChatModel
-                    //                              {
-                    //                                  PartnerName = p.Title,
-                    //                                  PartnerId = p.EventId.ToString()
-                    //                              }).ToList();
 
                     LatestEvent = events.OrderByDescending(x=>x.ApprovalDate).Take(length).AsEnumerable().Select(p => new ChatModel
                                               {
