@@ -1,0 +1,72 @@
+﻿@model ComPro.Models.ArchiveModel
+@{
+    ViewBag.Title = "Upload to archive";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/chosen.min.css" rel="stylesheet" />
+<script src="~/Scripts/chosen.jquery.min.js"></script>
+
+<h2>Upload file to Archive</h2>
+
+<form action="/Archive/Upload/" method="post" enctype="multipart/form-data">
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2"> Author </label>
+
+            <div class="col-md-10">
+        
+                <select data-placeholder="select an author" class="chosen-select form-control" id="author" name="AuthorId"></select>
+
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2"> File 1 </label>
+
+            <div class="col-md-10">
+                <input type="file" name="files" id="file1" />
+                
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2"> File 2 </label>
+
+            <div class="col-md-10">
+                <input type="file" name="files" id="file2" />
+                
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="btnUpload" type="submit" value="Upload and save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        var url = "/UserProfile/UserList";
+        $.ajax({
+            method: "GET",
+            url: url,
+            dataType: "json"
+        })
+            .done(function (data) {
+                $.each(data, function (k, v) {
+
+                    $('<option>').val(v.UserId).text(v.Name).appendTo('#author');
+                });
+                $(".chosen-select").chosen();
+            });
+    });
+</script>

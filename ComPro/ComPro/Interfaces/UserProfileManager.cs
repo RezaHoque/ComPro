@@ -314,30 +314,29 @@ namespace ComPro.Interfaces
         {
             try
             {
-                List<UserInfo> user = _data.UserInfo.ToList();
-                List<ApplicationUser> user2 = _data.Users.ToList();
+                List<UserInfo> user = _data.UserInfo.Where(x => x.ApprovalDate == null).ToList();
+               // List<ApplicationUser> user2 = _data.Users.ToList();
                 List<User_Approval_Model> NewUser = new List<User_Approval_Model>();
 
                
-                foreach (var x in user2)
-                {
+                //foreach (var x in user2)
+               // {
 
                     foreach (var y in user)
                     {
-                        if (GetUserRole(y.Email) == UserRole.NewUser.ToString())
-                            if (x.Email == y.Email)
-                            {
-                                NewUser.Add(new User_Approval_Model()
-                                {
-                                    Id = y.Id,
-                                    Name = y.Name,
-                                    Photo = y.Photo,
+                        
+                        NewUser.Add(new User_Approval_Model()
+                        {
+                            Id = y.Id,
+                            Name = y.Name,
+                            Photo = y.Photo,
 
-                                });
-                            }
+                        });
                     }
 
-                }
+            
+
+               // }
                 return NewUser;
             }
 

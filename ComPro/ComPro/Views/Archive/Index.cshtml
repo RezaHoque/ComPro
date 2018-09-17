@@ -1,0 +1,32 @@
+﻿@using ComPro.Helpers
+@model List<ComPro.Models.ArchiveModel>
+@{
+    ViewBag.Title = "Document archive";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Document archive</h3>
+<hr/>
+
+    @foreach (var i in Model)
+    {
+        <div class="row border border-light rounded" style="margin-bottom:3px; padding: 3px;">
+           <div class="col-md-12">
+              
+               <h5> @i.Title</h5>
+           
+               <i>Author:  @i.Author.UserName.UserName() <br/>Date: @i.UploadDate.ToShortDateString()</i>
+               <p>
+                   @foreach (var f in i.Files)
+                   {
+                       <div style="padding: 3px;">
+                           <a href="/Archive/Download?file=@f.FilePath"><i class="far fa-arrow-alt-circle-down"></i> @f.FilePath</a>
+                       </div>
+                       
+                   }
+               </p>
+            </div>
+        </div>
+       
+    }
+

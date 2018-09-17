@@ -58,6 +58,7 @@ namespace ComPro
             container.RegisterType<DbContext, ApplicationDbContext>(new HierarchicalLifetimeManager());
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<IEvent, EventManager>();
+            container.RegisterType<IArchive, ArchiveManager>();
         }
     }
 }

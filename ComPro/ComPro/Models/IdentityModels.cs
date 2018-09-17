@@ -41,6 +41,8 @@ namespace ComPro.Models
         public DbSet<SiteContibuter> SiteContibuters { get; set; }
         public DbSet<SiteFeaturePlan> SiteFeaturePlans { get; set; }
         //public DbSet<Current_Status_Model> CurrentStatus { get; set; }
+        public DbSet<ArchiveModel> Archives { get; set; }
+        public DbSet<ArchiveFilesModel> ArchiveFiles { get; set; }
 
 
 
