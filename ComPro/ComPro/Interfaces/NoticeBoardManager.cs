@@ -63,7 +63,7 @@ namespace ComPro.Interfaces
                     });
                 }
 
-                return MynoticeList;
+                return MynoticeList.OrderByDescending(y => y.Notice.SubmitDate).ToList();
             }
 
             catch

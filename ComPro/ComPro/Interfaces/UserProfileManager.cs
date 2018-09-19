@@ -124,7 +124,7 @@ namespace ComPro.Interfaces
                    
                 }
 
-                return _userProfile;
+                return _userProfile.OrderBy(x=>x.Name).ToList();
             }
 
             catch
@@ -342,7 +342,7 @@ namespace ComPro.Interfaces
             
 
                // }
-                return NewUser;
+                return NewUser.OrderBy(x=>x.Name).ToList();
             }
 
             catch
