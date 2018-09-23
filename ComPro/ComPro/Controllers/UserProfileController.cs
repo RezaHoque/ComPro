@@ -112,31 +112,7 @@ namespace ComPro.Controllers
         }
 
 
-        //[HttpGet]
-        //public ActionResult MyInfoPage()
-        //{
-        //    return PartialView("_PartialMyPageView", _userProfile.EditUserProfile());
-
-        //}
-
-        //[HttpPost]
-        //public ActionResult MyInfoPage(UserInfo info , FormCollection frm)
-        //{
-
-        //    var result = _userProfile.PostEditUserProfile(info);
-        //    //return PartialView("_PartialMyPageView", _userProfile.EditUserProfile());
-        //    return Content(result.ToString());
-        //}
-
-        //[HttpPost]
-        //public ActionResult MyInfoPage(UserInfo info)
-        //{
-
-        //    var result= _userProfile.PostEditUserProfile(info);
-        //    //return PartialView("_PartialMyPageView", _userProfile.EditUserProfile());
-        //    return Content(result.ToString());
-        //}
-
+        
 
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult UploadFile()
@@ -161,7 +137,6 @@ namespace ComPro.Controllers
                     var userinfo1 = _data.Users.FirstOrDefault(x => x.Id == user);
                     UserInfo userinfo2 = _data.UserInfo.FirstOrDefault(y => y.Email == userinfo1.Email);
 
-                    //userinfo2.Photo = "/Content/images/Profile/" + _imgname + _ext; 
                     userinfo2.Photo = "/Content/images/Profile/" + _imgname + _ext;
 
                     _data.SaveChanges();
@@ -175,15 +150,7 @@ namespace ComPro.Controllers
 
 
 
-        //public ActionResult ProfilePicture()
-        //{
-
-        //    return PartialView("_PartialProfilePictureView", _userProfile.CurrentUserDetail());
-
-
-        //}
-
-
+       
         [AllowAnonymous]
         public ActionResult CheckLink(string email)
         {
@@ -195,10 +162,10 @@ namespace ComPro.Controllers
         }
 
 
-        [AllowAnonymous]
+       // [AllowAnonymous]
         public JsonResult UserList()
         {
-            var alluser = _userProfile.AllUser();
+            var alluser = _userProfile.MemberList();
             return Json(alluser, JsonRequestBehavior.AllowGet);
         }
 

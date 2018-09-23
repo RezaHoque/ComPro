@@ -172,8 +172,7 @@
         })
             .done(function (data) {
                 $.each(data, function (k, v) {
-                    console.log(v);
-                    $('<option>').val(v.UserId).text(v.Name).appendTo('#slt');
+                   $('<option>').val(v.UserId).text(v.Name).appendTo('#slt');
                 });
                 $(".chosen-select").chosen();
             });

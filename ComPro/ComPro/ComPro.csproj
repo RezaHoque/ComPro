@@ -431,6 +431,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InternalRegisterViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MemberSelectViewModel.cs" />
     <Compile Include="Models\MessageRecieveModel.cs" />
     <Compile Include="Models\MessageSendingModel.cs" />
     <Compile Include="Models\NoticeBoard.cs" />
