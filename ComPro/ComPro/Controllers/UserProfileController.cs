@@ -111,31 +111,7 @@ namespace ComPro.Controllers
             return View(_userProfile.EditUserProfile());
         }
 
-
-        //[HttpGet]
-        //public ActionResult MyInfoPage()
-        //{
-        //    return PartialView("_PartialMyPageView", _userProfile.EditUserProfile());
-
-        //}
-
-        //[HttpPost]
-        //public ActionResult MyInfoPage(UserInfo info , FormCollection frm)
-        //{
-
-        //    var result = _userProfile.PostEditUserProfile(info);
-        //    //return PartialView("_PartialMyPageView", _userProfile.EditUserProfile());
-        //    return Content(result.ToString());
-        //}
-
-        //[HttpPost]
-        //public ActionResult MyInfoPage(UserInfo info)
-        //{
-
-        //    var result= _userProfile.PostEditUserProfile(info);
-        //    //return PartialView("_PartialMyPageView", _userProfile.EditUserProfile());
-        //    return Content(result.ToString());
-        //}
+        
 
 
         [AcceptVerbs(HttpVerbs.Post)]
