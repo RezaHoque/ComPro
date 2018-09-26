@@ -44,6 +44,10 @@ namespace ComPro.Models
         public DbSet<ArchiveModel> Archives { get; set; }
         public DbSet<ArchiveFilesModel> ArchiveFiles { get; set; }
 
+        public DbSet<PollingAndSyrvayModel> PollingAndSyrvays { get; set; }
+        public DbSet<QuestionModel> Questions { get; set; }
+        public DbSet<AnswerModel> Answers { get; set; }
+        public DbSet<PerticipentModel> Perticipents { get; set; }
 
 
 
@@ -54,14 +58,5 @@ namespace ComPro.Models
             return new ApplicationDbContext();
         }
 
-       // public System.Data.Entity.DbSet<ComPro.Models.User_Approval_Model> User_Approval_Model { get; set; }
-
-        //public System.Data.Entity.DbSet<ComPro.Models.EventViewModel> EventViewModels { get; set; }
-
-        //public System.Data.Entity.DbSet<ComPro.Models.MemberViewModel> MemberViewModels { get; set; }
-
-        //public System.Data.Entity.DbSet<ComPro.Models.DetailViewModel> DetailViewModels { get; set; }
-
-        //public System.Data.Entity.DbSet<ComPro.Models.EventViewModel> EventViewModels { get; set; }
-    }
+        }
 }

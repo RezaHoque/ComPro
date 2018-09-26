@@ -244,6 +244,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NoticeBoardController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\SurvayController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -260,10 +261,12 @@
     <Compile Include="Interfaces\IHome.cs" />
     <Compile Include="Interfaces\INoticeBoard.cs" />
     <Compile Include="Interfaces\ISearch.cs" />
+    <Compile Include="Interfaces\ISurvey.cs" />
     <Compile Include="Interfaces\IUserProfile.cs" />
     <Compile Include="Interfaces\IUtility.cs" />
     <Compile Include="Interfaces\NoticeBoardManager.cs" />
     <Compile Include="Interfaces\SearchManager.cs" />
+    <Compile Include="Interfaces\SurveyManager.cs" />
     <Compile Include="Interfaces\UserProfileManager.cs" />
     <Compile Include="Interfaces\UtilityManager.cs" />
     <Compile Include="Migrations\201801091222077_first.cs" />
@@ -441,6 +444,7 @@
     <Compile Include="Models\MessageSendingModel.cs" />
     <Compile Include="Models\NoticeBoard.cs" />
     <Compile Include="Models\NoticeBoardViewModel.cs" />
+    <Compile Include="Models\PollingAndSyrvayModel.cs" />
     <Compile Include="Models\PublicComment.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\SiteContibuter.cs" />
@@ -790,6 +794,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Survay\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

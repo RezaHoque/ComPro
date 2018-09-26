@@ -20,15 +20,7 @@ namespace ComPro.Controllers
             return View(_chat.All_reciever());
         }
 
-
-        //public ActionResult Create_Chat()
-        //{
-        //    return View(_chat.Allmember());
-        //}
-
-
-
-
+                     
         public ActionResult NewMessage()
         {
             return PartialView("_NewChatPartialview");
@@ -46,7 +38,7 @@ namespace ComPro.Controllers
                 }
                 var result = _chat.CreateNewChat(frm["Message"], invitees);
             }
-            //return PartialView("_NewChatPartialview");
+          
 
             return RedirectToAction("ShowChat");
         }
