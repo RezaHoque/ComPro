@@ -253,10 +253,12 @@
     <Compile Include="Interfaces\ArchiveManager.cs" />
     <Compile Include="Interfaces\ChatManager.cs" />
     <Compile Include="Interfaces\EventManager.cs" />
+    <Compile Include="Interfaces\FeedManager.cs" />
     <Compile Include="Interfaces\HomeManager.cs" />
     <Compile Include="Interfaces\IArchive.cs" />
     <Compile Include="Interfaces\IChat.cs" />
     <Compile Include="Interfaces\IEvent.cs" />
+    <Compile Include="Interfaces\IFeed.cs" />
     <Compile Include="Interfaces\IHome.cs" />
     <Compile Include="Interfaces\INoticeBoard.cs" />
     <Compile Include="Interfaces\ISearch.cs" />
@@ -434,6 +436,7 @@
     <Compile Include="Models\Email_Service_Model.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\EventModel.cs" />
+    <Compile Include="Models\FeedModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InternalRegisterViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
