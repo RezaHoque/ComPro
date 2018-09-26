@@ -1,7 +1,16 @@
 ﻿@{
     ViewBag.Title = "Home";
 }
-
+@section metatags
+{
+    <meta property="og:url" content="https://bpid.dk" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Bangladeshi Professionals in Denmark" />
+    <meta property="og:description" content="Bangladeshi Professionals in Denmark (BPID) - is a voluntary organization
+        in Denmark that dedicated to the overall achievement and advancement of professionals
+        of Bangladeshi origin in Denmark" />
+    @*<meta property="og:image" content="http://www.your-domain.com/path/image.jpg" />*@
+}
 <script>
     $(document).ready(function () {
 
@@ -16,7 +25,7 @@
 <div id="common-message" style="display: none;"></div>
 <div class="row justify-content-md-center" style="margin-bottom:100px;">
     <div class="col-md-12">
-       
+
 
 
         <div style="margin-left:auto;margin-right:auto;margin-top:10px; text-align: center;background-color: #f8f9fa !important" class="jumbotron">
@@ -26,9 +35,7 @@
             <div style="padding-top: 10px;">
                 <input type="button" class="btn btn-primary btn-custom " id="StartSearch" name="submit" value="Search" />
             </div>
-            <div style="padding: 10px; font-size: large;font-style: italic">
-                Perticipate in the BPID career survey <a href="/Home/Survey">here.</a>
-            </div>
+           
         </div>
 
 
@@ -41,7 +48,26 @@
 
     </div>
 </div>
+<div class="row" style="padding: 20px;">
 
+    <div class="col col-md-6">
+        <img src="/Content/images/bpid_cultural_night.jpg" alt="BPID cultural night" class="img-thumbnail">
+    </div>
+    <div class="col col-md-4">
+        <p>
+            <i>
+                For the first time in Denmark, we are trying to arrange a fun networking night with comedy and music. 
+                <br/>
+                Renowned Bangladeshi standup comedian Naveed Mahboob and our own BPID star Nayeem will be performing.
+                <br/>
+                <b>Ticket Price 100 DKK (Individual) & 150 DKK (Family). Please bring your Yellow card to enter in Hall.</b>
+            </i>
+        </p>
+        <p>
+            <a href="https://www.facebook.com/events/265718164057747/" target="_blank"> <i class="fab fa-facebook-square"></i> See it in Facebook</a>
+        </p>
+    </div>
+</div>
 
 <div class="row">
 
