@@ -25,6 +25,7 @@ namespace ComPro.Interfaces
         
 
         IEnumerable<UserInfo> AllUser();
+        IEnumerable<MemberSelectViewModel> MemberList();
 
         UserInfo DetailProfile(int Id);
         UserInfo EditUserProfile();

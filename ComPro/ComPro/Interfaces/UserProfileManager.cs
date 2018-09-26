@@ -124,7 +124,38 @@ namespace ComPro.Interfaces
                    
                 }
 
-                return _userProfile;
+                return _userProfile.OrderBy(x=>x.Name).ToList();
+            }
+
+            catch
+            {
+                throw;
+            }
+
+        }
+
+        public IEnumerable<MemberSelectViewModel> MemberList()
+        {
+            try
+            {
+                var _UserInfo = Data.UserInfo.Where(x => x.ApprovalDate != null).Select(p => new { p.UserId, p.Name }).ToList();
+                List<MemberSelectViewModel> _List = new List<MemberSelectViewModel>();
+               
+                foreach (var x in _UserInfo)
+                {
+                    if (GetUserRoleById(x.UserId) != UserRole.Administrator.ToString())
+                    {
+                        MemberSelectViewModel Member = new MemberSelectViewModel
+                        {
+                            UserId = x.UserId,
+                            Name = x.Name
+                        };
+                        _List.Add(Member);
+                    }
+
+                }
+
+                return _List.OrderBy(x => x.Name).ToList();
             }
 
             catch
@@ -342,7 +373,7 @@ namespace ComPro.Interfaces
             
 
                // }
-                return NewUser;
+                return NewUser.OrderBy(x=>x.Name).ToList();
             }
 
             catch
