@@ -33,7 +33,7 @@ namespace ComPro.Interfaces
             {
                 
                 
-                return _data.Notice.Where(x => x.IsApproved == true);
+                return _data.Notice.Where(x => x.IsApproved == true).ToList();
 
             }
 
@@ -63,7 +63,7 @@ namespace ComPro.Interfaces
                     });
                 }
 
-                return MynoticeList;
+                return MynoticeList.OrderByDescending(y => y.Notice.SubmitDate).ToList();
             }
 
             catch

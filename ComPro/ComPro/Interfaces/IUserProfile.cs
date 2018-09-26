@@ -18,13 +18,14 @@ namespace ComPro.Interfaces
        // void ApproveNewUser(string Email);
         UserInfo UserDetail(string id);
         //UserProfileModel GetUser(string name);
-        bool ApproveNewUser(int ID);
+        UserInfo ApproveNewUser(int ID);
         UserInfo CurrentUserDetail();
         string CheckExternalUser(string providerkey);
         
         
 
         IEnumerable<UserInfo> AllUser();
+        IEnumerable<MemberSelectViewModel> MemberList();
 
         UserInfo DetailProfile(int Id);
         UserInfo EditUserProfile();

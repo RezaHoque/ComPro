@@ -9,6 +9,11 @@
 
         $("#commentBox").load("/NoticeBoard/PostComment");
 
+        
+        @*var description = '@Model.Notice.Description';
+        alert(description);*@
+        
+
     });
 </script>
 
@@ -19,7 +24,7 @@
             <input type="hidden" name="hNoticeId" value="@Model.Notice.Id" id="hNoticeId" />
         </div>
         <div class="card-body">
-            @Model.Notice.Description
+             @Model.Notice.Description 
             <p style="margin-top:10px;">
                 @if (Model.NoticeImage.ImagePath != null)
                 {
@@ -35,13 +40,7 @@
             <i>@UserInformation.UserNameById(Model.Notice.CreatorId) </i>
             <i>@Model.Notice.SubmitDate.ToShortDateString()</i>
 
-            @*@if ((User.Identity.Name == Model.Notice.Creator.UserName) || User.IsInRole("Administrator"))
-        {
-
-            <i>@Html.ActionLink("Edit", "Edit", new { id = Model.Notice.Id })</i>
-
-            <i>@Html.ActionLink("Delete", "Delete", new { id = Model.Notice.Id })</i>
-        }*@
+            
         </div>
     </div>
 </div>

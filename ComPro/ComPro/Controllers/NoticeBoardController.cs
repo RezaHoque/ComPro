@@ -41,7 +41,7 @@ namespace ComPro.Controllers
                 });
             }
 
-            return View(noticeVMList.OrderByDescending(x => x.Notice.PinUp));
+            return View(noticeVMList.OrderByDescending(y=>y.Notice.SubmitDate).OrderByDescending(x => x.Notice.PinUp).ToList());
         }
 
         public ActionResult MyNotice()

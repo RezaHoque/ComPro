@@ -43,6 +43,7 @@ namespace ComPro.Models
         //public DbSet<Current_Status_Model> CurrentStatus { get; set; }
         public DbSet<ArchiveModel> Archives { get; set; }
         public DbSet<ArchiveFilesModel> ArchiveFiles { get; set; }
+        public DbSet<FeedModel> Feeds { get; set; }
 
         public DbSet<PollingAndSyrvayModel> PollingAndSyrvays { get; set; }
         public DbSet<QuestionModel> Questions { get; set; }

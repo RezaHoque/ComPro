@@ -51,6 +51,5 @@ namespace ComPro.Models
             Female,
         }
 
-
     }
 }
