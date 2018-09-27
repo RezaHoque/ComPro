@@ -5,6 +5,14 @@
 @{
     ViewBag.Title = "Noticeboard";
 }
+@section metatags
+{
+    <meta property="og:url" content="http://bpid.dk" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Bangladeshi Professionals in Denmark" />
+    <meta property="og:description" content="BPID presents cultural night with comedy and music.Standup comedian Naveed Mahbub and rockstar Nayeem RahmanArnob will be performing." />
+    <meta property="og:image" content="http://bpid.dk/content/images/bpid_cultural_night.jpg" />
+}
 <div class="text-md-right">
     <a href="/Noticeboard/Create" class="card-link btn btn-primary" name="Create" id="Create"><i class="fa fa-newspaper"></i> Post to Notice board</a>
 </div>
@@ -26,148 +34,148 @@
     </div>
     <div class="row">
         @foreach (var i in Model)
-    {
-        <div class="col-sm-4" id="@i.Notice.Id">
-            @if (i.TotalComments >= 3)
         {
-
-            <div class="card bg-light mb-3 border-success" style="max-width: 18rem;">
-                <div class="card-header"><a href="/NoticeBoard/Notice?Id=@i.Notice.Id">@i.Notice.Title</a> </div>
-                @if (i.NoticeImage != null)
+            <div class="col-sm-4" id="@i.Notice.Id">
+                @if (i.TotalComments >= 3)
                 {
-                    <img class="card-img-top" src="@i.NoticeImage.ImagePath" alt="@i.Notice.Title">
-                }
-                <div class="card-body">
-                    <p class="card-text">
-                        @if (i.Notice.Description.Length > 200)
-                        {
-                            @i.Notice.Description.Substring(0, 190) <span>...</span>
-                        }
-                        else
-                        {
-                            @i.Notice.Description
-                        }
-                        <a href="/NoticeBoard/Notice?Id=@i.Notice.Id" class="alert-link">more</a>
-                        @if (!string.IsNullOrEmpty(i.Notice.WebLink))
-                        {
-                        <p><a href="@i.Notice.WebLink" target="_blank"><i class="fa fa-external-link-alt"></i> go to link</a></p>
-                    }
 
-                        <h6 class="card-title bg-white" style="padding:3px;">
-                            @if (@UserInformation.UserName(i.Notice.Creator.UserName) == "Admin")
-                            {
-                                <i>
-                                    Posted by: @UserInformation.UserName(i.Notice.Creator.UserName)
-                                    <br />
-                                    @i.Notice.SubmitDate.ToShortDateString()
-                                </i>
-                            }
-                            else
-                            {
-                                <i>
-                                    Posted by: <a href="#" onclick="Notice_Creator_Details('@i.Notice.CreatorId')">@UserInformation.UserName(i.Notice.Creator.UserName)</a>
-
-                                    <br />
-                                    @i.Notice.SubmitDate.ToShortDateString()
-                                </i>
+                    <div class="card bg-light mb-3 border-success" style="max-width: 18rem;">
+                        <div class="card-header"><a href="/NoticeBoard/Notice?Id=@i.Notice.Id">@i.Notice.Title</a> </div>
+                        @if (i.NoticeImage != null)
+                        {
+                            <img class="card-img-top" src="@i.NoticeImage.ImagePath" alt="@i.Notice.Title">
+                        }
+                        <div class="card-body">
+                            <p class="card-text">
+                                @if (i.Notice.Description.Length > 200)
+                                {
+                                    @i.Notice.Description.Substring(0, 190) <span>...</span>
+                                }
+                                else
+                                {
+                                    @i.Notice.Description
+                                }
+                                <a href="/NoticeBoard/Notice?Id=@i.Notice.Id" class="alert-link">more</a>
+                                @if (!string.IsNullOrEmpty(i.Notice.WebLink))
+                                {
+                                <p><a href="@i.Notice.WebLink" target="_blank"><i class="fa fa-external-link-alt"></i> go to link</a></p>
                             }
 
+                                <h6 class="card-title bg-white" style="padding:3px;">
+                                    @if (@UserInformation.UserName(i.Notice.Creator.UserName) == "Admin")
+                                    {
+                                        <i>
+                                            Posted by: @UserInformation.UserName(i.Notice.Creator.UserName)
+                                            <br />
+                                            @i.Notice.SubmitDate.ToShortDateString()
+                                        </i>
+                                    }
+                                    else
+                                    {
+                                        <i>
+                                            Posted by: <a href="#" onclick="Notice_Creator_Details('@i.Notice.CreatorId')">@UserInformation.UserName(i.Notice.Creator.UserName)</a>
+
+                                            <br />
+                                            @i.Notice.SubmitDate.ToShortDateString()
+                                        </i>
+                                    }
 
 
-                        </h6>
-                    </div>
 
-                    @if ((User.Identity.Name == i.Notice.Creator.UserName) || User.IsInRole("Administrator"))
-                    {
-                        <div class="card-footer bg-white border-success">
+                                </h6>
+                            </div>
 
-                            <i>@Html.ActionLink("Edit", "Edit", new { id = i.Notice.Id })</i>
+                            @if ((User.Identity.Name == i.Notice.Creator.UserName) || User.IsInRole("Administrator"))
+                            {
+                                <div class="card-footer bg-white border-success">
 
-                            <a href="#" onClick="Delete(@i.Notice.Id)">Delete</a>
+                                    <i>@Html.ActionLink("Edit", "Edit", new { id = i.Notice.Id })</i>
+
+                                    <a href="#" onClick="Delete(@i.Notice.Id)">Delete</a>
 
 
+                                </div>
+
+                            }
+
+
+                            <div class="card-footer bg-white border-success">
+                                <a href="/NoticeBoard/Notice?Id=@i.Notice.Id">
+                                    <i class="fas fa-comments"></i> Comments @if (i.TotalComments > 0)
+                                    {
+                                        <span class="badge badge-primary">@i.TotalComments</span>
+                                    }
+                                </a>
+                            </div>
                         </div>
 
                     }
-
-
-                    <div class="card-footer bg-white border-success">
-                        <a href="/NoticeBoard/Notice?Id=@i.Notice.Id">
-                            <i class="fas fa-comments"></i> Comments @if (i.TotalComments > 0)
+                    else
+                    {
+                        <div class="card bg-light mb-3" style="max-width: 18rem;">
+                            <div class="card-header"><a href="/NoticeBoard/Notice?Id=@i.Notice.Id">@i.Notice.Title</a></div>
+                            @if (i.NoticeImage != null)
                             {
-                                <span class="badge badge-primary">@i.TotalComments</span>
+                                <img class="card-img-top" src="@i.NoticeImage.ImagePath" alt="@i.Notice.Title" height="250" width="150">
                             }
-                        </a>
-                    </div>
-                </div>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    @if (i.Notice.Description.Length > 200)
+                                    {
+                                        @i.Notice.Description.Substring(0, 190) <span>...</span>
+                                    }
+                                    else
+                                    {
+                                        @i.Notice.Description
+                                    }
+                                    <a href="/NoticeBoard/Notice?Id=@i.Notice.Id" class="alert-link">more</a>
+                                    @if (!string.IsNullOrEmpty(i.Notice.WebLink))
+                                    {
+                                    <p><a href="@i.Notice.WebLink" target="_blank"><i class="fa fa-external-link-alt"></i> go to link</a></p>
+                                }
 
-        }
-        else
-        {
-            <div class="card bg-light mb-3" style="max-width: 18rem;">
-                <div class="card-header"><a href="/NoticeBoard/Notice?Id=@i.Notice.Id">@i.Notice.Title</a></div>
-                @if (i.NoticeImage != null)
-            {
-                <img class="card-img-top" src="@i.NoticeImage.ImagePath" alt="@i.Notice.Title" height="250" width="150">
-        }
-                <div class="card-body">
-                    <p class="card-text">
-                        @if (i.Notice.Description.Length > 200)
-        {
-                @i.Notice.Description.Substring(0, 190) <span>...</span>
-}
-else
-{
-                @i.Notice.Description
-}
-                        <a href="/NoticeBoard/Notice?Id=@i.Notice.Id" class="alert-link">more</a>
-                        @if (!string.IsNullOrEmpty(i.Notice.WebLink))
-        {
-                <p><a href="@i.Notice.WebLink" target="_blank"><i class="fa fa-external-link-alt"></i> go to link</a></p>
-}
+                                    <h6 class="card-title bg-white" style="padding:3px;">
+                                        <i>
+                                            @*Posted by: <a href="/Home/Member?name=@UserInformation.UserName(i.Notice.Creator.UserName)">@UserInformation.UserName(i.Notice.Creator.UserName)</a>*@
+                                            Posted by: @UserInformation.UserName(i.Notice.Creator.UserName)
+                                            <br />
+                                            @i.Notice.SubmitDate.ToShortDateString()
+                                        </i>
+                                    </h6>
 
-                        <h6 class="card-title bg-white" style="padding:3px;">
-                            <i>
-                                @*Posted by: <a href="/Home/Member?name=@UserInformation.UserName(i.Notice.Creator.UserName)">@UserInformation.UserName(i.Notice.Creator.UserName)</a>*@
-                                Posted by: @UserInformation.UserName(i.Notice.Creator.UserName)
-                                <br />
-                                @i.Notice.SubmitDate.ToShortDateString()
-                            </i>
-        </h6>
+                                    @if ((User.Identity.Name == i.Notice.Creator.UserName) || User.IsInRole("Administrator"))
+                                    {
+                                        <div class="card-footer bg-white border-success">
 
-        @if ((User.Identity.Name == i.Notice.Creator.UserName) || User.IsInRole("Administrator"))
-        {
-        <div class="card-footer bg-white border-success">
+                                            <i>@Html.ActionLink("Edit", "Edit", new { id = i.Notice.Id })</i>
 
-            <i>@Html.ActionLink("Edit", "Edit", new { id = i.Notice.Id })</i>
+                                            @*<i>@Html.ActionLink("Delete", "Delete", new { id = i.Notice.Id })</i>*@
 
-            @*<i>@Html.ActionLink("Delete", "Delete", new { id = i.Notice.Id })</i>*@
-
-                                <a href="#" onClick="Delete(@i.Notice.Id)">Delete</a>
+                                            <a href="#" onClick="Delete(@i.Notice.Id)">Delete</a>
 
 
-</div>
+                                        </div>
 
+                                    }
+                                </div>
+
+
+                                <div class="card-footer bg-white border-success">
+                                    <a href="/NoticeBoard/Notice?Id=@i.Notice.Id">
+                                        <i class="fas fa-comments"></i> Comments @if (i.TotalComments > 0)
+                                        {
+                                            <span class="badge badge-light">@i.TotalComments</span>
+                                        }
+                                    </a>
+                                </div>
+                            </div>
                         }
-                    </div>
+            </div>
 
 
-                    <div class="card-footer bg-white border-success">
-                        <a href="/NoticeBoard/Notice?Id=@i.Notice.Id">
-                            <i class="fas fa-comments"></i> Comments @if (i.TotalComments > 0)
-                        {
-                            <span class="badge badge-light">@i.TotalComments</span>
-                    }
-                        </a>
-                    </div>
-                </div>
         }
-        </div>
-
-        
-}
     </div>
-        </div>
+</div>
 
 
 
@@ -175,9 +183,9 @@ else
 
 <script>
     function Notice_Creator_Details(id) {
-        
-        
-       
+
+
+
 
         var url = "/UserProfile/ChangeId";
 
@@ -207,7 +215,7 @@ else
 
         });
 
-        
+
 
     }
 
@@ -220,24 +228,24 @@ else
             var id = Noticeid;
             var url = "/NoticeBoard/Delete";
             var objectid = '#' + Noticeid;
-           $.ajax({
+            $.ajax({
 
-               url: url,
-              data: { id: id },
+                url: url,
+                data: { id: id },
 
-               success: function (data) {
-                   if (data == "True") {
-                      
-                       $(objectid).remove();
-                   }
-               }
+                success: function (data) {
+                    if (data == "True") {
 
-           });
+                        $(objectid).remove();
+                    }
+                }
 
-       }
+            });
+
+        }
 
     }
-   
+
 </script>
 
 
