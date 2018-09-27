@@ -1,0 +1,82 @@
+﻿@model ComPro.Models.PollViewModel
+@{
+    ViewBag.Title = "Custpoll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@*<link href="~/Content/chosen.min.css" rel="stylesheet" />
+<script src="~/Scripts/chosen.jquery.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<h2>Create a Poll.</h2>
+<hr />*@
+
+<div id="Custing_Message"></div>
+
+<div>
+
+    <p>@Model.Title</p>
+    <p>@Model.Description</p>
+    <p>@Model.Question</p>
+    <p>
+        <input checked="checked"
+               id="Vote"
+               name="Vote"
+               type="radio"
+               value="Yes" />
+
+        <input id="Vote"
+               name="Vote"
+               type="radio"
+               value="No" />
+
+
+    </p>
+    <p>@Model.StartDate</p>
+    <p>@Model.EndDate</p>
+
+
+</div>
+    
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" value="Done" class="btn btn-success" id="cust" />
+        </div>
+    </div>
+
+
+
+
+
+<script type="text/javascript">
+    $(function () {
+
+       
+
+        $("#cust").click(function () {
+
+            
+            var title = $("#Vote").val();
+        
+
+        var request = $.ajax({
+            type: "POST",
+            url: "/Survey/CreatePoll",
+            data: { Title: title, Description: des, Question: qus, StartDate: start, EndDate: end }
+
+
+
+
+
+        });
+
+
+
+    });
+
+
+
+
+</script>

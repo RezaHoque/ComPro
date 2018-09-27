@@ -427,6 +427,10 @@
     <Compile Include="Migrations\201809151955389_archiveforeignkey.Designer.cs">
       <DependentUpon>201809151955389_archiveforeignkey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809262351259_pollmodi.cs" />
+    <Compile Include="Migrations\201809262351259_pollmodi.Designer.cs">
+      <DependentUpon>201809262351259_pollmodi.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ArchiveModel.cs" />
@@ -795,6 +799,10 @@
     <Content Include="Views\Home\Survey.cshtml" />
     <Content Include="Views\Archive\Upload.cshtml" />
     <Content Include="Views\Archive\Index.cshtml" />
+    <Content Include="Views\Survey\Index.cshtml" />
+    <Content Include="Views\Survey\Create1.cshtml" />
+    <Content Include="Views\Survey\Custpoll.cshtml" />
+    <Content Include="Views\Survey\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -922,6 +930,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809151955389_archiveforeignkey.resx">
       <DependentUpon>201809151955389_archiveforeignkey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809262351259_pollmodi.resx">
+      <DependentUpon>201809262351259_pollmodi.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

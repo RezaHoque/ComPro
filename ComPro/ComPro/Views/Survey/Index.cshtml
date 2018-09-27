@@ -1,0 +1,67 @@
+﻿@model IEnumerable<ComPro.Models.IndexViewModel2>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+
+<input type="button" class="btn btn-primary" onClick="Create(1)" name="Poll" value="CreatePoll"/>
+
+@foreach (var item in Model)
+{
+<a href="#" onClick="Custing(@item.Id)" ;> @item.Title</a>
+    <br />
+}
+
+
+    <script>
+        function Create(type) {
+            
+            //if (Type === 1)
+            //{
+            //    url = "/Survey/Create";
+            //}
+            //else if (Type === 2)
+            //{
+            //    url = "";
+            //}
+            //else
+            //{ alert("Invalid Choice"); }
+
+
+                
+           var url = "/Survey/Create";
+
+            $.ajax({
+
+                url: url,
+                data: { Type: type },
+
+                success: function (data) {
+                    
+                }
+
+            });
+
+        }
+
+        function Custing(id) {
+
+           
+            var url = "/Survey/Custpoll";
+
+            $.ajax({
+
+                url: url,
+                data: { Id: id },
+
+                success: function (data) {
+
+                }
+
+            });
+
+        }
+    </script>
