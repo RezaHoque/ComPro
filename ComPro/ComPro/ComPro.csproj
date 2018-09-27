@@ -427,9 +427,9 @@
     <Compile Include="Migrations\201809151955389_archiveforeignkey.Designer.cs">
       <DependentUpon>201809151955389_archiveforeignkey.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201809262351259_pollmodi.cs" />
-    <Compile Include="Migrations\201809262351259_pollmodi.Designer.cs">
-      <DependentUpon>201809262351259_pollmodi.cs</DependentUpon>
+    <Compile Include="Migrations\201809272144161_fixing.cs" />
+    <Compile Include="Migrations\201809272144161_fixing.Designer.cs">
+      <DependentUpon>201809272144161_fixing.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -929,8 +929,8 @@
     <EmbeddedResource Include="Migrations\201809151955389_archiveforeignkey.resx">
       <DependentUpon>201809151955389_archiveforeignkey.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809262351259_pollmodi.resx">
-      <DependentUpon>201809262351259_pollmodi.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201809272144161_fixing.resx">
+      <DependentUpon>201809272144161_fixing.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
