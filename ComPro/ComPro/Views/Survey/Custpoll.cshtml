@@ -20,16 +20,9 @@
     <p>@Model.Description</p>
     <p>@Model.Question</p>
     <p>
-        <input checked="checked"
-               id="Vote"
-               name="Vote"
-               type="radio"
-               value="Yes" />
+        <label><input type="radio" name="gender" value="Yes">Yes</label>
 
-        <input id="Vote"
-               name="Vote"
-               type="radio"
-               value="No" />
+        <label><input type="radio" name="gender" value="No">No</label>
 
 
     </p>
@@ -51,21 +44,35 @@
 
 
 <script type="text/javascript">
-    $(function () {
+
 
        
 
         $("#cust").click(function () {
 
-            
-            var title = $("#Vote").val();
+
+            var vote = $("input[name='gender']:checked").val().toString();
         
+            var id = parseInt('@Model.Id');
 
-        var request = $.ajax({
-            type: "POST",
-            url: "/Survey/CreatePoll",
-            data: { Title: title, Description: des, Question: qus, StartDate: start, EndDate: end }
+            var request = $.ajax({
+                type: "POST",
+                url: "/Survey/Custpoll",
+                data: { Vote: vote, Id: id  }
 
+            });
+
+            request.done(function (msg) {
+              
+                if (msg === "True") {
+                    alert("Your Vote Is Successfully cast");
+
+                    var url = "/Survey/Index";
+                    window.location.href = url;
+
+                }
+
+            });
 
 
 
@@ -74,7 +81,7 @@
 
 
 
-    });
+ 
 
 
 

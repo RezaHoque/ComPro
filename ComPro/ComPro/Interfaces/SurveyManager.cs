@@ -154,7 +154,7 @@ namespace ComPro.Interfaces
                     MemberList.Add(new PerticipentModel()
                     {
 
-                        //  ActivityId=Data.Id,
+                        ActivityId=Data.Id,
                         PerticipentId = id,
                         // AnswerId = 0
 
@@ -202,12 +202,27 @@ namespace ComPro.Interfaces
         {
             try
             {
-                var P = _data.Perticipents.FirstOrDefault(y => y.ActivityId == Id && y.PerticipentId == Current_User_id);
                 var poll = _data.PollingAndSyrvays.FirstOrDefault(x => x.Id == Id);
                 var qus = _data.Questions.FirstOrDefault(y => y.ActivityId == poll.Id);
                 var ans = _data.Answers.First(z => z.QuestionId == qus.Id && z.Answer == vote);
 
+                if (poll.IsPublic)
+                {
+                    PerticipentModel member = new PerticipentModel
+                    {
+                        ActivityId = Id,
+                        PerticipentId=Current_User_id,
+                        AnswerId=ans.Id
+                    };
+
+                }
+                else
+                {
+                var P = _data.Perticipents.FirstOrDefault(y => y.ActivityId == Id && y.PerticipentId == Current_User_id);
+               
                 P.AnswerId = ans.Id;
+
+                }
 
                 _data.SaveChanges();
                 return true;

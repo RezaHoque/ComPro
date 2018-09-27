@@ -30,38 +30,17 @@
             //else
             //{ alert("Invalid Choice"); }
 
-
+            var url = ("/Survey/Create?Type=" + type).toString();
+            window.location.href = url;
                 
-           var url = "/Survey/Create";
-
-            $.ajax({
-
-                url: url,
-                data: { Type: type },
-
-                success: function (data) {
-                    
-                }
-
-            });
+           
 
         }
 
         function Custing(id) {
 
-           
-            var url = "/Survey/Custpoll";
-
-            $.ajax({
-
-                url: url,
-                data: { Id: id },
-
-                success: function (data) {
-
-                }
-
-            });
+            var url = ("/Survey/Custpoll?Id=" + id).toString();
+            window.location.href = url;
 
         }
     </script>

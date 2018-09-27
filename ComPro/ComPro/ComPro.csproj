@@ -785,7 +785,6 @@
     <Content Include="Views\Home\Terms.cshtml" />
     <Content Include="Views\Chat\_MessagePartialViewView.cshtml" />
     <Content Include="Views\Chat\_NewChatPartialview.cshtml" />
-    <Content Include="Views\Event\%28Lage na%29_Create_PartialView.cshtml" />
     <Content Include="Views\Event\Create.cshtml" />
     <Content Include="Views\Account\ForgotPasswordWarning.cshtml" />
     <Content Include="Views\Account\AccountSettings.cshtml" />
@@ -800,13 +799,11 @@
     <Content Include="Views\Archive\Upload.cshtml" />
     <Content Include="Views\Archive\Index.cshtml" />
     <Content Include="Views\Survey\Index.cshtml" />
-    <Content Include="Views\Survey\Create1.cshtml" />
-    <Content Include="Views\Survey\Custpoll.cshtml" />
     <Content Include="Views\Survey\Create.cshtml" />
+    <Content Include="Views\Survey\Custpoll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Survay\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

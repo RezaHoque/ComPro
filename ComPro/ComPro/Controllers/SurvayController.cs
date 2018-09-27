@@ -19,13 +19,13 @@ namespace ComPro.Controllers
         }
 
         
-        public ActionResult CreatePoll(int Type)
+        public ActionResult Create(int Type)
         {
             //if (Type == 1)
             //{
             //    return View();
             //}
-            return View("Create");
+            return View();
         }
 
         [HttpPost]
@@ -39,7 +39,7 @@ namespace ComPro.Controllers
 
             var result = _surveyManager.CreatePoll(Poll, invitees);
 
-            return View();
+            return Content(result.ToString());
         }
 
         [HttpGet]
@@ -50,10 +50,10 @@ namespace ComPro.Controllers
         }
 
         [HttpPost]
-        public ActionResult Custpoll(string vote, int id)
+        public ActionResult Custpoll(string Vote, int Id)
         {
-
-            return View();
+            var result = _surveyManager.cust(Vote, Id);
+            return Content(result.ToString());
         }
 
 
