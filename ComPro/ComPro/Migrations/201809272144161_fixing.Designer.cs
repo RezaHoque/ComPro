@@ -7,13 +7,13 @@ namespace ComPro.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class pollmodi : IMigrationMetadata
+    public sealed partial class fixing : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(pollmodi));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(fixing));
         
         string IMigrationMetadata.Id
         {
-            get { return "201809262351259_pollmodi"; }
+            get { return "201809272144161_fixing"; }
         }
         
         string IMigrationMetadata.Source
