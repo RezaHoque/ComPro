@@ -15,7 +15,7 @@ using static ComPro.Models.Enums;
 namespace ComPro.Controllers
 {
 
-    [Authorize]
+    
     public class EventController : Controller
     {
         private readonly IEvent _eventManager;
@@ -60,7 +60,7 @@ namespace ComPro.Controllers
             return PartialView("_EventList_Partialview", result);
 
         }
-        // GET: Event/Details/5
+ 
 
         public ActionResult EventDetails(int id)
         {
@@ -69,7 +69,13 @@ namespace ComPro.Controllers
 
         }
 
-
+        // GET: Event/Details/5
+  
+        public ActionResult Details(string id)
+        {
+            return View();
+        }
+        [Authorize]
         // GET: Event/Create
         public ActionResult Create()
         {
@@ -79,7 +85,7 @@ namespace ComPro.Controllers
 
 
 
-
+        [Authorize]
         [HttpPost]
         public ActionResult Create(EventModel eventModel, FormCollection frm)
         {
