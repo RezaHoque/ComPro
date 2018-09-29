@@ -1,0 +1,254 @@
+﻿@model ComPro.Models.PollViewModel
+
+@{
+    ViewBag.Title = "CreateSurvey";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CreateSurvey</h2>
+
+
+
+
+<link href="~/Content/chosen.min.css" rel="stylesheet" />
+<script src="~/Scripts/chosen.jquery.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<h2>Create a Poll.</h2>
+<hr />
+
+<div id="Return_Message"></div>
+
+<form>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Title, new { id = "Title", htmlAttributes = new { @class = "form-control", placeholder = "Give it an attractive title" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Description, new { id = "Description", rows = "5", cols = "100", placeholder = " Write few words about it", htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col col-md-4">
+                <label class="control-label col-md-5">Start date</label>
+                <div class="col-md-5">
+                    @*@Html.EditorFor(model => model.Date, new { id = "Date", htmlAttributes = new { @class = "form-control" } })*@
+                    <input type="text" id="startDatetimepicker" class="form-control" name="Date" style="width:200px;">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col col-md-4">
+                <label class="control-label col-md-5">End date</label>
+                <div class="col-md-5">
+                    @*@Html.EditorFor(model => model.Date, new { id = "Date", htmlAttributes = new { @class = "form-control" } })*@
+                    <input type="text" id="endDatetimepicker" class="form-control" name="End" style="width:200px;" required>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <ul id="qus-ans" style="list-style: none; transform: rotate(180deg);"></ul>
+    <div id="FullQus">
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Question, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Question, new { id = "Question", htmlAttributes = new { @class = "form-control", placeholder = "Write Your Question here" } })
+            </div>
+        </div>
+    </div>
+        <div>
+            <input type="text" id="Ans" name="Ans" />
+
+            <button id="Answer">Add Answer</button>
+
+            <button id="Ques">Add Question</button>
+        </div>
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.Question, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Question, new { id = "Question", htmlAttributes = new { @class = "form-control", placeholder = "Write Your Question here" } })
+            </div>
+        </div>*@
+
+
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Send invitation to</label>
+        <div class="col-md-10">
+            <select data-placeholder="select invitees or leave blank if it is public" multiple class="chosen-select form-control" id="slt" name="invitees"></select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" value="Create" class="btn btn-success" id="SurveyCreate" />
+        </div>
+    </div>
+
+
+
+</form>
+
+<script type="text/javascript">
+    
+    
+        var count = 1;
+        var QusAndAns = [];
+
+
+        var question = true;
+
+        $("#Ques").hide();
+
+    $("#SurveyCreate").click(function () {
+       
+        var title = $("#Title").val().toString();
+        var des = $("#Description").val().toString();
+        var qus = $("#Question").val().toString();
+
+        var start = $("#startDatetimepicker").val();
+        var end = $("#endDatetimepicker").val();
+
+
+
+        var request = $.ajax({
+            type: "POST",
+            url: "/Survey/CreatePoll",
+            data: { Title: title, Description: des, Question: qus, StartDate: start, EndDate: end }
+
+        });
+
+        request.done(function (msg) {
+            alert(msg);
+            if (msg === "True") {
+                alert("Your Poll Is Successfully Created");
+
+
+
+            }
+
+        });
+
+    });
+   
+
+        $("#Ques").click(function () {
+            
+                if (question) {
+
+                    $("#qus-ans").prepend('<li style="transform: rotate(-180deg);">' + count + ". " + $("#Question").val() + ' </li>');
+                    // QusAndAns = QusAndAns.push((count + ". " + $("#Ques").val()).toString());
+                    count = count + 1;
+
+                }
+                // QusAndAns = QusAndAns.push($("#Ans").val().toString());
+                $("#qus-ans").prepend('<li style="transform: rotate(-180deg);">' + $("#Ans").val() + ' </li>');
+
+            $("#Question").val('');
+            $("#Ans").val('');
+                $("#FullQus").show();
+                $("#Ques").hide();
+                question = true;
+            
+
+        });
+
+      $("#Answer").click(function () {
+        
+        if ($("#Ans").val() !== '') {
+           
+                if (question) {
+                   
+                    $("#qus-ans").prepend('<li style="transform: rotate(-180deg);">' + count + ". " + $("#Question").val() + ' </li>');
+                    // QusAndAns = QusAndAns.push(count + ". " + $("#Ques").val());
+                    question = false;
+                    count = count + 1;
+                    $("#Question").val('');
+                    $("#FullQus").hide();
+
+                }
+                // QusAndAns = QusAndAns.push($("#Ans").val());
+                $("#qus-ans").prepend('<li style="transform: rotate(-180deg);">' + $("#Ans").val() + ' </li>');
+
+                $("#Ques").show();
+                $("#Ans").val('');
+                
+        }
+            
+      });
+
+
+       
+    
+   
+    $(function () {
+
+            var url = "/UserProfile/UserList";
+            $.ajax({
+                method: "GET",
+                url: url,
+                dataType: "json"
+            })
+                .done(function (data) {
+                    $.each(data, function (k, v) {
+                        $('<option>').val(v.UserId).text(v.Name).appendTo('#slt');
+                    });
+                    $(".chosen-select").chosen();
+                });
+
+
+       
+        
+       
+            $("#startDatetimepicker").datepicker({
+                minDate: 0,
+                defaultDate: "+1w",
+                changeMonth: true,
+                onClose: function (selectedDate) {
+                    $("#endDatetimepicker").datepicker("option", "minDate", selectedDate);
+                }, dateFormat: 'dd-mm-yy'
+            });
+      
+
+        
+
+       
+            $("#endDatetimepicker").datepicker({
+                defaultDate: "+1w",
+                changeMonth: true,
+                onClose: function (selectedDate) {
+                    $("#startDatetimepicker").datepicker("option", "maxDate", selectedDate);
+                }, dateFormat: 'dd-mm-yy'
+
+            });
+        
+        
+
+
+
+   
+    });
+
+    
+
+    
+
+
+</script>

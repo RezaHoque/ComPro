@@ -21,10 +21,12 @@ namespace ComPro.Controllers
         
         public ActionResult Create(int Type)
         {
-            //if (Type == 1)
-            //{
-            //    return View();
-            //}
+           if (Type == 2)
+            {
+
+                
+                return View("CreateSurvey");
+            }
             return View();
         }
 
