@@ -44,6 +44,24 @@ namespace ComPro.Controllers
             return Content(result.ToString());
         }
 
+
+        [HttpPost]
+        public ActionResult Createsurvey( string [] R )
+        {
+            //var invitees = new List<string>();
+            //if (!string.IsNullOrEmpty(frm["invitees"]))
+            //{
+            //    invitees = frm["invitees"].Split(',').ToList();
+            //}
+
+            //var result = _surveyManager.CreatePoll(Poll, invitees);
+
+            //return Content(result.ToString());
+            return View();
+        }
+
+
+
         [HttpGet]
         public ActionResult Custpoll(int Id)
         {
