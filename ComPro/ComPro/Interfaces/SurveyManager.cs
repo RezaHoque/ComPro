@@ -234,5 +234,165 @@ namespace ComPro.Interfaces
             }
         }
 
+
+       public bool CreateSurvey(PollViewModel model, string[] Questions)
+        {
+            try
+            {
+                Array.Reverse(Questions);
+
+                var start = model.StartDate.Date.ToString();
+                var end = model.EndDate.Date.ToString();
+
+                PollingAndSyrvayModel Data = new PollingAndSyrvayModel
+                {
+                    Name = "Survey",
+                    Title = model.Title,
+                    Description = model.Description,
+                    StartDate = DateTime.ParseExact(start, "dd-MM-yyyy hh:mm:ss", CultureInfo.InvariantCulture), // String to datetime
+                    EndDate = DateTime.ParseExact(end, "dd-MM-yyyy hh:mm:ss", CultureInfo.InvariantCulture), // String to datetime
+                    Creation = DateTime.Now.Date,
+                    CreatorId = Current_User_id,
+
+                    Status = true,
+                    IsApproved = true,
+                    ApprovalDate = DateTime.Now.Date,
+                    IsPublic = true,
+
+                };
+
+
+                _data.PollingAndSyrvays.Add(Data);
+                _data.SaveChanges();
+
+                List<QuestionModel> QuestionList = new List<QuestionModel>();
+                foreach (var i in Questions)
+                {
+                    if(i!="")
+                    {
+                        
+
+                        if (Char.IsDigit(i[0]) && i[i.Length - 1]=='?')
+                        {
+                            QuestionModel qus = new QuestionModel
+                            {
+                                ActivityName = "Survey",
+                                ActivityId = Data.Id,
+                                Question = i.Remove(i.Length - 1),
+
+                            };
+
+                            QuestionList.Add(qus);
+                        }
+                        
+                    }
+                   
+                    
+                }
+
+                //QuestionModel qus = new QuestionModel
+                //{
+                //    ActivityName = "Poll",
+                //    ActivityId = Data.Id,
+                //    Question = model.Question
+
+                //};
+
+                _data.Questions.AddRange(QuestionList);
+                _data.SaveChanges();
+
+
+                List<AnswerModel> AnswerList = new List<AnswerModel>();
+                int j = 0;
+                foreach(var z in QuestionList)
+                {
+                    
+                   
+                        for (int i =j; i<Questions.Length;)
+                    {
+                        if (Questions[i] != "" && Questions[i].Remove(Questions[i].Length - 1) == z.Question)
+                        {
+                            i++;
+                            if (Questions[i] != "")
+                            {
+                                var x = Questions[i][0];
+                                bool x1 = Char.IsDigit(Questions[i][0]);
+
+                                var y1 = Questions[i][Questions[i].Length - 1];
+                                bool y11 = Questions[i][Questions[i].Length - 1] == '?';
+
+
+                                while ((Questions[i] != "") && ((!Char.IsDigit(Questions[i][0])) || !(Questions[i][Questions[i].Length - 1] == '?')))
+                                {
+                                    AnswerModel answer = new AnswerModel
+                                    {
+                                        QuestionId = z.Id,
+                                        Answer = Questions[i]
+
+                                    };
+                                    AnswerList.Add(answer);
+                                    i++;
+                                    if (i >= Questions.Length)
+                                    { break; }
+
+
+                                }
+                                j = i;
+                                break;
+                            }
+                            else
+                            {i++;
+                            if (i >= Questions.Length)
+                            { break; }
+                            } 
+
+
+                        }
+                          else
+                           {
+                            i++;
+                            if (i >= Questions.Length)
+                            { break; }
+                        }
+
+                    }
+
+
+                }
+                //AnswerModel answer = new AnswerModel
+                //{
+                //    QuestionId = qus.Id,
+                //    Answer = "Yes"
+
+                //};
+
+
+                
+                _data.Answers.AddRange(AnswerList);
+                _data.SaveChanges();
+
+
+               
+
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+
+                Email_Service_Model email = new Email_Service_Model
+                {
+                    ToEmail = System.Configuration.ConfigurationManager.AppSettings["BccEmail"],
+                    EmailSubject = "Failed to create notice.",
+                    EMailBody = $"Description: {model.Description}. Title: {model.Title}. Exception: {ex.ToString()}"
+                };
+
+                var emailmanager = new UtilityManager();
+                emailmanager.SendEmail(email);
+                return false;
+            }
+
+        }
+
     }
 }

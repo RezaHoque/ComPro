@@ -46,18 +46,14 @@ namespace ComPro.Controllers
 
 
         [HttpPost]
-        public ActionResult Createsurvey( string [] R )
+        public ActionResult Createsurvey(PollViewModel Poll, string [] Questions)
         {
-            //var invitees = new List<string>();
-            //if (!string.IsNullOrEmpty(frm["invitees"]))
-            //{
-            //    invitees = frm["invitees"].Split(',').ToList();
-            //}
+           
 
-            //var result = _surveyManager.CreatePoll(Poll, invitees);
+            var result = _surveyManager.CreateSurvey(Poll, Questions);
 
-            //return Content(result.ToString());
-            return View();
+            return Content(result.ToString());
+          
         }
 
 

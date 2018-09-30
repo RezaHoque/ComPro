@@ -80,25 +80,14 @@
 
             <button id="Ques">Add Question</button>
         </div>
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.Question, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Question, new { id = "Question", htmlAttributes = new { @class = "form-control", placeholder = "Write Your Question here" } })
-            </div>
-        </div>*@
+    
 
 
-
-    <div class="form-group">
-        <label class="control-label col-md-2">Send invitation to</label>
-        <div class="col-md-10">
-            <select data-placeholder="select invitees or leave blank if it is public" multiple class="chosen-select form-control" id="slt" name="invitees"></select>
-        </div>
-    </div>
+   
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="button" value="Create" class="btn btn-success" id="SurveyCreate" />
+            <input type="button" value="Create Survey" class="btn btn-success" id="SurveyCreate" />
         </div>
     </div>
 
@@ -106,207 +95,137 @@
 
 </form>
 
-<script type="text/javascript">
-    
-    
-        var count = 1;
-    //var QusAndAns = [];
-    var QusAndAns = new Array();
-         var text;
+<script>
 
-        var question = true;
 
-        $("#Ques").hide();
+    var count = 1;
+
+    var text;
+
+    var question = true;
+
+    $("#Ques").hide();
 
     $("#SurveyCreate").click(function () {
 
         var x = $(".datalist").toArray();
         for (i = 0; i < x.length; i++) {
-          //  alert(x[i].innerHTML);
             x[i] = x[i].innerHTML.toString();
-            alert(x[i]);
         }
-        if (QusAndAns.length > 0) {
-            $.ajax({
+        var title = $("#Title").val().toString();
+        var des = $("#Description").val().toString();
+        var start = $("#startDatetimepicker").val();
+        var end = $("#endDatetimepicker").val();
+        if (x.length > 0) {
+
+
+            var request = $.ajax({
                 url: "/Survey/Createsurvey",
                 type: "post",
                 dataType: "json",
-                contextType: "application/json",
-                data: { R: x },
-                traditional: true,
-                success: function (result) {
-                    if (result.success) {
-                        //Do something useful
-                    } else {
-                        //It all went wrong
-                    }
-                },
-                error: function (_err) {
-                    //It all went REALLY wrong
-                    alert("error");
+                // contextType: "application/json",
+                data: { Title: title, Description: des, StartDate: start, EndDate: end, Questions: x }
+                // traditional: true
+                //});
+            });
+            request.done(function (msg) {
+                alert(msg);
+                if (msg === "true") {
+                    alert("Survey created");
+                }
+                else {
+                    alert("Survey not created");
                 }
             });
+
         }
-        //alert("Helo");
-        //var x = $(".datalist").toArray();
-        //for (i = 0; i < x.length; i++) {
-        //    alert(x[i].innerHTML);
-        //}
 
 
-        // var request = $.ajax({
-        //    type: "POST",
-        //     url: "/Survey/Createsurvey",
-        //    data: { R:x}
-
-        //});
-
-        //request.done(function (msg) {
-        //    alert(msg);
-        //    if (msg === "True") {
-        //        alert("Your Poll Is Successfully Created");
-
-
-
-        //    }
-
-     });
-        //var title = $("#Title").val().toString();
-        //var des = $("#Description").val().toString();
-        //var qus = $("#Question").val().toString();
-
-        //var start = $("#startDatetimepicker").val();
-        //var end = $("#endDatetimepicker").val();
-
-
-
-        //var request = $.ajax({
-        //    type: "POST",
-        //    url: "/Survey/CreatePoll",
-        //    data: { Title: title, Description: des, Question: qus, StartDate: start, EndDate: end }
-
-        //});
-
-        //request.done(function (msg) {
-        //    alert(msg);
-        //    if (msg === "True") {
-        //        alert("Your Poll Is Successfully Created");
-
-
-
-        //    }
-
-        //});
-
-  //  });
-   
-
-        $("#Ques").click(function () {
-            
-                if (question) {
-
-                    $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + count + ". " + $("#Question").val() + ' </li>');
-                    //text = count + ". " + $("#Ques").val();
-                    //alert(text);
-                    //// QusAndAns = QusAndAns.push((count + ". " + $("#Ques").val()).toString());
-                    count = count + 1;
-
-            }
-            //text = $("#Ans").val();
-            //alert(text);
-            //alert("Helo");
-                // QusAndAns = QusAndAns.push($("#Ans").val().toString());
-            $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + $("#Ans").val() + ' </li>');
-
-            $("#Question").val('');
-            $("#Ans").val('');
-                $("#FullQus").show();
-                $("#Ques").hide();
-                question = true;
-            
-            return false;
-        });
-
-      $("#Answer").click(function () {
-        
-        if ($("#Ans").val() !== '') {
-           
-                if (question) {
-                   
-                    $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + count + ". " + $("#Question").val() + ' </li>');
-                    // QusAndAns = QusAndAns.push(count + ". " + $("#Ques").val());
-                    question = false;
-                    count = count + 1;
-                    $("#Question").val('');
-                    $("#FullQus").hide();
-
-                }
-                // QusAndAns = QusAndAns.push($("#Ans").val());
-            $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + $("#Ans").val() + ' </li>');
-
-                $("#Ques").show();
-                $("#Ans").val('');
-                
-          }
-           return false;
-            
-      });
-
-
-       
-    
-   
-    $(function () {
-
-            var url = "/UserProfile/UserList";
-            $.ajax({
-                method: "GET",
-                url: url,
-                dataType: "json"
-            })
-                .done(function (data) {
-                    $.each(data, function (k, v) {
-                        $('<option>').val(v.UserId).text(v.Name).appendTo('#slt');
-                    });
-                    $(".chosen-select").chosen();
-                });
-
-
-       
-        
-       
-            $("#startDatetimepicker").datepicker({
-                minDate: 0,
-                defaultDate: "+1w",
-                changeMonth: true,
-                onClose: function (selectedDate) {
-                    $("#endDatetimepicker").datepicker("option", "minDate", selectedDate);
-                }, dateFormat: 'dd-mm-yy'
-            });
-      
-
-        
-
-       
-            $("#endDatetimepicker").datepicker({
-                defaultDate: "+1w",
-                changeMonth: true,
-                onClose: function (selectedDate) {
-                    $("#startDatetimepicker").datepicker("option", "maxDate", selectedDate);
-                }, dateFormat: 'dd-mm-yy'
-
-            });
-        
-        
-
-
-
-   
     });
 
-    
 
-    
+
+    $("#Ques").click(function () {
+
+        if (question) {
+
+            $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + count + ". " + $("#Question").val() + ' ?</li>');
+            count = count + 1;
+
+        }
+
+        $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + $("#Ans").val() + '</li>');
+
+        $("#Question").val('');
+        $("#Ans").val('');
+        $("#FullQus").show();
+        $("#Ques").hide();
+        question = true;
+
+        return false;
+    });
+
+    $("#Answer").click(function () {
+
+        if ($("#Ans").val() !== '') {
+
+            if (question) {
+
+                $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + count + ". " + $("#Question").val() + ' ?</li>');
+
+                question = false;
+                count = count + 1;
+                $("#Question").val('');
+                $("#FullQus").hide();
+
+            }
+
+            $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + $("#Ans").val() + '</li>');
+
+            $("#Ques").show();
+            $("#Ans").val('');
+
+        }
+        return false;
+
+    });
+
+
+
+
+
+    $(function () {
+
+
+        $("#startDatetimepicker").datepicker({
+            minDate: 0,
+            defaultDate: "+1w",
+            changeMonth: true,
+            onClose: function (selectedDate) {
+                $("#endDatetimepicker").datepicker("option", "minDate", selectedDate);
+            }, dateFormat: 'dd-mm-yy'
+        });
+
+
+
+
+        $("#endDatetimepicker").datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            onClose: function (selectedDate) {
+                $("#startDatetimepicker").datepicker("option", "maxDate", selectedDate);
+            }, dateFormat: 'dd-mm-yy'
+
+        });
+
+
+
+
+    });
+
+
+
+
 
 
 </script>
