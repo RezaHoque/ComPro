@@ -95,137 +95,197 @@
 
 </form>
 
-<script>
+<script type="text/javascript">
+    
+    
+        var count = 1;
+    
+         var text;
 
+        var question = true;
 
-    var count = 1;
-
-    var text;
-
-    var question = true;
-
-    $("#Ques").hide();
+        $("#Ques").hide();
 
     $("#SurveyCreate").click(function () {
 
         var x = $(".datalist").toArray();
         for (i = 0; i < x.length; i++) {
-            x[i] = x[i].innerHTML.toString();
-        }
+                     x[i] = x[i].innerHTML.toString();
+           }
         var title = $("#Title").val().toString();
         var des = $("#Description").val().toString();
         var start = $("#startDatetimepicker").val();
         var end = $("#endDatetimepicker").val();
         if (x.length > 0) {
-
-
-            var request = $.ajax({
+           
+            $.ajax({
                 url: "/Survey/Createsurvey",
                 type: "post",
-                dataType: "json",
-                // contextType: "application/json",
-                data: { Title: title, Description: des, StartDate: start, EndDate: end, Questions: x }
-                // traditional: true
-                //});
-            });
-            request.done(function (msg) {
-                alert(msg);
-                if (msg === "true") {
-                    alert("Survey created");
+                //dataType: "json",
+              //  contextType: "application/json",
+                ContentType: "application/javascript",
+                data: { Title: title, Description: des, StartDate: start, EndDate: end,Questions: x },
+                traditional: true,
+                success: function (result) {
+                    
+                    if (result==="True") {
+                        alert("Your Survey is created");
+                    } else {
+                        alert("Your Survey is Not created");
+                    }
+                },
+                error: function (_err) {
+                    
+                    alert(_err.responseText);
+                    alert("There is some Problem with your Survey. Please contac with BPID Admin");
                 }
-                else {
-                    alert("Survey not created");
-                }
             });
-
         }
+        //alert("Helo");
+        //var x = $(".datalist").toArray();
+        //for (i = 0; i < x.length; i++) {
+        //    alert(x[i].innerHTML);
+        //}
 
 
-    });
+        // var request = $.ajax({
+        //    type: "POST",
+        //     url: "/Survey/Createsurvey",
+        //    data: { R:x}
+
+        //});
+
+        //request.done(function (msg) {
+        //    alert(msg);
+        //    if (msg === "True") {
+        //        alert("Your Poll Is Successfully Created");
 
 
 
-    $("#Ques").click(function () {
+        //    }
 
-        if (question) {
+     });
+        //var title = $("#Title").val().toString();
+        //var des = $("#Description").val().toString();
+        //var qus = $("#Question").val().toString();
 
-            $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + count + ". " + $("#Question").val() + ' ?</li>');
-            count = count + 1;
+        //var start = $("#startDatetimepicker").val();
+        //var end = $("#endDatetimepicker").val();
 
-        }
 
-        $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + $("#Ans").val() + '</li>');
 
-        $("#Question").val('');
-        $("#Ans").val('');
-        $("#FullQus").show();
-        $("#Ques").hide();
-        question = true;
+        //var request = $.ajax({
+        //    type: "POST",
+        //    url: "/Survey/CreatePoll",
+        //    data: { Title: title, Description: des, Question: qus, StartDate: start, EndDate: end }
 
-        return false;
-    });
+        //});
 
-    $("#Answer").click(function () {
+        //request.done(function (msg) {
+        //    alert(msg);
+        //    if (msg === "True") {
+        //        alert("Your Poll Is Successfully Created");
 
-        if ($("#Ans").val() !== '') {
 
-            if (question) {
 
-                $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + count + ". " + $("#Question").val() + ' ?</li>');
+        //    }
 
-                question = false;
-                count = count + 1;
-                $("#Question").val('');
-                $("#FullQus").hide();
+        //});
+
+  //  });
+   
+
+        $("#Ques").click(function () {
+            
+                if (question) {
+
+                    $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + count + ". " + $("#Question").val() + ' ?</li>');
+                    //text = count + ". " + $("#Ques").val();
+                    //alert(text);
+                    //// QusAndAns = QusAndAns.push((count + ". " + $("#Ques").val()).toString());
+                    count = count + 1;
 
             }
-
+            //text = $("#Ans").val();
+            //alert(text);
+            //alert("Helo");
+                // QusAndAns = QusAndAns.push($("#Ans").val().toString());
             $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + $("#Ans").val() + '</li>');
 
-            $("#Ques").show();
+            $("#Question").val('');
             $("#Ans").val('');
+                $("#FullQus").show();
+                $("#Ques").hide();
+                question = true;
+            
+            return false;
+        });
 
-        }
-        return false;
+      $("#Answer").click(function () {
+        
+        if ($("#Ans").val() !== '') {
+           
+                if (question) {
+                   
+                    $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + count + ". " + $("#Question").val() + ' ?</li>');
+                    // QusAndAns = QusAndAns.push(count + ". " + $("#Ques").val());
+                    question = false;
+                    count = count + 1;
+                    $("#Question").val('');
+                    $("#FullQus").hide();
 
-    });
+                }
+                // QusAndAns = QusAndAns.push($("#Ans").val());
+            $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + $("#Ans").val() + '</li>');
+
+                $("#Ques").show();
+                $("#Ans").val('');
+                
+          }
+           return false;
+            
+      });
 
 
-
-
-
+       
+    
+   
     $(function () {
 
+          
+       
+            $("#startDatetimepicker").datepicker({
+                minDate: 0,
+                defaultDate: "+1w",
+                changeMonth: true,
+                onClose: function (selectedDate) {
+                    $("#endDatetimepicker").datepicker("option", "minDate", selectedDate);
+                }, dateFormat: 'dd-mm-yy'
+            });
+      
 
-        $("#startDatetimepicker").datepicker({
-            minDate: 0,
-            defaultDate: "+1w",
-            changeMonth: true,
-            onClose: function (selectedDate) {
-                $("#endDatetimepicker").datepicker("option", "minDate", selectedDate);
-            }, dateFormat: 'dd-mm-yy'
-        });
+        
+
+       
+            $("#endDatetimepicker").datepicker({
+                defaultDate: "+1w",
+                changeMonth: true,
+                onClose: function (selectedDate) {
+                    $("#startDatetimepicker").datepicker("option", "maxDate", selectedDate);
+                }, dateFormat: 'dd-mm-yy'
+
+            });
+        
+        
 
 
 
-
-        $("#endDatetimepicker").datepicker({
-            defaultDate: "+1w",
-            changeMonth: true,
-            onClose: function (selectedDate) {
-                $("#startDatetimepicker").datepicker("option", "maxDate", selectedDate);
-            }, dateFormat: 'dd-mm-yy'
-
-        });
-
-
-
-
+   
     });
 
+    
 
-
-
+    
 
 
 </script>

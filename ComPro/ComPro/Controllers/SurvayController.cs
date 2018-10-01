@@ -50,7 +50,7 @@ namespace ComPro.Controllers
         {
            
 
-            var result = _surveyManager.CreateSurvey(Poll, Questions);
+            bool result = _surveyManager.CreateSurvey(Poll, Questions);
 
             return Content(result.ToString());
           
