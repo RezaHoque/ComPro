@@ -21,10 +21,12 @@ namespace ComPro.Controllers
         
         public ActionResult Create(int Type)
         {
-            //if (Type == 1)
-            //{
-            //    return View();
-            //}
+           if (Type == 2)
+            {
+
+                
+                return View("CreateSurvey");
+            }
             return View();
         }
 
@@ -41,6 +43,20 @@ namespace ComPro.Controllers
 
             return Content(result.ToString());
         }
+
+
+        [HttpPost]
+        public ActionResult Createsurvey(PollViewModel Poll, string [] Questions)
+        {
+           
+
+            bool result = _surveyManager.CreateSurvey(Poll, Questions);
+
+            return Content(result.ToString());
+          
+        }
+
+
 
         [HttpGet]
         public ActionResult Custpoll(int Id)

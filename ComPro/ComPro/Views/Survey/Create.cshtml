@@ -83,7 +83,7 @@
 
 </form>
 
-<script type="text/javascript">
+<script>
     $(function () {
 
         var url = "/UserProfile/UserList";
@@ -141,7 +141,7 @@
         });
 
         request.done(function (msg) {
-            alert(msg);
+            
             if (msg === "True") {
                 alert("Your Poll Is Successfully Created");
 

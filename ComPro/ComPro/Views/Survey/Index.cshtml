@@ -7,40 +7,28 @@
 <h2>Index</h2>
 
 
-<input type="button" class="btn btn-primary" onClick="Create(1)" name="Poll" value="CreatePoll"/>
+<input type="button" class="btn btn-primary" onClick="Create(1)" name="Poll" value="Create Poll" />
+<input type="button" class="btn btn-primary" onClick="Create(2)" name="Survey" value="Create Survey" />
 
 @foreach (var item in Model)
 {
-<a href="#" onClick="Custing(@item.Id)" ;> @item.Title</a>
+    <a href="#" onClick="Custing(@item.Id)" ;> @item.Title</a>
     <br />
 }
 
 
-    <script>
-        function Create(type) {
-            
-            //if (Type === 1)
-            //{
-            //    url = "/Survey/Create";
-            //}
-            //else if (Type === 2)
-            //{
-            //    url = "";
-            //}
-            //else
-            //{ alert("Invalid Choice"); }
+<script>
+    function Create(type) {
 
-            var url = ("/Survey/Create?Type=" + type).toString();
-            window.location.href = url;
-                
-           
+        var url = ("/Survey/Create?Type=" + type).toString();
+        window.location.href = url;
 
-        }
+    }
 
-        function Custing(id) {
+    function Custing(id) {
 
-            var url = ("/Survey/Custpoll?Id=" + id).toString();
-            window.location.href = url;
+        var url = ("/Survey/Custpoll?Id=" + id).toString();
+        window.location.href = url;
 
-        }
-    </script>
+    }
+</script>

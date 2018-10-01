@@ -10,6 +10,7 @@ namespace ComPro.Interfaces
     interface ISurvey
     {
         bool CreatePoll(PollViewModel model, List<string> inviteesIds);
+        bool CreateSurvey(PollViewModel model, string[] Questions);
         List<IndexViewModel2> AllPoll();
         PollViewModel SinglePoll(int id);
         bool cust(string vote, int Id);
