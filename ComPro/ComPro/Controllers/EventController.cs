@@ -1,21 +1,17 @@
-﻿using System;
+﻿using ComPro.Interfaces;
+using ComPro.Models;
+using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using ComPro.Interfaces;
-using ComPro.Models;
-using static ComPro.Models.Enums;
 
 namespace ComPro.Controllers
 {
 
-    
+
     public class EventController : Controller
     {
         private readonly IEvent _eventManager;
@@ -62,18 +58,24 @@ namespace ComPro.Controllers
         }
  
 
-        public ActionResult EventDetails(int id)
-        {
+        //public ActionResult EventDetails(int id)
+        //{
 
-            return PartialView("_EventDetails", _eventManager.Detail(id));
+        //    return PartialView("_EventDetails", _eventManager.Detail(id));
 
-        }
+        //}
 
         // GET: Event/Details/5
   
         public ActionResult Details(string id)
         {
-            return View();
+            if (!string.IsNullOrEmpty(id))
+            {
+                var result = _eventManager.Detail(id);
+                return View(result);
+            }
+
+            return RedirectToAction("Events");
         }
         [Authorize]
         // GET: Event/Create

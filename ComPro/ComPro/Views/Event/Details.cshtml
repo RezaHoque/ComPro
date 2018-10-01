@@ -1,9 +1,114 @@
-﻿@model ComPro.Models.DetailViewModel
+﻿@using ComPro.Helpers
+@model ComPro.Models.DetailViewModel
 @{
     ViewBag.Title = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@section metatags
+{
+    <meta property="og:url" content="http://bpid.dk/Event/Details/@Model.UniqueUrl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@Model.Title" />
+    <meta property="og:description" content="@Model.Description.Replace("<br/>"," ")" />
+    <meta property="og:image" content="http://bpid.dk/@Model.Images.FirstOrDefault().ImagePath" />
+}
 <h3>@Model.Title</h3>
 
+<div class="row">
+    <div class="col col-6">
+        <h5>
+            <i>
+                at @Model.Place
+            </i>
+        </h5>
+    </div>
+</div>
+<div class="row table-bordered">
+    <div class="col col-6" style="padding-left: 0 !important">
+        <img src="@Model.Images.FirstOrDefault().ImagePath" class="thumbnail" alt="@Model.Title" />
+    </div>
+    <div class="col col-4">
+        <h5>
+            @Model.Date.ToString("dd.MMM.yyyy hh:mm") - @Model.EndDate.ToString("dd.MMM.yyyy hh:mm")
+        </h5>
+        <p>
+            @Html.Raw(Model.Description)
 
+        </p>
+        <p>
+            <h6>
+                <i>Owner: @Model.CreatorName</i>
+            </h6>
+        </p>
+
+    </div>
+</div>
+<div class="row" style="margin-top: 10px;">
+    @if (Model.Date >= DateTime.Now)
+    {
+        <div class="container-fluid text-center">
+            @if (User.Identity.IsAuthenticated)
+            {
+                if (string.IsNullOrEmpty(Model.UserActivity))
+                {
+                    <a href="#" onClick="MemberResponse('@Model.Id', 'Going')" class="btn btn-primary"><i class="fa fa-check"></i> Yes</a>
+                    <a href="#" id="maybe" onClick="MemberResponse('@Model.Id', 'MayBe')" class="btn btn-primary"><i class="fa fa-exclamation"></i> May Be</a>
+                    <a href="#" id="notgoing" onClick="MemberResponse('@Model.Id', 'NotGoing')" class="btn btn-primary"><i class="fa fa-times"></i> No</a>
+                }
+                else
+                {
+                    <span class="btn btn-sm btn-dark">@Model.UserActivity</span>
+
+                }
+            }
+            else
+            {
+                <h4>Login to join this event <a href="/Account/Login" class="btn btn-success"> Login here</a></h4>
+            }
+
+
+        </div>
+    }
+
+</div>
+<div class="row">
+    @if (Model.MembersList.Where(x => x.PerticipetingType == "Going").Count() == 0)
+    {
+        <div class="alert alert-light" role="alert">
+            <h5>No one responded to this event yet</h5>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-light" role="alert">
+            <h5>These members are going to this event</h5>
+            @foreach (var m in Model.MembersList.Where(x => x.PerticipetingType == "Going"))
+            {
+                <h6> @m.Member.UserName.UserName()</h6>
+            }
+        </div>
+
+    }
+</div>
+
+
+<script>
+    function MemberResponse(id, res) {
+
+        var request = $.ajax({
+            type: "GET",
+            url: "/Event/MemberResponse",
+            dataType: 'json',
+            //data: { ID: id},
+            data: { ID: id, Response: res }
+
+        });
+        request.done(function (msg) {
+            
+                window.location.reload(true);
+          
+        });
+
+
+    }
+</script>

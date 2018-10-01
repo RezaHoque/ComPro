@@ -25,7 +25,7 @@
             <div class="col-sm-4">
                 <div class="card bg-light mb-3" style="max-width: 18rem;">
                     <div class="card-header">
-                        <a href="#" id="EventDetails" onClick="EventDetails(@item.Id)">@item.EventTitel <span class="badge badge-success"><i class="fa fa-check"></i> @item.TotalYes</span> </a>
+                        <a href="/Event/Details/@item.UniqueUrl" id="EventDetails" >@item.EventTitel <span class="badge badge-success"><i class="fa fa-check"></i> @item.TotalYes</span> </a>
                     </div>
                     @if (item.Images.Any())
                     {
@@ -40,13 +40,13 @@
                                 if (item.Description.Length > 150)
                                 {
                                     <p class="card-text">
-                                        @item.Description.Substring(0,150) ..<a href="#" onClick="EventDetails(@item.Id)">see more</a>
+                                        @Html.Raw(item.Description.Substring(0,150)) ..<a href="/Event/Details/@item.UniqueUrl" onClick="EventDetails(@item.Id)">see more</a>
                                     </p>
                                 }
                                 else
                                 {
                                     <p class="card-text">
-                                        @item.Description
+                                        @Html.Raw(item.Description)
                                     </p>
                                 }
                             }
@@ -63,30 +63,38 @@
 
 
                         <div class="card-footer bg-white border-primary text-center">
-                            @if (!(User.Identity.GetUserId() == item.CreatorID) && !(User.IsInRole("Administrator")))
+                            @if (User.Identity.IsAuthenticated)
                             {
-                                if (item.EventDate >= DateTime.Now)
+                                if (!(User.Identity.GetUserId() == item.CreatorID) && !(User.IsInRole("Administrator")))
                                 {
-
-                                    if (string.IsNullOrEmpty(item.Activity))
+                                    if (item.EventDate >= DateTime.Now)
                                     {
-                                        <a href="#" onClick="MemberResponse('@item.Id','Going')" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Yes</a>
-                                        <a href="#" id="maybe" onClick="MemberResponse('@item.Id','MayBe')" class="btn btn-sm btn-primary"><i class="fa fa-exclamation"></i> May Be</a>
-                                        <a href="#" id="notgoing" onClick="MemberResponse('@item.Id','NotGoing')" class="btn btn-sm btn-primary"><i class="fa fa-times"></i> No</a>
-                                    }
-                                    else
-                                    {
-                                        <span class="btn btn-sm btn-dark">@item.Activity</span>
 
+                                        if (string.IsNullOrEmpty(item.Activity))
+                                        {
+                                            <a href="#" onClick="MemberResponse('@item.Id', 'Going')" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Yes</a>
+                                            <a href="#" id="maybe" onClick="MemberResponse('@item.Id', 'MayBe')" class="btn btn-sm btn-primary"><i class="fa fa-exclamation"></i> May Be</a>
+                                            <a href="#" id="notgoing" onClick="MemberResponse('@item.Id', 'NotGoing')" class="btn btn-sm btn-primary"><i class="fa fa-times"></i> No</a>
+                                        }
+                                        else
+                                        {
+                                            <span class="btn btn-sm btn-dark">@item.Activity</span>
+
+                                        }
                                     }
+
+
                                 }
-
+                                else
+                                {
+                                    <a href="#" onClick="EventEdit(@item.Id)" class="btn btn-sm btn-primary">Edit</a>
+                                    <a href="#" onClick="EventDelete(@item.Id)" class="btn btn-sm btn-primary">Delete</a>
+                                }
 
                             }
                             else
                             {
-                                <a href="#" onClick="EventEdit(@item.Id)" class="btn btn-sm btn-primary">Edit</a>
-                                <a href="#" onClick="EventDelete(@item.Id)" class="btn btn-sm btn-primary">Delete</a>
+                                <a href="/Account/Login" class="btn btn-success btn-sm"> Login to join</a>
                             }
                         </div>
 
@@ -102,7 +110,7 @@
 
             function EventDetails(id) {
                 var id = id;
-                var url = "/Event/EventDetails";
+                var url = "/Event/Details";
 
                 $.ajax({
 
