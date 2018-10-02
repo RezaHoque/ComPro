@@ -64,8 +64,6 @@ namespace ComPro.Controllers
         //    return PartialView("_EventDetails", _eventManager.Detail(id));
 
         //}
-
-        // GET: Event/Details/5
   
         public ActionResult Details(string id)
         {
