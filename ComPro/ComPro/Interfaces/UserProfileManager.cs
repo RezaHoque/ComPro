@@ -384,7 +384,7 @@ namespace ComPro.Interfaces
         }
 
 
-        public bool ApproveNewUser(int  Id)
+        public UserInfo ApproveNewUser(int  Id)
         {
             try
             {
@@ -422,13 +422,13 @@ namespace ComPro.Interfaces
                 var result = _utility.SendEmail(obj);
 
 
-                return true;
+                return UserInfo;
 
             }
 
             catch
             {
-                return false;
+                return new UserInfo();
                 
 
             }

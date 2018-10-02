@@ -51,25 +51,7 @@ namespace ComPro.Models
 
         }
 
-    //public class EventPerticepent
-    //{
-    //    [Key]
-    //    public int Id { get; set; }
-
-    //    //public string EventID { get; set; }
-
-    //    public string MemberID { get; set; }
-
-    //    public string PerticipetingType { get; set; }
-    //    public DateTime ResponseDate { get; set; }
-
-    //    // Foreign key
-    //    public int EventId { get; set; }
-
-        
-
-
-    //}
+    
 
     public class EventViewModel
     {

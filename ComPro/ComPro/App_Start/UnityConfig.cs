@@ -59,6 +59,7 @@ namespace ComPro
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<IEvent, EventManager>();
             container.RegisterType<IArchive, ArchiveManager>();
+            container.RegisterType<IFeed, FeedManager>();
         }
     }
 }

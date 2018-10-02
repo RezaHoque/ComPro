@@ -16,11 +16,13 @@ namespace ComPro.Controllers
     public class UserProfileController : Controller
     {
         private readonly IUserProfile _userProfile;
+        private readonly IFeed _feedManager;
         private readonly INoticeBoard _noticeBoardManager = new NoticeBoardManager();
         readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        public UserProfileController(IUserProfile UserProfileManager)
+        public UserProfileController(IUserProfile UserProfileManager,IFeed feed)
         {
             _userProfile = UserProfileManager;
+            _feedManager = feed;
         }
 
         // GET: UserProfile
@@ -67,7 +69,18 @@ namespace ComPro.Controllers
         public ActionResult Approve(int id)
         {
 
-            bool result = _userProfile.ApproveNewUser(id);
+            var result = _userProfile.ApproveNewUser(id);
+        
+            var feed=new FeedModel();
+            feed.Id = Guid.NewGuid().ToString();
+            feed.UserId = result.UserId;
+            feed.UserName = result.Name;
+            feed.Action = FeedVerb.HasJoined;
+            feed.ActionDate = (DateTime) result.ApprovalDate;
+            feed.ImagePath = result.Photo;
+            
+            _feedManager.AddToFeeds(feed);
+                
             return Content(result.ToString());
            
         }
@@ -111,8 +124,8 @@ namespace ComPro.Controllers
             return View(_userProfile.EditUserProfile());
         }
 
-
         
+
 
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult UploadFile()
@@ -137,6 +150,7 @@ namespace ComPro.Controllers
                     var userinfo1 = _data.Users.FirstOrDefault(x => x.Id == user);
                     UserInfo userinfo2 = _data.UserInfo.FirstOrDefault(y => y.Email == userinfo1.Email);
 
+                    //userinfo2.Photo = "/Content/images/Profile/" + _imgname + _ext; 
                     userinfo2.Photo = "/Content/images/Profile/" + _imgname + _ext;
 
                     _data.SaveChanges();
@@ -150,7 +164,15 @@ namespace ComPro.Controllers
 
 
 
-       
+        //public ActionResult ProfilePicture()
+        //{
+
+        //    return PartialView("_PartialProfilePictureView", _userProfile.CurrentUserDetail());
+
+
+        //}
+
+
         [AllowAnonymous]
         public ActionResult CheckLink(string email)
         {
@@ -162,10 +184,10 @@ namespace ComPro.Controllers
         }
 
 
-       // [AllowAnonymous]
+        [AllowAnonymous]
         public JsonResult UserList()
         {
-            var alluser = _userProfile.MemberList();
+            var alluser = _userProfile.AllUser();
             return Json(alluser, JsonRequestBehavior.AllowGet);
         }
 
