@@ -49,11 +49,11 @@
                             <p class="card-text">
                                 @if (i.Notice.Description.Length > 200)
                                 {
-                                    @i.Notice.Description.Substring(0, 190) <span>...</span>
+                                    @Html.Raw(i.Notice.Description.Substring(0, 190)) <span>...</span>
                                 }
                                 else
                                 {
-                                    @i.Notice.Description
+                                    @Html.Raw(i.Notice.Description)
                                 }
                                 <a href="/NoticeBoard/Notice?Id=@i.Notice.Id" class="alert-link">more</a>
                                 @if (!string.IsNullOrEmpty(i.Notice.WebLink))

@@ -24,7 +24,7 @@
             <input type="hidden" name="hNoticeId" value="@Model.Notice.Id" id="hNoticeId" />
         </div>
         <div class="card-body">
-             @Model.Notice.Description 
+             @Html.Raw(Model.Notice.Description) 
             <p style="margin-top:10px;">
                 @if (Model.NoticeImage.ImagePath != null)
                 {

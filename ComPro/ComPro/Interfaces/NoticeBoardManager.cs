@@ -98,6 +98,7 @@ namespace ComPro.Interfaces
                 model.SubmitDate = DateTime.Now;
                 model.CreatorId = model.CreatorId;
                 model.ActionDate = DateTime.Now;
+                model.Description = model.Description.Replace(System.Environment.NewLine, "<br/>");
 
                 if (model.PinUp)
                 {
