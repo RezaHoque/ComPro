@@ -11,10 +11,12 @@ namespace ComPro.Models
         [Key]
         public int Id { get; set; }
 
+        public string Name { get; set; }
         [Required]
         public string Title { get; set; }
 
-       
+        public string Description { get; set; }
+
         [Required]
         public DateTime StartDate { get; set; }
         [Required]
@@ -29,7 +31,7 @@ namespace ComPro.Models
         public bool IsApproved { get; set; }
         public DateTime ApprovalDate { get; set; }
         public bool IsPublic { get; set; }
-        
+
 
     }
 
@@ -40,9 +42,9 @@ namespace ComPro.Models
 
         public int ActivityId { get; set; }
         public string ActivityName { get; set; }
-              
+
         public string Question { get; set; }
-        
+
     }
 
     public class AnswerModel
@@ -60,6 +62,7 @@ namespace ComPro.Models
         [Key]
         public int Id { get; set; }
 
+        public int ActivityId { get; set; }
         public string PerticipentId { get; set; }
         public int AnswerId { get; set; }
 
@@ -111,7 +114,7 @@ namespace ComPro.Models
 
     public class SurveyViewModel
     {
-       
+
         public string Title { get; set; }
 
         public string Question { get; set; }
@@ -120,6 +123,29 @@ namespace ComPro.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }
+
+    public class IndexViewModel2
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Title { get; set; }
+
+
+    }
+
+    public class PollViewModel
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+
+        public string Question { get; set; }
+
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+    }
+
+
 
 
 }

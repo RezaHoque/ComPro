@@ -78,7 +78,8 @@ namespace ComPro.Interfaces
                     TotalYes = _data.EventMember.Where(x => x.EventId == p.EventId && x.PerticipetingType == "Going").Count(),
                     Members = _data.EventMember.Where(x => x.EventId == p.EventId).ToList(),
                     CreatorName = UserInformation.UserNameById(p.CreatorId),
-                    EventEndDate = p.End
+                    EventEndDate = p.End,
+                    UniqueUrl = p.UniqueUrl
 
 
                 }).ToList();
@@ -118,7 +119,8 @@ namespace ComPro.Interfaces
                                    EventTitel = p.Title,
                                    Approval = p.IsApproved,
                                    CreatorID = p.CreatorId,
-                                   Activity = null
+                                   Activity = null,
+                                   UniqueUrl = p.UniqueUrl
                                });
 
                     return AllResult;
@@ -135,7 +137,8 @@ namespace ComPro.Interfaces
                             EventTitel = p.Title,
                             Approval = p.IsApproved,
                             CreatorID = p.CreatorId,
-                            Activity = null
+                            Activity = null,
+                            UniqueUrl = p.UniqueUrl
                         });
 
 
@@ -226,14 +229,14 @@ namespace ComPro.Interfaces
         }
 
 
-        public DetailViewModel Detail(int Id)
+        public DetailViewModel Detail(string uniqueUrl)
         {
             DetailViewModel Result = new DetailViewModel();
 
             try
             {
 
-                EventModel eventModel = _data.Event.Find(Id);
+                EventModel eventModel = _data.Event.FirstOrDefault(x => x.UniqueUrl == uniqueUrl);
 
                 if (eventModel == null)
                 {
@@ -245,7 +248,7 @@ namespace ComPro.Interfaces
 
 
 
-                    Result.MembersList = _data.EventMember.Where(x => x.EventId == Id).ToList();
+                    Result.MembersList = _data.EventMember.Where(x => x.EventId == eventModel.EventId).ToList();
 
                     int Going = (int)PerticipentType.Going;
                     int NotGoing = (int)PerticipentType.NotGoing;
@@ -278,7 +281,7 @@ namespace ComPro.Interfaces
 
                     }
 
-                    Result.Id = Id;
+                    Result.Id = eventModel.EventId;
                     Result.Title = eventModel.Title;
                     Result.Description = eventModel.Description;
                     Result.Date = eventModel.Date;
@@ -297,7 +300,10 @@ namespace ComPro.Interfaces
                     Result.ApprovalDate = eventModel.ApprovalDate;
                     Result.IsApproved = eventModel.IsApproved;
                     Result.EndDate = eventModel.End;
-
+                    Result.UniqueUrl = eventModel.UniqueUrl;
+                    Result.Images = _data.SiteImages.Where(x => x.Type == "Event" && x.TypeId == eventModel.EventId)
+                        .ToList();
+                   
 
                     if (Result.MembersList.Any(x => x.MemberID == Current_User_id) && !(Result.CreatorId == Current_User_id))
                     {
@@ -345,7 +351,7 @@ namespace ComPro.Interfaces
             {
 
                 Data.Title = model.Title;
-                Data.Description = model.Description;
+                Data.Description = !string.IsNullOrEmpty(model.Description)? model.Description.Replace(System.Environment.NewLine,"<br/>"):model.Description;
                 Data.Date = model.Date;
                 Data.Place = model.Place;
 
@@ -358,9 +364,11 @@ namespace ComPro.Interfaces
                 Data.ApprovalDate = DateTime.Now;
                 Data.IsPublic = inviteesIds.Any() ? false : true;
 
-
+                
 
                 _data.Event.Add(Data);
+                _data.SaveChanges();
+                Data.UniqueUrl = $"{Data.EventId}-{Data.Title.Replace(" ", "-")}";
                 _data.SaveChanges();
                 if (Data.IsPublic == false)
                 {

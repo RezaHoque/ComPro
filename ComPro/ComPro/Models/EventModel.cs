@@ -31,6 +31,7 @@ namespace ComPro.Models
             public DateTime ApprovalDate { get; set; }
             public bool IsPublic { get; set; }
             public DateTime End { get; set; }
+            public string UniqueUrl { get; set; }
              
         }
 
@@ -70,7 +71,8 @@ namespace ComPro.Models
         public List<SiteImage> Images { get; set; }
         public int TotalYes { get; set; }
         public ICollection<EventMember> Members { get; set; }
-        
+        public string UniqueUrl { get; set; }
+
 
     }
 
@@ -111,6 +113,9 @@ namespace ComPro.Models
 
         public bool IsApproved { get; set; }
         public string UserActivity { get; set; }
+        public string UniqueUrl { get; set; }
+        public List<SiteImage> Images { get; set; }
+
 
     }
 

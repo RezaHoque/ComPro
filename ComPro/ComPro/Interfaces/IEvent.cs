@@ -13,7 +13,7 @@ namespace ComPro.Interfaces
         IEnumerable<EventViewModel> MyEvent();
         IEnumerable<EventViewModel> NewEvent();
 
-        DetailViewModel Detail(int Id);
+        DetailViewModel Detail(string uniqueUrl);
         EventModel Create(EventModel model,List<string> inviteesIds);
         bool ApproveEvent(int Id);
         EventModel GetEdit(int Id);

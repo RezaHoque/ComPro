@@ -1,0 +1,34 @@
+﻿@model IEnumerable<ComPro.Models.IndexViewModel2>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+
+<input type="button" class="btn btn-primary" onClick="Create(1)" name="Poll" value="Create Poll" />
+<input type="button" class="btn btn-primary" onClick="Create(2)" name="Survey" value="Create Survey" />
+
+@foreach (var item in Model)
+{
+    <a href="#" onClick="Custing(@item.Id)" ;> @item.Title</a>
+    <br />
+}
+
+
+<script>
+    function Create(type) {
+
+        var url = ("/Survey/Create?Type=" + type).toString();
+        window.location.href = url;
+
+    }
+
+    function Custing(id) {
+
+        var url = ("/Survey/Custpoll?Id=" + id).toString();
+        window.location.href = url;
+
+    }
+</script>
