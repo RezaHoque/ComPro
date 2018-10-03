@@ -26,9 +26,9 @@
         <div class="fb-share-button" data-href="http://bpid.dk/Event/Details/@Model.UniqueUrl" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a target="_blank" href="http://bpid.dk/Event/Details/@Model.UniqueUrl" class="fb-xfbml-parse-ignore">Share</a></div>
     </div>
 </div>
-<div class="row table-bordered">
-    <div class="col col-6" style="padding-left: 0 !important">
-        <img src="@Model.Images.FirstOrDefault().ImagePath" class="thumbnail" alt="@Model.Title" />
+<div class="row table-bordered card-body">
+    <div class="col col-6">
+        <img src="@Model.Images.FirstOrDefault().ImagePath" class="img-thumbnail" alt="@Model.Title" />
     </div>
     <div class="col col-4">
         <h5>
@@ -38,6 +38,7 @@
             @Html.Raw(Model.Description)
 
         </p>
+        <hr/>
         <p>
             <h6>
                 <i>Owner: @Model.CreatorName</i>

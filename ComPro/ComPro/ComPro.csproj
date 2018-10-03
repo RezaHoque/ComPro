@@ -435,6 +435,10 @@
     <Compile Include="Migrations\201809301027533_updateEventUrl.Designer.cs">
       <DependentUpon>201809301027533_updateEventUrl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810030743392_uniqueUrlToNotice.cs" />
+    <Compile Include="Migrations\201810030743392_uniqueUrlToNotice.Designer.cs">
+      <DependentUpon>201810030743392_uniqueUrlToNotice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ArchiveModel.cs" />
@@ -940,6 +944,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809301027533_updateEventUrl.resx">
       <DependentUpon>201809301027533_updateEventUrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810030743392_uniqueUrlToNotice.resx">
+      <DependentUpon>201810030743392_uniqueUrlToNotice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
