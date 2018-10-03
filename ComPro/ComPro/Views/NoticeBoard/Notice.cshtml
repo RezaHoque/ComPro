@@ -1,46 +1,63 @@
 ﻿@model ComPro.Models.NoticeBoardViewModel
 @using ComPro.Helpers
 @{
-    ViewBag.Title = "Notice";
+    ViewBag.Title = @Model.Notice.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section metatags
+{
+    <meta property="og:url" content="http://bpid.dk/Event/Details/@Model.Notice.UniqueUrl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@Model.Notice.Title" />
+    <meta property="og:description" content="@Model.Notice.Description.Replace("<br/>"," ")" />
+    <meta property="og:image" content="http://bpid.dk/@Model.NoticeImage.ImagePath" />
 }
 <script>
     $(document).ready(function () {
 
         $("#commentBox").load("/NoticeBoard/PostComment");
-
-        
-        @*var description = '@Model.Notice.Description';
-        alert(description);*@
-        
-
     });
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 </script>
-
+<div id="fb-root"></div>
 <div class="row" style="margin-top:10px;">
     <div class="card">
         <div class="card-header">
             @Model.Notice.Title
             <input type="hidden" name="hNoticeId" value="@Model.Notice.Id" id="hNoticeId" />
+
+            <div class="fb-share-button" style="float: right" data-href="http://bpid.dk/NoticeBoard/Notice/@Model.Notice.UniqueUrl" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a target="_blank" href="http://bpid.dk/NoticeBoard/Notice/@Model.Notice.UniqueUrl" class="fb-xfbml-parse-ignore">Share</a></div>
         </div>
         <div class="card-body">
-             @Html.Raw(Model.Notice.Description) 
-            <p style="margin-top:10px;">
-                @if (Model.NoticeImage.ImagePath != null)
-                {
-                    <img src="@Model.NoticeImage.ImagePath" alt="@Model.Notice.Title" class="img-thumbnail" width="200px" height="200px">
+            <div class="row">
+                <div class="col col-6">
+                    @if (Model.NoticeImage.ImagePath != null)
+                    {
+                        <img src="@Model.NoticeImage.ImagePath" alt="@Model.Notice.Title" class="img-thumbnail">
 
-                }
-            </p>
-            @if (!string.IsNullOrEmpty(Model.Notice.WebLink))
-            {
-                <p><a href="@Model.Notice.WebLink" target="_blank"><i class="fa fa-external-link-alt"></i> go to link</a></p>
-            }
-            <hr />
-            <i>@UserInformation.UserNameById(Model.Notice.CreatorId) </i>
-            <i>@Model.Notice.SubmitDate.ToShortDateString()</i>
-
+                    }
+                </div>
+                <div class="col col-6">
+                    @Html.Raw(Model.Notice.Description)
+                    <hr/>
+                    @if (!string.IsNullOrEmpty(Model.Notice.WebLink))
+                    {
+                        <p><a href="@Model.Notice.WebLink" target="_blank"><i class="fa fa-external-link-alt"></i> see more here </a></p>
+                    }
+                </div>
+            </div>
             
+            <hr/>
+            <i>Posted by : @UserInformation.UserNameById(Model.Notice.CreatorId) </i>
+            <i>on @Model.Notice.SubmitDate.ToShortDateString()</i>
+
+
         </div>
     </div>
 </div>

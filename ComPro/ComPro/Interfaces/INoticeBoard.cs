@@ -13,7 +13,7 @@ namespace ComPro.Interfaces
         List<NoticeBoardViewModel> GetMyNotice();
         //IEnumerable<NoticeBoard> GetNewNotices();
         NoticeBoard PostNotices(NoticeBoard model);
-        NoticeBoardViewModel GetDetails(int id);
+        NoticeBoardViewModel GetDetails(string id);
       //  void ApproveNotice(int id);
 
         NoticeBoardViewModel GetEdit(int id);

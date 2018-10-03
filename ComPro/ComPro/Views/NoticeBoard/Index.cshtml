@@ -40,7 +40,7 @@
                 {
 
                     <div class="card bg-light mb-3 border-success" style="max-width: 18rem;">
-                        <div class="card-header"><a href="/NoticeBoard/Notice?Id=@i.Notice.Id">@i.Notice.Title</a> </div>
+                        <div class="card-header"><a href="/NoticeBoard/Notice/@i.Notice.UniqueUrl">@i.Notice.Title</a> </div>
                         @if (i.NoticeImage != null)
                         {
                             <img class="card-img-top" src="@i.NoticeImage.ImagePath" alt="@i.Notice.Title">
@@ -55,7 +55,7 @@
                                 {
                                     @Html.Raw(i.Notice.Description)
                                 }
-                                <a href="/NoticeBoard/Notice?Id=@i.Notice.Id" class="alert-link">more</a>
+                                <a href="/NoticeBoard/Notice/@i.Notice.UniqueUrl" class="alert-link">more</a>
                                 @if (!string.IsNullOrEmpty(i.Notice.WebLink))
                                 {
                                 <p><a href="@i.Notice.WebLink" target="_blank"><i class="fa fa-external-link-alt"></i> go to link</a></p>
@@ -100,7 +100,7 @@
 
 
                             <div class="card-footer bg-white border-success">
-                                <a href="/NoticeBoard/Notice?Id=@i.Notice.Id">
+                                <a href="/NoticeBoard/Notice/@i.Notice.UniqueUrl">
                                     <i class="fas fa-comments"></i> Comments @if (i.TotalComments > 0)
                                     {
                                         <span class="badge badge-primary">@i.TotalComments</span>
@@ -113,10 +113,10 @@
                     else
                     {
                         <div class="card bg-light mb-3" style="max-width: 18rem;">
-                            <div class="card-header"><a href="/NoticeBoard/Notice?Id=@i.Notice.Id">@i.Notice.Title</a></div>
+                            <div class="card-header"><a href="/NoticeBoard/Notice/@i.Notice.UniqueUrl">@i.Notice.Title</a></div>
                             @if (i.NoticeImage != null)
                             {
-                                <img class="card-img-top" src="@i.NoticeImage.ImagePath" alt="@i.Notice.Title" height="250" width="150">
+                            <a href="/NoticeBoard/Notice/@i.Notice.UniqueUrl"><img class="card-img-top" src="@i.NoticeImage.ImagePath" alt="@i.Notice.Title" height="250" width="150"></a>
                             }
                             <div class="card-body">
                                 <p class="card-text">
@@ -128,10 +128,10 @@
                                     {
                                         @i.Notice.Description
                                     }
-                                    <a href="/NoticeBoard/Notice?Id=@i.Notice.Id" class="alert-link">more</a>
+                                    <a href="/NoticeBoard/Notice/@i.Notice.UniqueUrl" class="alert-link">more</a>
                                     @if (!string.IsNullOrEmpty(i.Notice.WebLink))
                                     {
-                                    <p><a href="@i.Notice.WebLink" target="_blank"><i class="fa fa-external-link-alt"></i> go to link</a></p>
+                                    <p><a href="@i.Notice.WebLink" target="_blank"><i class="fa fa-external-link-alt"></i> external link </a></p>
                                 }
 
                                     <h6 class="card-title bg-white" style="padding:3px;">
@@ -161,7 +161,7 @@
 
 
                                 <div class="card-footer bg-white border-success">
-                                    <a href="/NoticeBoard/Notice?Id=@i.Notice.Id">
+                                    <a href="/NoticeBoard/Notice/@i.Notice.UniqueUrl">
                                         <i class="fas fa-comments"></i> Comments @if (i.TotalComments > 0)
                                         {
                                             <span class="badge badge-light">@i.TotalComments</span>

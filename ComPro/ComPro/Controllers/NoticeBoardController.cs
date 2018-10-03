@@ -126,10 +126,15 @@ namespace ComPro.Controllers
             return RedirectToAction("Index");
         }
         //[Authorize]
-        public ActionResult Notice(int? id)
+        public ActionResult Notice(string id)
         {
-            ViewBag.NoticeId = id;
-            return View(_noticeBoardManager.GetDetails(id.Value));
+            if (!string.IsNullOrEmpty(id))
+            {
+                ViewBag.NoticeId = id;
+                return View(_noticeBoardManager.GetDetails(id));
+            }
+
+            return RedirectToAction("Index");
         }
 
         //[Authorize]

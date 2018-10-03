@@ -73,19 +73,23 @@ namespace ComPro.Interfaces
         }
        
 
-        public NoticeBoardViewModel GetDetails(int id)
+        public NoticeBoardViewModel GetDetails(string uniqueUrl)
         {
-            var noticeDetails = _data.Notice.FirstOrDefault(x => x.Id == id && x.IsApproved);
-            if (noticeDetails != null)
+            if (!string.IsNullOrEmpty(uniqueUrl))
             {
-                var nvm = new NoticeBoardViewModel();
-                nvm.Notice = noticeDetails;
-               
-                nvm.NoticeImage = _data.SiteImages.FirstOrDefault(x => x.TypeId == noticeDetails.Id && x.Type=="Notice");
+                var noticeDetails = _data.Notice.FirstOrDefault(x => x.UniqueUrl == uniqueUrl && x.IsApproved);
+                if (noticeDetails != null)
+                {
+                    var nvm = new NoticeBoardViewModel();
+                    nvm.Notice = noticeDetails;
 
-               
-                return nvm;
+                    nvm.NoticeImage = _data.SiteImages.FirstOrDefault(x => x.TypeId == noticeDetails.Id && x.Type == "Notice");
+
+
+                    return nvm;
+                }
             }
+          
             return new NoticeBoardViewModel();
         }
 
@@ -113,6 +117,9 @@ namespace ComPro.Interfaces
                
 
                 _data.Notice.Add(model);
+                _data.SaveChanges();
+
+                model.UniqueUrl= $"{model.Id}-{model.Title.Replace(" ", "-")}";
                 _data.SaveChanges();
 
                 return model;

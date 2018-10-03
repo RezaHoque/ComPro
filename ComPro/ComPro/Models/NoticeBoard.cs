@@ -31,5 +31,6 @@ namespace ComPro.Models
 
         public string CreatorId { get; set; }
         public virtual ApplicationUser Creator { get; set; }
+        public string UniqueUrl { get; set; }
     }
 }
