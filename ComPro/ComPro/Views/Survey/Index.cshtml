@@ -9,11 +9,26 @@
 
 <input type="button" class="btn btn-primary" onClick="Create(1)" name="Poll" value="Create Poll" />
 <input type="button" class="btn btn-primary" onClick="Create(2)" name="Survey" value="Create Survey" />
-
+<br />
+<br />
 @foreach (var item in Model)
 {
-    <a href="#" onClick="Custing(@item.Id)" ;> @item.Title</a>
+    if (item.Name == "Poll")
+    {
+        <a href="#" onClick="Custing(@item.Id)" ; style="color:darkblue"> @item.Title</a>
+    }
+    else
+    {
+        <a href="#" onClick="CustingSurvey(@item.Id)" ; style="color:darkgreen"> @item.Title</a>
+    }
+
+
+    <input type="button" class="btn btn-primary" onClick="Result(@item.Id)" name="Result" value="Show Result" />
+
     <br />
+    <br />
+
+
 }
 
 
@@ -28,6 +43,19 @@
     function Custing(id) {
 
         var url = ("/Survey/Custpoll?Id=" + id).toString();
+        window.location.href = url;
+
+    }
+    function CustingSurvey(id) {
+
+        var url = ("/Survey/CustSurvey?Id=" + id).toString();
+        window.location.href = url;
+
+    }
+
+    function Result(id) {
+
+        var url = ("/Survey/ShowResult?Id=" + id).toString();
         window.location.href = url;
 
     }

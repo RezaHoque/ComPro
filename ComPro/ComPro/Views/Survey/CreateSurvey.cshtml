@@ -97,8 +97,7 @@
 
 <script type="text/javascript">
     
-    
-        var count = 1;
+           var count = 1;
     
          var text;
 
@@ -121,8 +120,7 @@
             $.ajax({
                 url: "/Survey/Createsurvey",
                 type: "post",
-                //dataType: "json",
-              //  contextType: "application/json",
+               
                 ContentType: "application/javascript",
                 data: { Title: title, Description: des, StartDate: start, EndDate: end,Questions: x },
                 traditional: true,
@@ -141,76 +139,19 @@
                 }
             });
         }
-        //alert("Helo");
-        //var x = $(".datalist").toArray();
-        //for (i = 0; i < x.length; i++) {
-        //    alert(x[i].innerHTML);
-        //}
-
-
-        // var request = $.ajax({
-        //    type: "POST",
-        //     url: "/Survey/Createsurvey",
-        //    data: { R:x}
-
-        //});
-
-        //request.done(function (msg) {
-        //    alert(msg);
-        //    if (msg === "True") {
-        //        alert("Your Poll Is Successfully Created");
-
-
-
-        //    }
+        
 
      });
-        //var title = $("#Title").val().toString();
-        //var des = $("#Description").val().toString();
-        //var qus = $("#Question").val().toString();
-
-        //var start = $("#startDatetimepicker").val();
-        //var end = $("#endDatetimepicker").val();
-
-
-
-        //var request = $.ajax({
-        //    type: "POST",
-        //    url: "/Survey/CreatePoll",
-        //    data: { Title: title, Description: des, Question: qus, StartDate: start, EndDate: end }
-
-        //});
-
-        //request.done(function (msg) {
-        //    alert(msg);
-        //    if (msg === "True") {
-        //        alert("Your Poll Is Successfully Created");
-
-
-
-        //    }
-
-        //});
-
-  //  });
-   
 
         $("#Ques").click(function () {
             
                 if (question) {
 
                     $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + count + ". " + $("#Question").val() + ' ?</li>');
-                    //text = count + ". " + $("#Ques").val();
-                    //alert(text);
-                    //// QusAndAns = QusAndAns.push((count + ". " + $("#Ques").val()).toString());
-                    count = count + 1;
+                      count = count + 1;
 
             }
-            //text = $("#Ans").val();
-            //alert(text);
-            //alert("Helo");
-                // QusAndAns = QusAndAns.push($("#Ans").val().toString());
-            $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + $("#Ans").val() + '</li>');
+              $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + $("#Ans").val() + '</li>');
 
             $("#Question").val('');
             $("#Ans").val('');
@@ -228,15 +169,13 @@
                 if (question) {
                    
                     $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + count + ". " + $("#Question").val() + ' ?</li>');
-                    // QusAndAns = QusAndAns.push(count + ". " + $("#Ques").val());
-                    question = false;
+                     question = false;
                     count = count + 1;
                     $("#Question").val('');
                     $("#FullQus").hide();
-
+                    
                 }
-                // QusAndAns = QusAndAns.push($("#Ans").val());
-            $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + $("#Ans").val() + '</li>');
+               $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + $("#Ans").val() + '</li>');
 
                 $("#Ques").show();
                 $("#Ans").val('');
@@ -284,8 +223,5 @@
     });
 
     
-
-    
-
 
 </script>

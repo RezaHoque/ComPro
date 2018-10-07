@@ -66,12 +66,12 @@
         </div>
     </div>
 
-    <div class="form-group">
+    @*<div class="form-group">
         <label class="control-label col-md-2">Send invitation to</label>
         <div class="col-md-10">
-            <select data-placeholder="select invitees or leave blank if it is public" multiple class="chosen-select form-control" id="slt" name="invitees"></select>
+            <select data-placeholder="select invitees or leave blank if it is public" multiple class="chosen-select form-control" id="member" name="invitees"></select>
         </div>
-    </div>
+    </div>*@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -94,7 +94,7 @@
         })
             .done(function (data) {
                 $.each(data, function (k, v) {
-                    $('<option>').val(v.UserId).text(v.Name).appendTo('#slt');
+                    $('<option>').val(v.UserId).text(v.Name).appendTo('#member');
                 });
                 $(".chosen-select").chosen();
             });

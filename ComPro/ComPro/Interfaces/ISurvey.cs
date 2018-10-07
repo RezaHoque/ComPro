@@ -14,5 +14,10 @@ namespace ComPro.Interfaces
         List<IndexViewModel2> AllPoll();
         PollViewModel SinglePoll(int id);
         bool cust(string vote, int Id);
+
+        SurveyViewModel SingleSurvey(int id);
+        bool CustSurvey(int[] Vote, int Id);
+
+        SurveyViewModel ShowResult(int id);
     }
 }
