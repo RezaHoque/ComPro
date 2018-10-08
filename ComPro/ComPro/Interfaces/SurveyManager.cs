@@ -107,28 +107,16 @@ namespace ComPro.Interfaces
 
 
 
-        public List<IndexViewModel2> AllPoll()
+        public List<PollingAndSyrvayModel> AllPoll()
         {
-            List<IndexViewModel2> POlls = new List<IndexViewModel2>();
+            List<PollingAndSyrvayModel> POlls = new List<PollingAndSyrvayModel>();
 
 
             try
             {
-                var AllPoll = _data.PollingAndSyrvays.ToList();
+                POlls = _data.PollingAndSyrvays.ToList();
 
-                foreach (var item in AllPoll)
-                {
-                    IndexViewModel2 singlePoll = new IndexViewModel2
-                    {
-                        Id = item.Id,
-                        Name = item.Name,
-                        Title = item.Title
-                    };
-                    POlls.Add(singlePoll);
-
-
-
-                }
+                                
                 return POlls;
             }
 

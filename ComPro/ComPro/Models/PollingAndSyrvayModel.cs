@@ -68,49 +68,6 @@ namespace ComPro.Models
 
     }
 
-    //public class ResultViewModel
-    //{
-    //    [Key]
-    //    public int Id { get; set; }
-
-    //    public string Title { get; set; }
-
-    //   List<QuestionAndAnswerViewModel> QA  { get; set; }
-
-
-
-    //    public DateTime StartDate { get; set; }
-    //    public DateTime EndDate { get; set; }
-
-    //    [Display(Name = "Creation Date")]
-    //    public DateTime Creation { get; set; }
-
-    //    [Display(Name = "Creator Name")]
-    //    public string CreatorName { get; set; }
-
-
-    //    [Display(Name = "Approved On")]
-    //    public DateTime ApprovalDate { get; set; }
-    //    public string CreatorId { get; set; }
-
-    //    public List<EventMember> MembersList { get; set; }
-
-
-
-    //}
-
-    //public class QuestionAndAnswerViewModel
-    //{
-    //    public string Question { get; set; }
-    //    public string Answer1 { get; set; }
-    //    public string Agreed1 { get; set; }
-
-    //    public string Answer2 { get; set; }
-    //    public string Agreed2 { get; set; }
-
-
-
-    //}
 
     public class SurveyViewModel
     {
@@ -134,14 +91,15 @@ namespace ComPro.Models
 
     }
 
-    public class IndexViewModel2
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Title { get; set; }
+    //public class IndexViewModel2
+    //{
+    //    public int Id { get; set; }
+    //    public string Name { get; set; }
+    //    public string Title { get; set; }
+      
 
 
-    }
+    //}
 
     public class PollViewModel
     {
