@@ -107,28 +107,16 @@ namespace ComPro.Interfaces
 
 
 
-        public List<IndexViewModel2> AllPoll()
+        public List<PollingAndSyrvayModel> AllPoll()
         {
-            List<IndexViewModel2> POlls = new List<IndexViewModel2>();
+            List<PollingAndSyrvayModel> POlls = new List<PollingAndSyrvayModel>();
 
 
             try
             {
-                var AllPoll = _data.PollingAndSyrvays.Where(x => x.Name == "Poll").ToList();
+                POlls = _data.PollingAndSyrvays.ToList();
 
-                foreach (var item in AllPoll)
-                {
-                    IndexViewModel2 singlePoll = new IndexViewModel2
-                    {
-                        Id = item.Id,
-                        Name = item.Name,
-                        Title = item.Title
-                    };
-                    POlls.Add(singlePoll);
-
-
-
-                }
+                                
                 return POlls;
             }
 
@@ -179,7 +167,7 @@ namespace ComPro.Interfaces
             PollViewModel poll = new PollViewModel();
             try
             {
-                var y = _data.PollingAndSyrvays.FirstOrDefault(x => x.Id == id);
+                var y = _data.PollingAndSyrvays.FirstOrDefault(x => x.Id == id && x.Name == "Poll");
                 var z = _data.Questions.FirstOrDefault(x => x.ActivityId == y.Id && x.ActivityName == "Poll");
 
                 poll.Id = id;
@@ -214,7 +202,7 @@ namespace ComPro.Interfaces
                         PerticipentId=Current_User_id,
                         AnswerId=ans.Id
                     };
-
+                    _data.Perticipents.Add(member);
                 }
                 else
                 {
@@ -290,13 +278,7 @@ namespace ComPro.Interfaces
                     
                 }
 
-                //QuestionModel qus = new QuestionModel
-                //{
-                //    ActivityName = "Poll",
-                //    ActivityId = Data.Id,
-                //    Question = model.Question
-
-                //};
+               
 
                 _data.Questions.AddRange(QuestionList);
                 _data.SaveChanges();
@@ -359,14 +341,7 @@ namespace ComPro.Interfaces
 
 
                 }
-                //AnswerModel answer = new AnswerModel
-                //{
-                //    QuestionId = qus.Id,
-                //    Answer = "Yes"
-
-                //};
-
-
+                
                 
                 _data.Answers.AddRange(AnswerList);
                 _data.SaveChanges();
@@ -392,6 +367,150 @@ namespace ComPro.Interfaces
                 return false;
             }
 
+        }
+
+
+        public SurveyViewModel SingleSurvey(int id)
+        {
+            SurveyViewModel Survey = new SurveyViewModel();
+           
+            List<QA> QusAnsList = new List<QA>();
+            try
+            {
+                var y = _data.PollingAndSyrvays.FirstOrDefault(x => x.Id == id && x.Name=="Survey");
+
+                var questions = _data.Questions.Where(x => x.ActivityId == y.Id && x.ActivityName == "Survey").ToList();
+
+                Survey.Id = id;
+                Survey.Title = y.Title;
+                Survey.Description = y.Description;
+
+                foreach (var q in questions)
+                {
+                    QA QueAns = new QA
+                    {
+                        Id= q.Id,
+                        Type = "Question",
+                        Q_A = q.Question
+                    };
+
+                    QusAnsList.Add(QueAns);
+
+                    var ans = _data.Answers.Where(P => P.QuestionId == q.Id).Select(x=> new { x.Id, x.Answer}).ToList();  
+
+
+                    foreach (var a in ans)
+                    {
+                        QA QueAns2 = new QA
+                        {   Id= a.Id,
+                            Type = "Answer",
+                            Q_A = a.Answer
+                        };
+
+                        QusAnsList.Add(QueAns2);
+                    }
+                    
+
+                }
+                Survey.QA = QusAnsList;
+               
+                Survey.StartDate = y.StartDate;
+                Survey.EndDate = y.EndDate;
+
+                return Survey;
+            }
+
+            catch
+            {
+                return Survey;
+            }
+        }
+
+        public bool CustSurvey(int[] Vote, int Id)
+        {
+            try
+            {
+                List<PerticipentModel> members = new List<PerticipentModel>();
+                foreach (var i in Vote)
+                {
+                    PerticipentModel member = new PerticipentModel
+                    {
+                        ActivityId = Id,
+                        PerticipentId = Current_User_id,
+                        AnswerId = i
+                    };
+                    members.Add(member);
+                }
+
+                _data.Perticipents.AddRange(members);
+                _data.SaveChanges();
+                return true;
+            }
+
+            catch
+            {
+                return false;
+            }
+        }
+
+
+        public SurveyViewModel ShowResult(int id)
+        {
+
+            SurveyViewModel Survey = new SurveyViewModel();
+
+            List<QA> QusAnsList = new List<QA>();
+            try
+            {
+                var y = _data.PollingAndSyrvays.FirstOrDefault(x => x.Id == id );
+
+                var questions = _data.Questions.Where(x => x.ActivityId == y.Id && x.ActivityName == y.Name).ToList();
+
+                Survey.Id = id;
+                Survey.Title = y.Title;
+                Survey.Description = y.Description;
+
+                foreach (var q in questions)
+                {
+                    QA QueAns = new QA
+                    {
+                        Id = q.Id,
+                        Type = "Question",
+                        Q_A = q.Question
+                    };
+
+                    QusAnsList.Add(QueAns);
+
+                    var ans = _data.Answers.Where(P => P.QuestionId == q.Id).Select(x => new { x.Id, x.Answer }).ToList();
+
+
+                    foreach (var a in ans)
+                    {
+                        QA QueAns2 = new QA
+                        {
+                            Id = a.Id,
+                            Type = "Answer",
+                            Q_A = a.Answer,
+                            Result = _data.Perticipents.Where(x => x.AnswerId == a.Id && x.ActivityId==id).Count()
+                        };
+
+                        QusAnsList.Add(QueAns2);
+                    }
+
+
+                }
+                Survey.QA = QusAnsList;
+
+                Survey.StartDate = y.StartDate;
+                Survey.EndDate = y.EndDate;
+
+                return Survey;
+            }
+
+            catch
+            {
+                return Survey;
+            }
         }
 
     }

@@ -11,8 +11,8 @@ namespace ComPro.Interfaces
     interface IHome
     {
         IEnumerable<UserInfo> LatestMember(int length);
-        IEnumerable<NoticeBoard> LatestNotice(int length);
-        IEnumerable<ChatModel> LatestEvent(int length);
+        IEnumerable<NoticeBoardViewModel> LatestNotice(int length);
+        IEnumerable<EventViewModel> LatestEvent(int length);
 
         bool Contac_Admin(FormCollection Message);
         IEnumerable<SiteContibuter> GetContributers();

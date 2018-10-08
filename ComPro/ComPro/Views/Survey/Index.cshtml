@@ -1,34 +1,308 @@
-﻿@model IEnumerable<ComPro.Models.IndexViewModel2>
+﻿@model IEnumerable<ComPro.Models.PollingAndSyrvayModel>
+@using Microsoft.AspNet.Identity
+@using ComPro.Helpers
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-
-<input type="button" class="btn btn-primary" onClick="Create(1)" name="Poll" value="Create Poll" />
-<input type="button" class="btn btn-primary" onClick="Create(2)" name="Survey" value="Create Survey" />
-
-@foreach (var item in Model)
+@section metatags
 {
-    <a href="#" onClick="Custing(@item.Id)" ;> @item.Title</a>
-    <br />
+    <meta property="og:url" content="http://bpid.dk" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Bangladeshi Professionals in Denmark" />
+    <meta property="og:description" content="BPID presents cultural night with comedy and music.Standup comedian Naveed Mahbub and rockstar Nayeem RahmanArnob will be performing." />
+    <meta property="og:image" content="http://bpid.dk/content/images/bpid_cultural_night.jpg" />
 }
+    <div class="text-md-right">
+        <a href="/Survey/Create?Type=1" class="card-link btn btn-primary" name="CreatePoll" id="CreatePoll"><i class="fas fa-dice"></i> Create Poll</a>
+        <a href="/Survey/Create?Type=2" class="card-link btn btn-primary" name="CreateSurvey" id="CreateSurvey"><i class="fas fa-poll"></i> Create Survey</a>
+
+    </div>
 
 
-<script>
-    function Create(type) {
 
-        var url = ("/Survey/Create?Type=" + type).toString();
-        window.location.href = url;
+    <div class="container-fluid">
+        <div class="alert alert-light" role="alert">
+            <h3>Displaying @Model.Count() post(s).</h3>
+        </div>
+        <div class="row">
+            @foreach (var i in Model)
+            {
+                <div class="col-sm-4" id="@i.Id">
+                   
+                    <div class="card bg-light mb-3 border-success" style="max-width: 18rem;">
+                        @if (i.Name == "Poll")
+                        {
+                        <div class="card-header bg-success">@i.Title</div>
+                        }
+                        else
+                        {
+                        <div class="card-header bg-primary">@i.Title</div>
+                        }
+                        
+                        <div class="card-body">
+                            <p class="card-text">
+                                @if (i.Description.Length > 200)
+                                {
+                                    @Html.Raw(i.Description.Substring(0, 190)) <a href="#" data-toggle="popover" title="@i.Title" data-content="@i.Description">.....More</a>
+                                }
+                                else
+                                {
+                                    @Html.Raw(i.Description)
+                                }
 
-    }
 
-    function Custing(id) {
+                                <h6 class="card-title bg-white" style="padding:3px;">
 
-        var url = ("/Survey/Custpoll?Id=" + id).toString();
-        window.location.href = url;
 
-    }
-</script>
+                                    @if (@UserInformation.UserName(i.CreatorId) == "Admin")
+                                    {
+                                        <i>
+                                            Posted by: @UserInformation.UserName(i.CreatorId)
+                                            <br />
+                                            Start :  @i.StartDate.ToShortDateString()
+                                            End :  @i.EndDate.ToShortDateString()
+                                        </i>
+                                    }
+                                    else
+                                    {
+                                        <i>
+                                            Posted by: <a href="#" onclick="Notice_Creator_Details('@i.CreatorId')">@UserInformation.UserName(i.CreatorId)</a>
+
+                                            <br />
+
+                                            Start :  @i.StartDate.ToShortDateString()
+                                            End :  @i.EndDate.ToShortDateString()
+                                        </i>
+                                    }
+
+
+
+                                </h6>
+                        </div>
+
+
+
+
+                        <div class="card-footer bg-white border-success">
+
+                            @if (i.StartDate < DateTime.Now)
+                            {
+                                if (User.Identity.IsAuthenticated)
+                                {
+
+                                    if (i.EndDate >= DateTime.Now)
+                                    {
+                                        if (i.Name == "Poll")
+                                        {
+                                            <a href="#" onClick="Custing(@i.Id)" ; style="color:darkblue"> Perticipate </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#" onClick="CustingSurvey(@i.Id)" ; style="color:darkgreen"> Perticipate</a>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if ((User.Identity.Name == i.CreatorId) || User.IsInRole("Administrator"))
+                                        {
+
+                                            <a href="#" onClick="Result(@i.Id)" name="Result"> Show Result</a>
+
+                                        }
+
+                                    }
+
+                                }
+                            }
+                        </div>
+                    </div>
+ 
+                </div>
+            }
+        </div>
+    </div>
+
+
+
+
+
+            @*<script>
+                function Notice_Creator_Details(id) {
+
+
+
+
+                    var url = "/UserProfile/ChangeId";
+
+                    $.ajax({
+
+                        url: url,
+                        data: { id: id },
+
+                        success: function (data) {
+
+                            id = data;
+                            var url = "/UserProfile/Details";
+
+                            $.ajax({
+
+                                url: url,
+                                data: { id: id },
+
+                                success: function (data) {
+                                    $('#Latest_Detailscontainer').html(data);
+                                    $('#MemDetails').modal();
+                                }
+
+                            });
+
+                        }
+
+                    });
+
+
+
+                }
+
+                function Delete(Noticeid) {
+
+
+                    var result = confirm("Are You sure to Delete This Notice ?");
+
+                    if (result) {
+                        var id = Noticeid;
+                        var url = "/NoticeBoard/Delete";
+                        var objectid = '#' + Noticeid;
+                        $.ajax({
+
+                            url: url,
+                            data: { id: id },
+
+                            success: function (data) {
+                                if (data == "True") {
+
+                                    $(objectid).remove();
+                                }
+                            }
+
+                        });
+
+                    }
+
+                }
+
+            </script>
+            *@
+
+            <div id="Latest_Detailscontainer">
+            </div>
+
+
+
+            @*@model IEnumerable<ComPro.Models.IndexViewModel2>
+            @{
+                ViewBag.Title = "Index";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+            }
+
+            <h2>Index</h2>
+
+
+            <input type="button" class="btn btn-primary" onClick="Create(1)" name="Poll" value="Create Poll" />
+            <input type="button" class="btn btn-primary" onClick="Create(2)" name="Survey" value="Create Survey" />
+            <br />
+            <br />
+            @foreach (var item in Model)
+            {
+                if (item.Name == "Poll")
+                {
+                    <a href="#" onClick="Custing(@item.Id)" ; style="color:darkblue"> @item.Title</a>
+                }
+                else
+                {
+                    <a href="#" onClick="CustingSurvey(@item.Id)" ; style="color:darkgreen"> @item.Title</a>
+                }
+
+
+                <input type="button" class="btn btn-primary" onClick="Result(@item.Id)" name="Result" value="Show Result" />
+
+                <br />
+                <br />
+
+
+            }*@
+
+
+            <script>
+                $(document).ready(function () {
+                    $('[data-toggle="popover"]').popover();
+                });
+
+                function Notice_Creator_Details(id) {
+
+
+
+
+                    var url = "/UserProfile/ChangeId";
+
+                    $.ajax({
+
+                        url: url,
+                        data: { id: id },
+
+                        success: function (data) {
+
+                            id = data;
+                            var url = "/UserProfile/Details";
+
+                            $.ajax({
+
+                                url: url,
+                                data: { id: id },
+
+                                success: function (data) {
+                                    $('#Latest_Detailscontainer').html(data);
+                                    $('#MemDetails').modal();
+                                }
+
+                            });
+
+                        }
+
+                    });
+
+
+
+                }
+
+
+                function Create(type) {
+
+                    var url = ("/Survey/Create?Type=" + type).toString();
+                    window.location.href = url;
+
+                }
+
+                function Custing(id) {
+
+                    var url = ("/Survey/Custpoll?Id=" + id).toString();
+                    window.location.href = url;
+
+                }
+                function CustingSurvey(id) {
+
+                    var url = ("/Survey/CustSurvey?Id=" + id).toString();
+                    window.location.href = url;
+
+                }
+
+                function Result(id) {
+
+                    var url = ("/Survey/ShowResult?Id=" + id).toString();
+                    window.location.href = url;
+
+                }
+            </script>

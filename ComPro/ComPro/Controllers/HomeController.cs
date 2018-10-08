@@ -33,20 +33,19 @@ namespace ComPro.Controllers
             return PartialView("_LatestMember",_Home.LatestMember(3));
         }
 
-        public ActionResult LatestNotice()
+        public JsonResult LatestNotice()
         {
+            var latestNotices= _Home.LatestNotice(6);
 
-            return PartialView("_LatestNoticePartialView", _Home.LatestNotice(2));
+            return Json(latestNotices,JsonRequestBehavior.AllowGet);
+
         }
 
-        public ActionResult LatestEvent()
+        public JsonResult LatestEvent()
         {
-
-            return PartialView("_LatestEventPartialView", _Home.LatestEvent(3));
+            var latestEvents = _Home.LatestEvent(3);
+            return Json(latestEvents, JsonRequestBehavior.AllowGet);
         }
-
-
-
 
         public ActionResult About()
         {

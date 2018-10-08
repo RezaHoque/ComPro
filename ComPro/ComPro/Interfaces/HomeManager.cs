@@ -19,10 +19,12 @@ namespace ComPro.Interfaces
         Email_Service_Model obj = new Email_Service_Model();
         IUtility _utility = new UtilityManager();
         private readonly ApplicationDbContext _data;
-
+        private NoticeBoardManager _noticeManager;
         public HomeManager()
         {
             _data=new ApplicationDbContext();
+            _noticeManager=new NoticeBoardManager();
+
         }
 
         public IEnumerable<UserInfo> LatestMember(int length)
@@ -51,103 +53,71 @@ namespace ComPro.Interfaces
             }
         }
 
-        public IEnumerable<NoticeBoard> LatestNotice(int length)
+        public IEnumerable<NoticeBoardViewModel> LatestNotice(int length)
         {
-            // ApplicationDbContext _data = new ApplicationDbContext();
-            // List<ChatModel> LatestNotice = new List<ChatModel>();
-            List<NoticeBoard> LatestNotice = new List<NoticeBoard>();
+            List<NoticeBoardViewModel> noticeList = new List<NoticeBoardViewModel>();
 
             try
             {
 
-                var PinUpNotice = _data.Notice.FirstOrDefault(x => x.IsApproved == true && x.PinUp==true);
+                var orderedNotices = _data.Notice.Where(x => x.IsApproved).OrderBy(x => x.PinUp)
+                    .ThenByDescending(x => x.SubmitDate).Take(length);
 
-                if(PinUpNotice==null)
+
+                foreach (var n in orderedNotices)
                 {
-                    length = length + 1;
-                }
-                else
-                {
-                    LatestNotice.Add(PinUpNotice);
-                }
-                var NewNotice = _data.Notice.Where(x => x.IsApproved && x.PinUp==false).OrderByDescending(x => x.SubmitDate).Take(length);
+                    var nvm=new NoticeBoardViewModel();
+                    var noticeBoard=new NoticeBoard();
+                    noticeBoard.UniqueUrl = n.UniqueUrl;
+                    noticeBoard.SubmitDate = n.SubmitDate;
+                    noticeBoard.Description = n.Description;
+                    noticeBoard.Title = n.Title;
 
-                LatestNotice.AddRange(NewNotice);
 
-                return LatestNotice.OrderByDescending(x=>x.PinUp);
+                    nvm.Notice = noticeBoard;
+                    nvm.TotalComments=_noticeManager.GetComments(n.Id).Count();
+                    nvm.NoticeImage = _noticeManager.GetNoticeImage(n.Id, "Notice");
+                    nvm.PostedBy= n.Creator.UserName.UserName();
+
+                    noticeList.Add(nvm);
+                }
+
             }
-
-
             catch (Exception ex)
             {
-                //return LatestNotice;
-
                 //log the exception.
-                return LatestNotice;
+              
             }
+
+            return noticeList;
         }
 
-        public IEnumerable<ChatModel> LatestEvent(int length)
+        public IEnumerable<EventViewModel> LatestEvent(int length)
         {
-            //ApplicationDbContext _data = new ApplicationDbContext();
-            List<ChatModel> LatestEvent = new List<ChatModel>();
-            string Current_User_id = HttpContext.Current.User.Identity.GetUserId();
+            List<EventViewModel> latestEvents = new List<EventViewModel>();
+
             try
             {
+                var events = _data.Event.Where(x => x.Date >= DateTime.Now && x.IsApproved && x.IsPublic).OrderByDescending(x=>x.Date).Take(length);
+                foreach (var e in events)
+                {
+                    var evm=new EventViewModel();
+                    evm.UniqueUrl = e.UniqueUrl;
+                    evm.EventTitel = e.Title;
+                    evm.Description = e.Description;
+                    evm.EventDate = e.Date;
+                    evm.Images = _data.SiteImages.Where(x => x.Type == "Event" && x.TypeId == e.EventId).ToList();
 
-                List<EventViewModel> Result = new List<EventViewModel>();
-                List<EventModel> events = new List<EventModel>();
+                    latestEvents.Add(evm);
 
+                }
+            }
+            catch
+            {
                
-                    var AllEvent = _data.Event.Where(x => x.EventStatus && x.Date >= DateTime.Now && x.IsApproved);
-
-                    if (HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString()))
-                    {
-
-                        foreach (var item in AllEvent)
-                        {
-                            events.Add(item);
-
-                        }
-
-                        
-                    }
-                    else
-                    {
-                        foreach (var item in AllEvent)
-                        {
-                            if (item.IsPublic || item.CreatorId == Current_User_id)
-                            {
-                                events.Add(item);
-                            }
-                            else
-                            {
-                                if (_data.EventMember.Any(x => x.EventId == item.EventId && x.MemberID == Current_User_id) || HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString()))
-                                {
-                                    events.Add(item);
-                                }
-                            }
-                        }
-
-
-
-                    }
-
-                    LatestEvent = events.OrderByDescending(x=>x.ApprovalDate).Take(length).AsEnumerable().Select(p => new ChatModel
-                                              {
-                                                  PartnerName = p.Title,
-                                                  PartnerId = p.EventId.ToString()
-                     }).ToList();
-
-
-                    return LatestEvent;
             }
 
-
-                catch
-                {
-                    return LatestEvent;
-                }
+            return latestEvents;
         }
 
 

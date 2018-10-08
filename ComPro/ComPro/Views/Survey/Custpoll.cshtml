@@ -20,9 +20,9 @@
     <p>@Model.Description</p>
     <p>@Model.Question</p>
     <p>
-        <label><input type="radio" name="gender" value="Yes">Yes</label>
+        <label><input type="radio" name="Issue" value="Yes">Yes</label>
 
-        <label><input type="radio" name="gender" value="No">No</label>
+        <label><input type="radio" name="Issue" value="No">No</label>
 
 
     </p>
@@ -51,7 +51,7 @@
         $("#cust").click(function () {
 
 
-            var vote = $("input[name='gender']:checked").val().toString();
+            var vote = $("input[name='Issue']:checked").val().toString();
         
             var id = parseInt('@Model.Id');
 

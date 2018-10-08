@@ -1,0 +1,111 @@
+﻿
+@model ComPro.Models.SurveyViewModel
+@{
+    ViewBag.Title = "CustSurvey";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@*<link href="~/Content/chosen.min.css" rel="stylesheet" />
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <h2>Create a Poll.</h2>
+    <hr />*@
+
+<div id="Custing_Message"></div>
+
+<div>
+
+    <p>@Model.Title</p>
+    <p>@Model.Description</p>
+    
+    
+    <p>@Model.StartDate</p>
+    <p>@Model.EndDate</p>
+
+    <div>
+        @foreach (var item in Model.QA)
+        {
+            if(item.Type == "Question")
+            { <p>@item.Q_A</p>}
+            else
+            {
+              <p>
+                  <input type="checkbox" class="Answer" onclick="check('@item.Id')"> @item.Q_A  
+              </p>
+            }
+
+        }
+
+
+       
+       
+
+    </div>
+
+
+</div>
+
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="button" value="Done" class="btn btn-success" id="custSurvey" />
+    </div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+
+
+    var x = [];
+    var i = 0;
+
+    $("#custSurvey").click(function () {
+
+        
+           var id = parseInt('@Model.Id');
+
+            
+
+            var request = $.ajax({
+                type: "POST",
+                url: "/Survey/CustSurvey",
+                data: { Vote: x, Id: id}
+
+            });
+
+            request.done(function (msg) {
+
+                if (msg === "True") {
+                    alert("Your Vote Is Successfully cast");
+
+                    var url = "/Survey/Index";
+                    window.location.href = url;
+
+                }
+
+            });
+
+
+
+
+        });
+
+    
+    function check(value) {
+        alert(value);
+        x[i] = value;
+        
+        alert(x[i]);
+        i++;
+    }
+
+
+
+
+
+</script>

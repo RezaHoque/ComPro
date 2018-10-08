@@ -15,6 +15,7 @@ namespace ComPro.Controllers
         // GET: Survey
         public ActionResult Index()
         {
+
             return View(_surveyManager.AllPoll());
         }
 
@@ -72,6 +73,26 @@ namespace ComPro.Controllers
             return Content(result.ToString());
         }
 
+        [HttpGet]
+        public ActionResult CustSurvey(int Id)
+        {
+
+            return View(_surveyManager.SingleSurvey(Id));
+        }
+
+        [HttpPost]
+        public ActionResult CustSurvey(int[] Vote, int Id)
+        {
+            var result = _surveyManager.CustSurvey(Vote, Id);
+            return Content(result.ToString());
+        }
+
+        [HttpGet]
+        public ActionResult ShowResult(int Id)
+        {
+
+            return View(_surveyManager.ShowResult(Id));
+        }
 
 
     }
