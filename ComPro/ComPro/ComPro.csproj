@@ -1593,6 +1593,8 @@
     <Content Include="Views\Event\Details.cshtml" />
     <Content Include="Views\Survey\CreateSurvey.cshtml" />
     <Content Include="Content\angular\version.json" />
+    <Content Include="Views\Survey\CustSurvey.cshtml" />
+    <Content Include="Views\Survey\ShowResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

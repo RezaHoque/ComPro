@@ -1,0 +1,68 @@
+﻿@model ComPro.Models.SurveyViewModel
+@{
+    ViewBag.Title = "ShowResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div id="Custing_Message"></div>
+
+<div>
+
+    <p>@Model.Title</p>
+    <p>@Model.Description</p>
+
+
+    <p>@Model.StartDate</p>
+    <p>@Model.EndDate</p>
+
+    <div>
+        @foreach (var item in Model.QA)
+        {
+            if (item.Type == "Question")
+            {<p>@item.Q_A</p>}
+        else
+        {
+            <div>
+                <p>@item.Q_A   : @item.Result  Votes</p>
+
+            </div>
+                 
+            
+        }
+
+    }
+               
+
+
+    </div>
+
+
+</div>
+
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="button" value="Done" class="btn btn-success" id="Done" />
+    </div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+
+
+    $("#Done").click(function () {
+        var url = "/Survey/Index";
+        window.location.href = url;
+
+    });
+
+
+
+
+
+</script>
