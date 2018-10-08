@@ -1,89 +1,113 @@
-﻿@{
+﻿@using ComPro.Helpers
+@{
     ViewBag.Title = "Home";
 }
+
 @section metatags
 {
-    <meta property="og:url" content="http://bpid.dk" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Bangladeshi Professionals in Denmark" />
+    <meta property="og:url" content="http://bpid.dk"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="Bangladeshi Professionals in Denmark"/>
     <meta property="og:description" content="Bangladeshi Professionals in Denmark (BPID) - is a voluntary organization
         in Denmark that dedicated to the overall achievement and advancement of professionals
-        of Bangladeshi origin in Denmark" />
+        of Bangladeshi origin in Denmark"/>
     @*<meta property="og:image" content="http://www.your-domain.com/path/image.jpg" />*@
 }
-<script>
+
+@*<script>
     $(document).ready(function () {
 
-        $("#MemberName").load("/Home/LatestMember", function () {
-            $("#memberLoader").hide();
-        });
-        $("#EventName").load("/Home/LatestEvent");
-        $("#NoticeName").load("/Home/LatestNotice");
+        //$("#MemberName").load("/Home/LatestMember", function () {
+        //    $("#memberLoader").hide();
+        //});
+        //$("#EventName").load("/Home/LatestEvent");
+        //$("#NoticeName").load("/Home/LatestNotice");
 
     });
-</script>
-<div id="common-message" style="display: none;"></div>
-<div class="row justify-content-md-center" style="margin-bottom:100px;">
-    <div class="col-md-12">
+</script>*@
+<div ng-controller="homeController">
+    <div id="common-message" style="display: none;"></div>
+    <div class="row justify-content-md-center" style="margin-bottom: 100px;">
+        <div class="col-md-12">
 
+            <div style="margin-left: auto; margin-right: auto; margin-top: 10px; text-align: center; background-color: #f8f9fa !important" class="jumbotron">
+                <div id="fakeBox">
+                    <input type="text" name="Search" id="searchText" placeholder="Search for Members, their Posts and Events" class="fakeInput"/>
+                </div>
+                <div style="padding-top: 10px;">
+                    <input type="button" class="btn btn-primary btn-custom " id="StartSearch" name="submit" value="Search"/>
+                </div>
 
-
-        <div style="margin-left:auto;margin-right:auto;margin-top:10px; text-align: center;background-color: #f8f9fa !important" class="jumbotron">
-            <div id="fakeBox">
-                <input type="text" name="Search" id="searchText" placeholder="Search for Members, their Posts and Events" class="fakeInput" />
             </div>
-            <div style="padding-top: 10px;">
-                <input type="button" class="btn btn-primary btn-custom " id="StartSearch" name="submit" value="Search" />
-            </div>
-           
-        </div>
 
 
-        @if (!User.Identity.IsAuthenticated)
-        {
-            <div style="margin-left:auto;margin-right:auto;text-align: center;">
-                <h4>Be a part of the professional network. <a href="/Account/Register" class="btn btn-success"> Register here</a></h4>
-            </div>
-        }
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <div style="margin-left: auto; margin-right: auto; text-align: center;">
+                    <h4>Be a part of the professional network. <a href="/Account/Register" class="btn btn-success"> Register here</a></h4>
+                </div>
+            }
 
-    </div>
-</div>
-<div class="row" style="padding: 20px;">
-
-    <div class="col col-md-6">
-        <img src="/Content/images/bpid_cultural_night.jpg" alt="BPID cultural night" class="img-thumbnail">
-    </div>
-    <div class="col col-md-4">
-        <p>
-            <i>
-                For the first time in Denmark, we are trying to arrange a fun networking night with comedy and music. 
-                <br/>
-                Renowned Bangladeshi standup comedian Naveed Mahboob and our own BPID star Nayeem will be performing.
-                <br/>
-                <b>Ticket Price 100 DKK (Individual) & 150 DKK (Family). Please bring your Yellow card to enter in Hall.</b>
-            </i>
-        </p>
-        <p>
-            <a href="https://www.facebook.com/events/265718164057747/" target="_blank"> <i class="fab fa-facebook-square"></i> See it in Facebook</a>
-        </p>
-    </div>
-</div>
-
-<div class="row">
-
-    <div id="MemberName">
-        <div class="lds-ellipsis" id="memberLoader">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
         </div>
     </div>
+    <div class="row" style="padding: 20px;">
+        <div class="spinner" ng-show="loadingEvents">
+            <img src="/Content/ajax-loader.gif" alt="bpid content loading..."/>
+        </div>
+        <div class="card-deck">
+            <div class="card" ng-repeat="n in latestEvents" >
+                <a href="/Event/Details/{{n.UniqueUrl}}">
+                    <img class="card-img-top" src="{{n.Images[0].ImagePath}}" alt="{{n.EventTitel}}" style="max-width: 100%; max-height: 200px">
+                </a>
+                <div class="card-body text-center">
+                    <div class="row">
+                        <div class="col col-md-3">
+                            <p class="card-text text-capitalize text-lg-right lead">
+                                <span><strong>{{n.EventDate.slice(6,-2)|date : "MMM "}}</strong></span>
+                                <br/>
+                                <span><strong>{{n.EventDate.slice(6,-2)|date : "d"}}</strong></span>
+                                @*<small class="text-muted"></small>*@
+                            </p>
+                        </div>
+                        <div class="col col-md-7">
+                            <h5><a href="/Event/Details/{{n.UniqueUrl}}"> {{n.EventTitel}}</a></h5>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            
+        </div>
+       
+    </div>
+    <div class="row" ng-show="showMoreEvents">
+        <div class="lead" style="width: 160px; margin-left: auto;margin-right: auto"><a href="/Event"><u>see more events</u></a></div>
+    </div>
+    <div class="row" style="padding: 20px;">
+        <div class="spinner" ng-show="loadingNotice">
+            <img src="/Content/ajax-loader.gif" alt="bpid content loading..."/>
+        </div>
+        <div class="card-deck">
+            <div class="card" ng-repeat="n in latestNotices">
+                <a href="/NoticeBoard/Notice/{{n.Notice.UniqueUrl}}">
+                    <img class="card-img-top" src="{{n.NoticeImage.ImagePath}}" alt="{{n.Notice.Title}}" style="max-width: 278px; max-height: 200px">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title"><a href="/NoticeBoard/Notice/{{n.Notice.UniqueUrl}}"> {{n.Notice.Title}}</a></h5>
+                    @*<p class="card-text" ng-bind-html="n.Notice.Description|limitTo : 30 : 0"></p>*@
+                    <p class="card-text">
+                        <small class="text-muted">Posted by: {{n.PostedBy}}</small>
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="lead" style="width: 160px; margin-left: auto;margin-right: auto"><a href="/Noticeboard"><u>see more notices</u></a></div>
+    </div>
 </div>
-<div class="row" style="padding-top: 30px; padding-bottom: 10px;">
-    <div id="NoticeName"></div>
-</div>
-
 <script>
     $(document).ready(function () {
         $("#StartSearch").click(function () {
@@ -103,3 +127,5 @@
 
 
 </script>
+
+
