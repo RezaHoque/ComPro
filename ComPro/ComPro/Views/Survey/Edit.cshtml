@@ -1,0 +1,248 @@
+﻿@model ComPro.Models.SurveyViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CreateSurvey</h2>
+
+
+
+
+<link href="~/Content/chosen.min.css" rel="stylesheet" />
+<script src="~/Scripts/chosen.jquery.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<h2>Create a Poll.</h2>
+<hr />
+
+<div id="Return_Message"></div>
+
+<form>
+    @Html.HiddenFor(model => model.Id, new { id = "Id", htmlAttributes = new { @class = "form-control" } })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Title, new { id = "Title", htmlAttributes = new { @class = "form-control", placeholder = "Give it an attractive title" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Description, new { id = "Description", rows = "5", cols = "100", placeholder = " Write few words about it", htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col col-md-4">
+                <label class="control-label col-md-5">Start date</label>
+                <div class="col-md-5">
+                    <input type="text" id="startDatetimepicker"  class="form-control" name="Date" style="width:200px;">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col col-md-4">
+                <label class="control-label col-md-5">End date</label>
+                <div class="col-md-5">
+                     <input type="text" id="endDatetimepicker" class="form-control" name="End" style="width:200px;">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <ul style="list-style: none; ">
+        @foreach (var item in Model.QA)
+        {
+            <li class="datalist"> @item.Q_A</li>
+            <li class="text-hide questioncount">@item.Type</li>
+        }
+
+    </ul>
+    <ul id="qus-ans" style="list-style: none; transform: rotate(180deg);">
+        
+
+    </ul>
+
+    <div id="FullQus">
+
+        Question:  <input type="text" id="Question" name="Question" />
+
+    </div>
+    <div>
+        <input type="text" id="Ans" name="Ans" />
+
+        <button id="Answer">Add Answer</button>
+
+        <button id="Ques">Add Question</button>
+    </div>
+
+
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" value="Save Change" class="btn btn-success" id="SurveyEdit" />
+        </div>
+    </div>
+
+
+
+</form>
+
+<script type="text/javascript">
+   
+    
+    var qcount = $(".questioncount").toArray();
+    for (i = 0; i < qcount.length; i++) {
+        qcount[i] = qcount[i].innerHTML.toString();
+    }
+
+    var count = 1;
+    var i;
+    for (i = 0; i < qcount.length; ++i) {
+       
+        if (qcount[i]=== "Question") {
+            count = count + 1;
+        } 
+    }
+    
+    var text;
+
+    var question = true;
+
+    $("#Ques").hide();
+
+    $("#SurveyEdit").click(function () {
+       
+        var x = $(".datalist").toArray();
+        for (i = 0; i < x.length; i++) {
+            x[i] = x[i].innerHTML.toString();
+            alert(x[i]);
+        }
+        var title = $("#Title").val().toString();
+        var des = $("#Description").val().toString();
+        var start = $("#startDatetimepicker").val();
+        var end = $("#endDatetimepicker").val();
+        if (x.length > 0) {
+            alert("Here");
+
+            $.ajax({
+                url: "/Survey/Edit",
+                type: "post",
+
+                ContentType: "application/javascript",
+                data: { Title: title, Description: des, StartDate: start, EndDate: end, Questions: x },
+                traditional: true,
+                success: function (result) {
+
+                    if (result === "True") {
+                        alert("Your Survey is created");
+                    } else {
+                        alert("Your Survey is Not created");
+                    }
+                },
+                error: function (_err) {
+
+                    alert(_err.responseText);
+                    alert("There is some Problem with your Survey. Please contac with BPID Admin");
+                }
+            });
+        }
+
+
+    });
+
+    $("#Ques").click(function () {
+
+        if (question) {
+
+            $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + count + ". " + $("#Question").val() + ' ?</li>');
+            count = count + 1;
+
+        }
+        $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + $("#Ans").val() + '</li>');
+
+        $("#Question").val('');
+        $("#Ans").val('');
+        $("#FullQus").show();
+        $("#Ques").hide();
+        question = true;
+
+        return false;
+    });
+
+    $("#Answer").click(function () {
+
+        if ($("#Ans").val() !== '') {
+
+            if (question) {
+
+                $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + count + ". " + $("#Question").val() + ' ?</li>');
+                question = false;
+                count = count + 1;
+                $("#Question").val('');
+                $("#FullQus").hide();
+
+            }
+            $("#qus-ans").prepend('<li class="datalist" style="transform: rotate(-180deg);">' + $("#Ans").val() + '</li>');
+
+            $("#Ques").show();
+            $("#Ans").val('');
+
+        }
+        return false;
+
+    });
+
+
+
+
+
+    $(function () {
+
+
+
+        $("#startDatetimepicker").datepicker({
+            minDate: 0,
+            defaultDate: "+1w",
+            changeMonth: true,
+            onClose: function (selectedDate) {
+                $("#endDatetimepicker").datepicker("option", "minDate", selectedDate);
+            }, dateFormat: 'dd-mm-yy'
+        });
+
+
+
+
+
+        $("#endDatetimepicker").datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            onClose: function (selectedDate) {
+                $("#startDatetimepicker").datepicker("option", "maxDate", selectedDate);
+            }, dateFormat: 'dd-mm-yy'
+
+        });
+
+
+
+
+
+
+    });
+
+
+
+</script>

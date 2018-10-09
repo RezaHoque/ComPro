@@ -96,60 +96,34 @@ namespace ComPro.Controllers
         }
 
         //[Authorize]
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
 
-        //    return View(_noticeBoardManager.GetEdit(id.Value));
-        //}
+            return View(_surveyManager.GetEdit(id.Value));
+        }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Authorize]
-        //public ActionResult Edit(NoticeBoardViewModel Model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult Edit(SurveyViewModel Poll, string[] Questions)
+        {
+            bool Result = false;
 
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        ViewBag.NoticeEdit = _noticeBoardManager.PostEdit(Model);
+            //if (ModelState.IsValid)
+            //{
+            //    //Result = _surveyManager.PostEdit(Model);
+            //    bool result = _surveyManager.CreateSurvey(Poll, Questions);
 
+            //}
+            return Content(Result.ToString());
+        }
 
-        //        if (Request.Files.Count > 0)
-        //        {
-        //            var file = Request.Files[0];
-
-        //            if (file != null && file.ContentLength > 0)
-        //            {
-        //                var fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
-        //                var path = Path.Combine(Server.MapPath("~/Content/images/"), fileName);
-        //                file.SaveAs(path);
-        //                var image = _data.SiteImages.FirstOrDefault(x => x.TypeId == Model.Notice.Id && x.Type == "Notice");
-
-        //                path = Path.Combine(Server.MapPath(image.ImagePath));
-
-        //                System.IO.File.Delete(path);
-
-        //                image.ImagePath = "/Content/images/" + fileName;
-
-        //                _data.SaveChanges();
-
-
-        //            }
-
-
-
-
-        //        }
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(Model);
-        //}
-
-        // GET: Notice/Delete/5
+       
         [Authorize]
         public ActionResult Delete(int? id)
         {

@@ -563,6 +563,92 @@ namespace ComPro.Interfaces
             }
         }
 
+        public SurveyViewModel GetEdit(int Id)
+        {
+            SurveyViewModel Detail = new SurveyViewModel();
+            List<QA> QusAnsList = new List<QA>();
+            try
+            {
+                var y = _data.PollingAndSyrvays.FirstOrDefault(x => x.Id == Id);
+                var a1 = y.EndDate > DateTime.Now;
+                var b = y.StartDate > DateTime.Now;
+                var c = System.Web.HttpContext.Current.User != null;
+                var d = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+                var e = Current_User_id == y.CreatorId;
+                var f = System.Web.HttpContext.Current.User.IsInRole("Administrator");
+
+                if (y.EndDate > DateTime.Now && y.StartDate > DateTime.Now && (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+
+                    if (Current_User_id == y.CreatorId || System.Web.HttpContext.Current.User.IsInRole("Administrator"))
+                    {
+                        var questions = _data.Questions.Where(x => x.ActivityId == y.Id && x.ActivityName == y.Name).ToList();
+
+                        Detail.Id = Id;
+                        Detail.Title = y.Title;
+                        Detail.Description = y.Description;
+
+                        foreach (var q in questions)
+                        {
+                            QA QueAns = new QA
+                            {
+                                Id = q.Id,
+                                Type = "Question",
+                                Q_A = q.Question
+                            };
+
+                            QusAnsList.Add(QueAns);
+
+                            var ans = _data.Answers.Where(P => P.QuestionId == q.Id).Select(x => new { x.Id, x.Answer }).ToList();
+
+
+                            foreach (var a in ans)
+                            {
+                                QA QueAns2 = new QA
+                                {
+                                    Id = a.Id,
+                                    Type = "Answer",
+                                    Q_A = a.Answer,
+                                    Result = _data.Perticipents.Where(x => x.AnswerId == a.Id && x.ActivityId == Id).Count()
+                                };
+
+                                QusAnsList.Add(QueAns2);
+                            }
+
+
+                        }
+                        Detail.QA = QusAnsList;
+
+                        Detail.StartDate = y.StartDate;
+                        Detail.EndDate = y.EndDate;
+
+                    }
+
+                }
+
+
+                return Detail;
+
+            }
+            catch
+            {
+                return Detail;
+
+            }
+        }
+
+        public bool PostEdit(SurveyViewModel model)
+        {
+            try
+            {
+                return true;
+            }
+
+            catch
+            {
+                return false;
+            }
+        }
         public bool Delete(int id)
         {
             try

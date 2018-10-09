@@ -20,6 +20,8 @@ namespace ComPro.Interfaces
 
         SurveyViewModel ShowResult(int id);
 
+        SurveyViewModel GetEdit(int Id);
+        bool PostEdit(SurveyViewModel model);
         bool Delete(int id);
 
 
