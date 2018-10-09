@@ -117,7 +117,7 @@ namespace ComPro.Controllers
             //if (ModelState.IsValid)
             //{
             //    //Result = _surveyManager.PostEdit(Model);
-            //    bool result = _surveyManager.CreateSurvey(Poll, Questions);
+          
 
             //}
             return Content(Result.ToString());
