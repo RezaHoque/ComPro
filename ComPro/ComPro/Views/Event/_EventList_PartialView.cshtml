@@ -2,13 +2,13 @@
 @model IEnumerable<ComPro.Models.EventViewModel>
 @using Microsoft.AspNet.Identity;
 @using ComPro.Models;
-@using ComPro.Models;
+
 
 @if (Model.Count() <= 0)
 {
-<div class="alert alert-primary" role="alert">
-    Currently there are no events for you !!
-</div>
+    <div class="alert alert-primary" role="alert">
+        Currently there are no events for you !!
+    </div>
 }
 <div class="container-fluid">
     @if (Model.Count() > 0)
@@ -104,118 +104,118 @@
         }
     </div>
 </div>
- 
 
-        <script>
 
-            function EventDetails(id) {
-                var id = id;
-                var url = "/Event/Details";
+<script>
 
-                $.ajax({
+    function EventDetails(id) {
+        var id = id;
+        var url = "/Event/Details";
 
-                    url: url,
-                    data: { id: id },
+        $.ajax({
 
-                    success: function (data) {
-                        $('#datacontainer2').html(data);
-                        $('#MyModal').modal();
-                    }
+            url: url,
+            data: { id: id },
 
-                });
+            success: function (data) {
+                $('#datacontainer2').html(data);
+                $('#MyModal').modal();
+            }
+
+        });
+
+    }
+
+
+
+    function EventEdit(id) {
+
+        $.ajax({
+            url: "/Event/Edit?id=" + id,
+            success: function (data) {
+
+                $('#datacontainer').html(data);
+                $('#EventEdit').modal();
 
             }
 
+        });
 
+    }
 
-            function EventEdit(id) {
-
-                $.ajax({
-                    url: "/Event/Edit?id=" + id,
-                    success: function (data) {
-
-                        $('#datacontainer').html(data);
-                        $('#EventEdit').modal();
-
-                    }
-
-                });
-
-            }
-
-            function EventDelete(id) {
+    function EventDelete(id) {
 
 
 
-                if (confirm('You Are Going to Delete This Event')) {
+        if (confirm('You Are Going to Delete This Event')) {
 
-                    var url = "/Event/Delete";
+            var url = "/Event/Delete";
 
-                    var request = $.ajax({
-                        type: "POST",
-                        url: url,
-                        data: { id: id }
-                    })
-                    request.done(function (msg) {
-                        if (msg == "True") {
-                            alert("Your Event Is Successfully Deleted");
+            var request = $.ajax({
+                type: "POST",
+                url: url,
+                data: { id: id }
+            })
+            request.done(function (msg) {
+                if (msg == "True") {
+                    alert("Your Event Is Successfully Deleted");
 
 
-
-                        }
-
-                    });
 
                 }
 
+            });
+
+        }
+
+    }
+
+    function MemberResponse(id, res) {
+
+        var request = $.ajax({
+
+            type: "GET",
+            url: "/Event/MemberResponse",
+            dataType: 'json',
+            //data: { ID: id},
+            data: { ID: id, Response: res },
+
+        })
+        request.done(function (msg) {
+            if (msg === "True") {
+                $("#EventList").load("/Event/GetEvents");
             }
 
-            function MemberResponse(id,res) {
-
-                var request = $.ajax({
-
-                    type: "GET",
-                    url: "/Event/MemberResponse",
-                    dataType: 'json',
-                    //data: { ID: id},
-                    data: { ID: id, Response: res },
-
-                })
-                request.done(function (msg) {
-                    if (msg === "True") {
-                        $("#EventList").load("/Event/GetEvents");
-                    }
-
-                });
+        });
 
 
+    }
+
+    function Approval(id) {
+
+        var request = $.ajax({
+            type: "POST",
+            url: "/Event/ApproveEvent",
+            data: { Id: id }
+        })
+        request.done(function (msg) {
+            if (msg == "True") {
+
+                $("#EventList").load("/Event/NewEvent");
             }
 
-            function Approval(id) {
+        });
 
-                var request = $.ajax({
-                    type: "POST",
-                    url: "/Event/ApproveEvent",
-                    data: { Id: id }
-                })
-                request.done(function (msg) {
-                    if (msg == "True") {
-
-                        $("#EventList").load("/Event/NewEvent");
-                    }
-
-                });
-
-            }
+    }
 
 
-        </script>
+</script>
 
-        <div id="datacontainer">
+<div id="datacontainer">
 
-        </div>
-        <div id="datacontainer2">
+</div>
+<div id="datacontainer2">
 
-        </div>
+</div>
 
 

@@ -137,26 +137,7 @@ namespace ComPro.Controllers
             return RedirectToAction("Index");
         }
 
-        //[Authorize]
-        //public ActionResult ApproveNotice(int id)
-        //{
-        //    if (User.IsInRole(UserRole.Administrator.ToString()))
-        //    {
-        //        _noticeBoardManager.ApproveNotice(id);
-        //        return RedirectToAction("NewNotice");
-        //    }
-        //    else
-        //        return RedirectToAction("Index");
-
-        //}
-
-        //public ActionResult NewNotice()
-        //{
-        //    if(User.IsInRole(UserRole.Administrator.ToString()))
-        //        return View(_noticeBoardManager.GetNewNotices());
-        //    else
-        //        return RedirectToAction("Index");
-        //}
+        
         [HttpPost]
         [Authorize]
         public ActionResult PostComment(PublicComment model)

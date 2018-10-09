@@ -168,14 +168,23 @@ namespace ComPro.Interfaces
             try
             {
                 var y = _data.PollingAndSyrvays.FirstOrDefault(x => x.Id == id && x.Name == "Poll");
-                var z = _data.Questions.FirstOrDefault(x => x.ActivityId == y.Id && x.ActivityName == "Poll");
+                if (y.EndDate >= DateTime.Now && y.StartDate <= DateTime.Now && (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                {
 
-                poll.Id = id;
-                poll.Title = y.Title;
-                poll.Description = y.Description;
-                poll.Question = z.Question;
-                poll.StartDate = y.StartDate;
-                poll.EndDate = y.EndDate;
+                    if (Current_User_id == y.CreatorId || System.Web.HttpContext.Current.User.IsInRole("Administrator"))
+                    {
+                        var z = _data.Questions.FirstOrDefault(x => x.ActivityId == y.Id && x.ActivityName == "Poll");
+
+                        poll.Id = id;
+                        poll.Title = y.Title;
+                        poll.Description = y.Description;
+                        poll.Question = z.Question;
+                        poll.StartDate = y.StartDate;
+                        poll.EndDate = y.EndDate;
+                        return poll;
+                    }
+                }
+                        
 
                 return poll;
             }
@@ -190,30 +199,40 @@ namespace ComPro.Interfaces
         {
             try
             {
-                var poll = _data.PollingAndSyrvays.FirstOrDefault(x => x.Id == Id);
-                var qus = _data.Questions.FirstOrDefault(y => y.ActivityId == poll.Id);
-                var ans = _data.Answers.First(z => z.QuestionId == qus.Id && z.Answer == vote);
+                 var poll = _data.PollingAndSyrvays.FirstOrDefault(x => x.Id == Id);
 
-                if (poll.IsPublic)
+                if (poll.EndDate >= DateTime.Now && poll.StartDate <= DateTime.Now && (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
-                    PerticipentModel member = new PerticipentModel
+                   
+                    if (Current_User_id == poll.CreatorId || System.Web.HttpContext.Current.User.IsInRole("Administrator"))
                     {
-                        ActivityId = Id,
-                        PerticipentId=Current_User_id,
-                        AnswerId=ans.Id
-                    };
-                    _data.Perticipents.Add(member);
-                }
-                else
-                {
-                var P = _data.Perticipents.FirstOrDefault(y => y.ActivityId == Id && y.PerticipentId == Current_User_id);
-               
-                P.AnswerId = ans.Id;
+                         var qus = _data.Questions.FirstOrDefault(y => y.ActivityId == poll.Id);
+                        var ans = _data.Answers.First(z => z.QuestionId == qus.Id && z.Answer == vote);
 
-                }
+                        if (poll.IsPublic)
+                        {
+                            PerticipentModel member = new PerticipentModel
+                            {
+                                ActivityId = Id,
+                                PerticipentId = Current_User_id,
+                                AnswerId = ans.Id
+                            };
+                            _data.Perticipents.Add(member);
+                        }
+                        else
+                        {
+                            var P = _data.Perticipents.FirstOrDefault(y => y.ActivityId == Id && y.PerticipentId == Current_User_id);
 
-                _data.SaveChanges();
-                return true;
+                            P.AnswerId = ans.Id;
+
+                        }
+
+                        _data.SaveChanges();
+                        return true;
+                    }
+                    else return false;
+                }
+                else return false;    
             }
 
             catch
@@ -379,43 +398,52 @@ namespace ComPro.Interfaces
             {
                 var y = _data.PollingAndSyrvays.FirstOrDefault(x => x.Id == id && x.Name=="Survey");
 
-                var questions = _data.Questions.Where(x => x.ActivityId == y.Id && x.ActivityName == "Survey").ToList();
-
-                Survey.Id = id;
-                Survey.Title = y.Title;
-                Survey.Description = y.Description;
-
-                foreach (var q in questions)
+                if (y.EndDate >= DateTime.Now && y.StartDate <= DateTime.Now && (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
-                    QA QueAns = new QA
+
+                    if (Current_User_id == y.CreatorId || System.Web.HttpContext.Current.User.IsInRole("Administrator"))
                     {
-                        Id= q.Id,
-                        Type = "Question",
-                        Q_A = q.Question
-                    };
+                        var questions = _data.Questions.Where(x => x.ActivityId == y.Id && x.ActivityName == "Survey").ToList();
 
-                    QusAnsList.Add(QueAns);
+                        Survey.Id = id;
+                        Survey.Title = y.Title;
+                        Survey.Description = y.Description;
 
-                    var ans = _data.Answers.Where(P => P.QuestionId == q.Id).Select(x=> new { x.Id, x.Answer}).ToList();  
+                        foreach (var q in questions)
+                        {
+                            QA QueAns = new QA
+                            {
+                                Id = q.Id,
+                                Type = "Question",
+                                Q_A = q.Question
+                            };
+
+                            QusAnsList.Add(QueAns);
+
+                            var ans = _data.Answers.Where(P => P.QuestionId == q.Id).Select(x => new { x.Id, x.Answer }).ToList();
 
 
-                    foreach (var a in ans)
-                    {
-                        QA QueAns2 = new QA
-                        {   Id= a.Id,
-                            Type = "Answer",
-                            Q_A = a.Answer
-                        };
+                            foreach (var a in ans)
+                            {
+                                QA QueAns2 = new QA
+                                {
+                                    Id = a.Id,
+                                    Type = "Answer",
+                                    Q_A = a.Answer
+                                };
 
-                        QusAnsList.Add(QueAns2);
+                                QusAnsList.Add(QueAns2);
+                            }
+
+
+                        }
+                        Survey.QA = QusAnsList;
+
+                        Survey.StartDate = y.StartDate;
+                        Survey.EndDate = y.EndDate;
                     }
-                    
-
                 }
-                Survey.QA = QusAnsList;
-               
-                Survey.StartDate = y.StartDate;
-                Survey.EndDate = y.EndDate;
+                      
 
                 return Survey;
             }
@@ -430,21 +458,33 @@ namespace ComPro.Interfaces
         {
             try
             {
-                List<PerticipentModel> members = new List<PerticipentModel>();
-                foreach (var i in Vote)
-                {
-                    PerticipentModel member = new PerticipentModel
-                    {
-                        ActivityId = Id,
-                        PerticipentId = Current_User_id,
-                        AnswerId = i
-                    };
-                    members.Add(member);
-                }
+                var y = _data.PollingAndSyrvays.FirstOrDefault(x => x.Id == Id);
 
-                _data.Perticipents.AddRange(members);
-                _data.SaveChanges();
-                return true;
+                if (y.EndDate >= DateTime.Now && y.StartDate <= DateTime.Now && (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+
+                    if (Current_User_id == y.CreatorId || System.Web.HttpContext.Current.User.IsInRole("Administrator"))
+                    {
+                        List<PerticipentModel> members = new List<PerticipentModel>();
+                        foreach (var i in Vote)
+                        {
+                            PerticipentModel member = new PerticipentModel
+                            {
+                                ActivityId = Id,
+                                PerticipentId = Current_User_id,
+                                AnswerId = i
+                            };
+                            members.Add(member);
+                        }
+
+                        _data.Perticipents.AddRange(members);
+                        _data.SaveChanges();
+                        return true;
+                    }
+                    else return false;
+                }
+                else return false;
+
             }
 
             catch
@@ -464,45 +504,55 @@ namespace ComPro.Interfaces
             {
                 var y = _data.PollingAndSyrvays.FirstOrDefault(x => x.Id == id );
 
-                var questions = _data.Questions.Where(x => x.ActivityId == y.Id && x.ActivityName == y.Name).ToList();
-
-                Survey.Id = id;
-                Survey.Title = y.Title;
-                Survey.Description = y.Description;
-
-                foreach (var q in questions)
+                if (y.EndDate < DateTime.Now && y.StartDate < DateTime.Now && (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
-                    QA QueAns = new QA
+
+                    if (Current_User_id == y.CreatorId || System.Web.HttpContext.Current.User.IsInRole("Administrator"))
                     {
-                        Id = q.Id,
-                        Type = "Question",
-                        Q_A = q.Question
-                    };
+                        var questions = _data.Questions.Where(x => x.ActivityId == y.Id && x.ActivityName == y.Name).ToList();
 
-                    QusAnsList.Add(QueAns);
+                        Survey.Id = id;
+                        Survey.Title = y.Title;
+                        Survey.Description = y.Description;
 
-                    var ans = _data.Answers.Where(P => P.QuestionId == q.Id).Select(x => new { x.Id, x.Answer }).ToList();
-
-
-                    foreach (var a in ans)
-                    {
-                        QA QueAns2 = new QA
+                        foreach (var q in questions)
                         {
-                            Id = a.Id,
-                            Type = "Answer",
-                            Q_A = a.Answer,
-                            Result = _data.Perticipents.Where(x => x.AnswerId == a.Id && x.ActivityId==id).Count()
-                        };
+                            QA QueAns = new QA
+                            {
+                                Id = q.Id,
+                                Type = "Question",
+                                Q_A = q.Question
+                            };
 
-                        QusAnsList.Add(QueAns2);
+                            QusAnsList.Add(QueAns);
+
+                            var ans = _data.Answers.Where(P => P.QuestionId == q.Id).Select(x => new { x.Id, x.Answer }).ToList();
+
+
+                            foreach (var a in ans)
+                            {
+                                QA QueAns2 = new QA
+                                {
+                                    Id = a.Id,
+                                    Type = "Answer",
+                                    Q_A = a.Answer,
+                                    Result = _data.Perticipents.Where(x => x.AnswerId == a.Id && x.ActivityId == id).Count()
+                                };
+
+                                QusAnsList.Add(QueAns2);
+                            }
+
+
+                        }
+                        Survey.QA = QusAnsList;
+
+                        Survey.StartDate = y.StartDate;
+                        Survey.EndDate = y.EndDate;
+
                     }
-
-
+                    
                 }
-                Survey.QA = QusAnsList;
-
-                Survey.StartDate = y.StartDate;
-                Survey.EndDate = y.EndDate;
+                        
 
                 return Survey;
             }
@@ -513,5 +563,64 @@ namespace ComPro.Interfaces
             }
         }
 
+        public bool Delete(int id)
+        {
+            try
+            {
+                List<AnswerModel> answers = new List<AnswerModel>();
+                var y = _data.PollingAndSyrvays.FirstOrDefault(x => x.Id == id);
+
+                //var a = y.EndDate > DateTime.Now;
+                //    var b = y.StartDate > DateTime.Now;
+                //var c = System.Web.HttpContext.Current.User != null;
+                //var d = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+                //var e = Current_User_id == y.CreatorId;
+                //var f = System.Web.HttpContext.Current.User.IsInRole("Administrator");
+                   
+
+               if (y.EndDate > DateTime.Now && y.StartDate > DateTime.Now && (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    
+                    if (Current_User_id == y.CreatorId || System.Web.HttpContext.Current.User.IsInRole("Administrator"))
+                    {
+                        var questions = _data.Questions.Where(x => x.ActivityId == y.Id && x.ActivityName == y.Name).ToList();
+                        foreach (var q in questions)
+                        {
+
+                            var ans = _data.Answers.Where(P => P.QuestionId == q.Id).ToList();
+                            answers.AddRange(ans);
+                        }
+
+                        if(_data.Perticipents.Any(p=>p.ActivityId==id))
+                        {
+                        var perticipent = _data.Perticipents.Where(x => x.ActivityId == id).ToList();
+                        _data.Perticipents.RemoveRange(perticipent);
+
+                        }
+                        
+
+                       
+                        _data.Answers.RemoveRange(answers);
+                        _data.Questions.RemoveRange(questions);
+
+                        _data.PollingAndSyrvays.Remove(y);
+
+                        _data.SaveChanges();
+                        return true;
+
+                    }
+                    else return false;
+                }
+                else
+                    return false;
+
+                
+            }
+
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
