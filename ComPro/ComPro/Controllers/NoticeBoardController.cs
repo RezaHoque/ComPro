@@ -234,12 +234,16 @@ namespace ComPro.Controllers
             {
                 var image = _data.SiteImages.FirstOrDefault(x => x.TypeId == id && x.Type == "Notice");
 
-                var path = Path.Combine(Server.MapPath(image.ImagePath));
+                if (image != null && !image.ImagePath.Contains("defaultNotice"))
+                {
+                    var path = Path.Combine(Server.MapPath(image.ImagePath));
 
-                System.IO.File.Delete(path);
+                    System.IO.File.Delete(path);
 
-                _data.SiteImages.Remove(image);
-                _data.SaveChanges();
+                    _data.SiteImages.Remove(image);
+                    _data.SaveChanges();
+
+                }
             }
 
             return Content(Result.ToString());

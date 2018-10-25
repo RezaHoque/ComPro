@@ -259,9 +259,8 @@ namespace ComPro.Interfaces
                     _data.Notice.Remove(notice);
 
                    
-
                     _data.SaveChanges();
-                    _data.SaveChanges();
+                   
 
                     return true;
                 }
