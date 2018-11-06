@@ -19,5 +19,11 @@ namespace ComPro.Interfaces
         bool CustSurvey(int[] Vote, int Id);
 
         SurveyViewModel ShowResult(int id);
+
+        SurveyViewModel GetEdit(int Id);
+        bool PostEdit(SurveyViewModel model);
+        bool Delete(int id);
+
+
     }
 }

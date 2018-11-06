@@ -137,26 +137,7 @@ namespace ComPro.Controllers
             return RedirectToAction("Index");
         }
 
-        //[Authorize]
-        //public ActionResult ApproveNotice(int id)
-        //{
-        //    if (User.IsInRole(UserRole.Administrator.ToString()))
-        //    {
-        //        _noticeBoardManager.ApproveNotice(id);
-        //        return RedirectToAction("NewNotice");
-        //    }
-        //    else
-        //        return RedirectToAction("Index");
-
-        //}
-
-        //public ActionResult NewNotice()
-        //{
-        //    if(User.IsInRole(UserRole.Administrator.ToString()))
-        //        return View(_noticeBoardManager.GetNewNotices());
-        //    else
-        //        return RedirectToAction("Index");
-        //}
+        
         [HttpPost]
         [Authorize]
         public ActionResult PostComment(PublicComment model)
@@ -253,12 +234,16 @@ namespace ComPro.Controllers
             {
                 var image = _data.SiteImages.FirstOrDefault(x => x.TypeId == id && x.Type == "Notice");
 
-                var path = Path.Combine(Server.MapPath(image.ImagePath));
+                if (image != null && !image.ImagePath.Contains("defaultNotice"))
+                {
+                    var path = Path.Combine(Server.MapPath(image.ImagePath));
 
-                System.IO.File.Delete(path);
+                    System.IO.File.Delete(path);
 
-                _data.SiteImages.Remove(image);
-                _data.SaveChanges();
+                    _data.SiteImages.Remove(image);
+                    _data.SaveChanges();
+
+                }
             }
 
             return Content(Result.ToString());

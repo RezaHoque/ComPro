@@ -14,7 +14,7 @@ namespace ComPro.Helpers
         {
             IUtility _utility = new UtilityManager();
             ApplicationDbContext Data = new ApplicationDbContext();
-            //var Email= HttpContext.Current.User.Identity.Name;
+            
             
 
             try
@@ -42,11 +42,11 @@ namespace ComPro.Helpers
 
             }
         }
+
         public static string UserNameById(string Id)
         {
             if (!string.IsNullOrEmpty(Id))
             {
-                IUtility _utility = new UtilityManager();
                 ApplicationDbContext Data = new ApplicationDbContext();
 
 
@@ -55,13 +55,29 @@ namespace ComPro.Helpers
                 return user2.Name;
             }
             return string.Empty;
-          
-                
-
-
             
+        }
 
-            
+        public static string UserEmailById(string Id)
+        {
+            if (!string.IsNullOrEmpty(Id))
+            {
+                try
+                {
+                ApplicationDbContext Data = new ApplicationDbContext();
+                             var user2 = Data.UserInfo.FirstOrDefault(x => x.UserId == Id);
+
+
+                                return user2.Email;
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+             
+            }
+            return string.Empty;
+
         }
 
     }

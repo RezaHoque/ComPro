@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ComPro.Models;
 using ComPro.Interfaces;
+using System.Net;
 
 namespace ComPro.Controllers
 {
@@ -93,6 +94,48 @@ namespace ComPro.Controllers
 
             return View(_surveyManager.ShowResult(Id));
         }
+
+        //[Authorize]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+
+            return View(_surveyManager.GetEdit(id.Value));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult Edit(SurveyViewModel Poll, string[] Questions)
+        {
+            bool Result = false;
+
+            //if (ModelState.IsValid)
+            //{
+            //    //Result = _surveyManager.PostEdit(Model);
+          
+
+            //}
+            return Content(Result.ToString());
+        }
+
+       
+        [Authorize]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            bool Result = _surveyManager.Delete(id.Value);
+            return Content(Result.ToString());
+
+        }
+
 
 
     }
