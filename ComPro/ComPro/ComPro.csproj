@@ -250,6 +250,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Constants.cs" />
+    <Compile Include="Helpers\MyEnums.cs" />
     <Compile Include="Helpers\UserInformation.cs" />
     <Compile Include="Interfaces\ArchiveManager.cs" />
     <Compile Include="Interfaces\ChatManager.cs" />
@@ -438,6 +439,14 @@
     <Compile Include="Migrations\201810030743392_uniqueUrlToNotice.cs" />
     <Compile Include="Migrations\201810030743392_uniqueUrlToNotice.Designer.cs">
       <DependentUpon>201810030743392_uniqueUrlToNotice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811060829499_NewFieldUserInfo.cs" />
+    <Compile Include="Migrations\201811060829499_NewFieldUserInfo.Designer.cs">
+      <DependentUpon>201811060829499_NewFieldUserInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811060945533_NewFieldUserInfo2.cs" />
+    <Compile Include="Migrations\201811060945533_NewFieldUserInfo2.Designer.cs">
+      <DependentUpon>201811060945533_NewFieldUserInfo2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1731,6 +1740,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810030743392_uniqueUrlToNotice.resx">
       <DependentUpon>201810030743392_uniqueUrlToNotice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811060829499_NewFieldUserInfo.resx">
+      <DependentUpon>201811060829499_NewFieldUserInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811060945533_NewFieldUserInfo2.resx">
+      <DependentUpon>201811060945533_NewFieldUserInfo2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

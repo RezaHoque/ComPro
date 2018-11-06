@@ -44,7 +44,10 @@ namespace ComPro.Models
         [Display(Name = "Date of Birth")]
         public System.DateTime? BirthDate { get; set; }
 
-        [Display(Name = "Current profession")]
+        [Display(Name = "Current Status")]
+        public string CurrentStatus { get; set; }
+
+        [Display(Name = "Current Position")]
         public string CurrentJobTitle { get; set; }
 
    
@@ -53,6 +56,12 @@ namespace ComPro.Models
 
         [Display(Name = "Skills")]
         public string Skills { get; set; }
+
+        [Display(Name = "Expectation to BPID")]
+        public string Expectation { get; set; }
+
+        [Display(Name = "Contribution to BPID")]
+        public string Contribution { get; set; }
 
         [Required]
         [EmailAddress]
@@ -63,4 +72,6 @@ namespace ComPro.Models
         public System.DateTime? ApprovalDate { get; set; }
 
     }
+
+    
 }

@@ -53,6 +53,10 @@ namespace ComPro.Interfaces
                 UserInformation.CompanyName = "Not Specified";
                 UserInformation.Skills = "Not Specified";
 
+                UserInformation.CurrentStatus = "Not Specified";
+                UserInformation.Expectation = "Not Specified";
+                UserInformation.Contribution = "Not Specified";
+
                 UserInformation.Email = model.Email;
 
 
@@ -221,13 +225,30 @@ namespace ComPro.Interfaces
                 if(info.BirthDate != null)
                 {User.BirthDate = info.BirthDate;
                   }
-                
+
+                User.CurrentStatus = info.CurrentStatus;
+                if(info.CurrentStatus!= "On_Job")
+                {
+                    User.CurrentJobTitle = "Not Specified";
+                    User.CompanyName = "Not Specified";
+                }
+                else
+                {
                 User.CurrentJobTitle = info.CurrentJobTitle;
                 User.CompanyName = info.CompanyName;
+                }
+               
+               
+               
                 User.Skills = info.Skills;
 
-               // User.Email = info.Email;
-              //info.Gender = User.Gender;
+                
+                User.Expectation = info.Expectation;
+                User.Contribution = info.Contribution;
+
+
+                // User.Email = info.Email;
+                //info.Gender = User.Gender;
 
                 Data.Entry(User).State = EntityState.Modified;
                 Data.SaveChanges();

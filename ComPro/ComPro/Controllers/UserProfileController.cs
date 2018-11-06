@@ -8,6 +8,7 @@ using ComPro.Models;
 using System.IO;
 using Microsoft.AspNet.Identity;
 using static ComPro.Helpers.UserInformation;
+using System.Data.Entity;
 
 namespace ComPro.Controllers
 {
@@ -192,6 +193,7 @@ namespace ComPro.Controllers
         }
 
        
+
 
     }
 }
