@@ -50,6 +50,14 @@ namespace ComPro.Models
             Male,
             Female,
         }
+       
+    }
 
+    public enum Status
+    {
+        Student,
+        On_Job,
+        Job_Seeker,
+        Planning
     }
 }

@@ -1,0 +1,87 @@
+﻿
+@model IEnumerable<ComPro.Models.EventCalanderViewModel>
+
+<table class="table">
+    @{
+                   
+
+                    var array = Model.ToArray();
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        if (i == 0)
+                        {
+                            <tr>
+                                <td> @array[i].Month</td>
+                            </tr>
+
+                        }
+
+                        else if (array[i].Month != array[i - 1].Month)
+                        {
+                            <tr>
+                                <td> @array[i].Month</td>
+                            </tr>
+                        }
+
+                        <tr>
+                            <td>
+                                <p>
+                                    @array[i].Date  <a href="#" onclick="Latest_Event_Details(@array[i].EventId)">@array[i].EventTitel</a>
+                                </p>
+                            </td>
+
+                        </tr>
+
+                    }
+    }
+
+    @*
+        @foreach (var item in Model)
+        {
+            int i = 1;
+
+            if (i == 1)
+            {
+                <tr>
+                    <td> @item.Month</td>
+                </tr>
+                i++;
+            }
+
+            <tr>
+                <td>
+                    <a href="#" onclick="Latest_Event_Details(@item.EventId)">@item.EventTitel</a>
+                </td>
+
+            </tr>
+
+
+        }*@
+
+</table>
+
+
+<script>
+
+    function Latest_Event_Details(id) {
+
+
+        var url = "/Event/EventDetails";
+
+        $.ajax({
+
+            url: url,
+            data: { id: id },
+
+            success: function (data) {
+
+                $('#Latest_Event_Container').html(data);
+                $('#MyModal').modal();
+            }
+
+        });
+
+    }
+</script>
+<div id="Latest_Event_Container">
+</div>

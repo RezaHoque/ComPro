@@ -250,7 +250,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Constants.cs" />
-    <Compile Include="Helpers\MyEnums.cs" />
     <Compile Include="Helpers\UserInformation.cs" />
     <Compile Include="Interfaces\ArchiveManager.cs" />
     <Compile Include="Interfaces\ChatManager.cs" />
@@ -1605,6 +1604,8 @@
     <Content Include="Views\Survey\CustSurvey.cshtml" />
     <Content Include="Views\Survey\ShowResult.cshtml" />
     <Content Include="Views\Survey\Edit.cshtml" />
+    <Content Include="Views\Event\EventCalander.cshtml" />
+    <Content Include="Views\Event\_UpcommingEventPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

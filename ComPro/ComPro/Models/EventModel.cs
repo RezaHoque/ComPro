@@ -50,7 +50,7 @@ namespace ComPro.Models
         // Foreign key
         public int EventId { get; set; }
 
-        }
+    }
 
     
 
@@ -124,5 +124,14 @@ namespace ComPro.Models
         public string Name { get; set; }
 
         public string ID { get; set; }
+    }
+
+    public class EventCalanderViewModel
+    {
+        public int EventId { get; set; }
+        public string EventTitel { get; set; }
+        public DateTime Date { get; set; }
+        public string Month { get; set; }
+
     }
 }

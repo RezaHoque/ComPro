@@ -14,6 +14,7 @@ namespace ComPro.Interfaces
         IEnumerable<EventViewModel> NewEvent();
 
         DetailViewModel Detail(string uniqueUrl);
+        DetailViewModel CalanderDetail(int id);
         EventModel Create(EventModel model,List<string> inviteesIds);
         bool ApproveEvent(int Id);
         EventModel GetEdit(int Id);
@@ -24,5 +25,9 @@ namespace ComPro.Interfaces
         void Disposing(bool Disposing);
 
         bool MemberResponse(int Id, string Response);
+
+
+        List<EventCalanderViewModel> UpcommingEventCalander();
+        string CurrentEventCalander();
     }
 }

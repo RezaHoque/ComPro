@@ -56,17 +56,17 @@ namespace ComPro.Controllers
             return PartialView("_EventList_Partialview", result);
 
         }
- 
 
-        //public ActionResult EventDetails(int id)
-        //{
 
-        //    return PartialView("_EventDetails", _eventManager.Detail(id));
+        public ActionResult EventDetails(int id)
+        {
 
-        //}
+            return PartialView("_EventDetails", _eventManager.CalanderDetail(id));
+
+        }
 
         // GET: Event/Details/5
-  
+
         public ActionResult Details(string id)
         {
             if (!string.IsNullOrEmpty(id))
@@ -256,6 +256,30 @@ namespace ComPro.Controllers
             return Content(res.ToString());
 
         }
+
+        public ActionResult EventCalander ()
+        {
+            return View();
+            //return Content(true.ToString());
+
+        }
+        public ActionResult CurrentEventCalander()
+        {
+
+            var Result = _eventManager.CurrentEventCalander();
+
+            return Content(Result.ToString());
+
+        }
+        public ActionResult UpcommingEventCalander()
+        {
+            List<EventCalanderViewModel> Events = _eventManager.UpcommingEventCalander();
+
+            return PartialView("_UpcommingEventPartialView", Events);
+           
+
+        }
+
 
     }
 }

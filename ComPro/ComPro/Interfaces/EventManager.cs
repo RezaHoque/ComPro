@@ -343,6 +343,118 @@ namespace ComPro.Interfaces
             }
         }
 
+        public DetailViewModel CalanderDetail(int id)
+        {
+            DetailViewModel Result = new DetailViewModel();
+
+            try
+            {
+
+                EventModel eventModel = _data.Event.FirstOrDefault(x => x.EventId == id);
+
+                if (eventModel == null)
+                {
+                    return null;
+                }
+
+                else
+                {
+                                       
+                    Result.MembersList = _data.EventMember.Where(x => x.EventId == eventModel.EventId).ToList();
+
+                    int Going = (int)PerticipentType.Going;
+                    int NotGoing = (int)PerticipentType.NotGoing;
+                    int Maybe = (int)PerticipentType.Maybe;
+                    int Seen = (int)PerticipentType.Seen;
+
+
+                    foreach (var item in Result.MembersList)
+                    {
+                        switch (item.PerticipetingType)
+                        {
+                            case "Going":
+                                Going++;
+                                break;
+
+                            case "NotGoing":
+                                NotGoing++;
+                                break;
+
+                            case "Maybe":
+                                Maybe++;
+                                break;
+
+                            case "Seen":
+                                Seen++;
+                                break;
+
+
+                        }
+
+                    }
+
+                    Result.Id = eventModel.EventId;
+                    Result.Title = eventModel.Title;
+                    Result.Description = eventModel.Description;
+                    Result.Date = eventModel.Date;
+                    Result.Place = eventModel.Place;
+
+                    Result.Members = Result.MembersList.Count();
+                    Result.Going = Going;
+                    Result.NotGoing = NotGoing;
+                    Result.Maybe = Maybe;
+                    Result.Seen = Seen;
+
+
+                    Result.Creation = eventModel.Creation;
+                    Result.CreatorName = Helpers.UserInformation.UserName(eventModel.CreatorId);
+                    Result.CreatorId = eventModel.CreatorId;
+                    Result.ApprovalDate = eventModel.ApprovalDate;
+                    Result.IsApproved = eventModel.IsApproved;
+                    Result.EndDate = eventModel.End;
+                    Result.UniqueUrl = eventModel.UniqueUrl;
+                    Result.Images = _data.SiteImages.Where(x => x.Type == "Event" && x.TypeId == eventModel.EventId)
+                        .ToList();
+
+
+                    if (Result.MembersList.Any(x => x.MemberID == Current_User_id) && !(Result.CreatorId == Current_User_id))
+                    {
+                        var user = Result.MembersList.FirstOrDefault(x => x.MemberID == Current_User_id);
+                        if (user.PerticipetingType == null)
+                        {
+                            Result.UserActivity = PerticipentType.NotResponsed.ToString();
+                        }
+                        else
+                        {
+                            Result.UserActivity = user.PerticipetingType;
+                        }
+
+                    }
+
+                    else if (HttpContext.Current.User.IsInRole(UserRole.Administrator.ToString()))
+                    {
+                        Result.UserActivity = UserRole.Administrator.ToString();
+                    }
+                    else if (Result.CreatorId == Current_User_id)
+                    {
+                        Result.UserActivity = EventType.Creator.ToString();
+                    }
+
+
+
+
+                    return Result;
+
+                }
+
+            }
+
+            catch
+            {
+                return Result;
+            }
+        }
+
 
         public EventModel Create(EventModel model, List<string> inviteesIds)
         {
@@ -701,6 +813,74 @@ namespace ComPro.Interfaces
 
             return AllEvent.ToList();
         }
+
+        public List<EventCalanderViewModel> UpcommingEventCalander()
+        {
+            List<EventCalanderViewModel> Events = new List<EventCalanderViewModel>();
+            
+
+            try
+            {
+                var AllEvent = _data.Event.Where(x => x.IsApproved && x.EventStatus==true);
+
+               
+                 foreach (var i in AllEvent)
+                    {
+                        if (i.Date > DateTime.Now.Date && i.End > DateTime.Now.Date)
+                        {
+                            EventCalanderViewModel SingleEvent = new EventCalanderViewModel
+                            {
+                                EventId = i.EventId,
+                                EventTitel = i.Title,
+                                Date= i.Date,
+                                Month= i.Date.ToString("MMMM")
+
+                        };
+                            Events.Add(SingleEvent);
+
+                        }
+
+
+                 }
+               return Events.OrderBy(u => u.Date).ToList();
+               
+            }
+
+            catch
+            {
+                return Events.ToList();
+            }
+
+            
+        }
+
+
+        public string CurrentEventCalander()
+        {
+           string Result= null;
+           try
+            {
+                var AllEvent = _data.Event.Where(x => x.IsApproved && x.EventStatus == true);
+
+                
+                foreach (var i in AllEvent)
+                    {
+                    if (i.Date <= DateTime.Now.Date && i.End >= DateTime.Now.Date)
+                        Result =  i.Title.ToString() + "; " + Result;
+
+                }
+
+               return Result;
+            }
+
+            catch
+            {
+                return Result;
+            }
+
+
+        }
+
 
     }
 

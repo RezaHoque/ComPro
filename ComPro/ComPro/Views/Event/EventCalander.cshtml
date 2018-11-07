@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "EventCalander";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h5>Current Events</h5>
+<div id="curent"></div>
+<br /><br />
+<h5>Upcomming Events</h5>
+<div id="Upcomming"></div>
+<script>
+    $(document).ready(function () {
+
+                
+        $("#curent").load('/Event/CurrentEventCalander');
+        $("#Upcomming").load('/Event/UpcommingEventCalander');
+
+    });
+
+</script>

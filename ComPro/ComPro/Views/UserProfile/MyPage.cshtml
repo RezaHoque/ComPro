@@ -1,5 +1,5 @@
-﻿
-@using ComPro.Helpers
+﻿@using ComPro.Models
+
 @model ComPro.Models.UserInfo
 
 
@@ -48,12 +48,12 @@
             </div>
             @* Date of birth will be unlock later ----
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-4" })
-            <div class="col-md-10">
-               <input type="text" id="datetimepicker" value="@Model.BirthDate" class="form-control" name="Date">
-            </div>
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-10">
+                       <input type="text" id="datetimepicker" value="@Model.BirthDate" class="form-control" name="Date">
+                    </div>
+                </div>
             *@
 
 
@@ -66,7 +66,7 @@
                 </div>
             </div>
 
-           
+
             <div class="form-group">
                 @Html.LabelFor(model => model.CurrentJobTitle, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-10">
@@ -106,12 +106,12 @@
 
             @*  User is not allowed to change his email address as email address is also used as his user id.
 
-                    <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
-        </div>*@
+                            <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>*@
 
 
 
