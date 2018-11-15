@@ -1,0 +1,31 @@
+﻿@model IEnumerable<ComPro.Models.Meetings_Models>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+
+
+<table class="table">
+   
+    <tr>
+        <th>Date</th>
+        <th>Title</th>
+        
+    </tr>
+
+    <tr>
+        @foreach (var item in Model)
+        {   <td>@item.Meeting_Date.Date</td>
+            <td><a href="/Meetings/Details?@item.Id">@item.Title</a></td>
+            
+        }
+    </tr>
+
+
+</table>
+
+

@@ -242,6 +242,7 @@
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MeetingsController.cs" />
     <Compile Include="Controllers\NoticeBoardController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SurvayController.cs" />
@@ -261,11 +262,13 @@
     <Compile Include="Interfaces\IEvent.cs" />
     <Compile Include="Interfaces\IFeed.cs" />
     <Compile Include="Interfaces\IHome.cs" />
+    <Compile Include="Interfaces\IMeetings.cs" />
     <Compile Include="Interfaces\INoticeBoard.cs" />
     <Compile Include="Interfaces\ISearch.cs" />
     <Compile Include="Interfaces\ISurvey.cs" />
     <Compile Include="Interfaces\IUserProfile.cs" />
     <Compile Include="Interfaces\IUtility.cs" />
+    <Compile Include="Interfaces\MeetingsManager.cs" />
     <Compile Include="Interfaces\NoticeBoardManager.cs" />
     <Compile Include="Interfaces\SearchManager.cs" />
     <Compile Include="Interfaces\SurveyManager.cs" />
@@ -447,6 +450,14 @@
     <Compile Include="Migrations\201811060945533_NewFieldUserInfo2.Designer.cs">
       <DependentUpon>201811060945533_NewFieldUserInfo2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811142052032_Meetings.cs" />
+    <Compile Include="Migrations\201811142052032_Meetings.Designer.cs">
+      <DependentUpon>201811142052032_Meetings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811142103413_Meetings2.cs" />
+    <Compile Include="Migrations\201811142103413_Meetings2.Designer.cs">
+      <DependentUpon>201811142103413_Meetings2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ArchiveModel.cs" />
@@ -463,6 +474,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InternalRegisterViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Meetings_Models.cs" />
     <Compile Include="Models\MemberSelectViewModel.cs" />
     <Compile Include="Models\MessageRecieveModel.cs" />
     <Compile Include="Models\MessageSendingModel.cs" />
@@ -1606,6 +1618,9 @@
     <Content Include="Views\Survey\Edit.cshtml" />
     <Content Include="Views\Event\EventCalander.cshtml" />
     <Content Include="Views\Event\_UpcommingEventPartialView.cshtml" />
+    <Content Include="Views\Meetings\Index.cshtml" />
+    <Content Include="Views\Meetings\Details.cshtml" />
+    <Content Include="Views\Meetings\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1747,6 +1762,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811060945533_NewFieldUserInfo2.resx">
       <DependentUpon>201811060945533_NewFieldUserInfo2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811142052032_Meetings.resx">
+      <DependentUpon>201811142052032_Meetings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811142103413_Meetings2.resx">
+      <DependentUpon>201811142103413_Meetings2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -50,6 +50,8 @@ namespace ComPro.Models
         public DbSet<AnswerModel> Answers { get; set; }
         public DbSet<PerticipentModel> Perticipents { get; set; }
 
+        public DbSet<Meetings_Models> Meetings_Models { get; set; }
+
 
 
 
