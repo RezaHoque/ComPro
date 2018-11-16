@@ -31,7 +31,8 @@ namespace ComPro.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public DateTime Meeting_Date { get; set; }
-        
+        public string Creator_Id { get; set; }
+
     }
 
 
@@ -40,10 +41,22 @@ namespace ComPro.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Creator_Name { get; set; }
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime Creation_Date { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime Meeting_Date { get; set; }
         public String Description { get; set; }
         public string Perticipents_Name { get; set; }
+    }
+
+    public class MeetingEditModel
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public DateTime Meeting_Date { get; set; }
+        public String Description { get; set; }
+        
     }
 
 }

@@ -6,21 +6,23 @@ using System.Web.Mvc;
 using ComPro.Interfaces;
 using ComPro.Models;
 
+
+
+
 namespace ComPro.Controllers
 {
     public class MeetingsController : Controller
     {
 
+        IMeetings _MeetingManager = new MeetingsManager();
 
-        private readonly IMeetings _MeetingManager;
        
-
 
         // GET: Meetings
         public ActionResult Index()
         {
             var Result = _MeetingManager.AllMeetingss();
-
+            
             return View(Result);
         }
 
@@ -31,10 +33,21 @@ namespace ComPro.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Meetings_Models model )
+        public ActionResult Create(Meetings_Models model, FormCollection frm)
         {
+            model.Perticipents_Id = null;
+            if (ModelState.IsValid)
+            {
+                if (!string.IsNullOrEmpty(frm["Perticipent"]))
+                {
+                    model.Perticipents_Id = frm["Perticipent"];
+                }
+                
+            }
 
-            return View("Index");
+            _MeetingManager.Meeting_Information(model);
+           
+            return View();
         }
 
         public ActionResult Details(int id)
@@ -43,15 +56,26 @@ namespace ComPro.Controllers
             return View(Result);
         }
 
-        public ActionResult Edit()
+        [HttpGet]
+        public ActionResult Edit(int id)
         {
-            return View();
+            var Result = _MeetingManager.GetMeeting(id);
+            return View(Result);
         }
 
-       
-        public ActionResult Delete()
+        [HttpPost]
+        public ActionResult Edit(MeetingEditModel model)
         {
-            return View();
+            _MeetingManager.PostMeeting(model);
+            return View(model);
+        }
+
+
+        public ActionResult Delete(int id )
+        {
+            _MeetingManager.RemoveMeeting(id);
+
+            return View("Index",_MeetingManager.AllMeetingss());
         }
 
 

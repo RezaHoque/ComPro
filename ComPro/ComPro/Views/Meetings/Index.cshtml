@@ -1,29 +1,42 @@
-﻿@model IEnumerable<ComPro.Models.Meetings_Models>
-
+﻿@model IEnumerable<ComPro.Models.MeetingViewModel>
+@using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Meetings</h2>
 
-
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 
 <table class="table">
-   
+
     <tr>
         <th>Date</th>
         <th>Title</th>
-        
+        <th></th>
+
     </tr>
 
-    <tr>
-        @foreach (var item in Model)
-        {   <td>@item.Meeting_Date.Date</td>
-            <td><a href="/Meetings/Details?@item.Id">@item.Title</a></td>
-            
-        }
-    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Meeting_Date.ToShortDateString()</td>
+            <td><a> @Html.ActionLink(item.Title, "Details", new { id = item.Id }) </a></td>
+            <td>
+
+                @if ((@HttpContext.Current.User.Identity.GetUserId() == item.Creator_Id) || User.IsInRole("Administrator"))
+                {<a> @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |</a>
+                <a>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</a>
+            }
+
+            </td>
+        </tr>
+    }
+
 
 
 </table>
